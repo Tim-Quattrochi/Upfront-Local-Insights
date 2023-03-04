@@ -10,6 +10,9 @@ const signUp = async (req, res) => {
       .status(400)
       .json("Please enter all the required fields.");
   }
+  if (password !== confirmPassword) {
+    res.status(422).json("Passwords must match.");
+  }
 
   const checkExistingUser = await User.findOne(email);
 
@@ -42,6 +45,10 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   const checkExistingUser = await User.findOne({ email });
+
+  if (!checkExistingUser) {
+    return res.status(404).json("User not found.");
+  }
 
   if (
     checkExistingUser &&
