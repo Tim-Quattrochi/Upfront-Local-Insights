@@ -1,6 +1,9 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
-const createToken = require("../config/createToken");
+const {
+  createAccessToken,
+  createRefreshToken,
+} = require("../config/createToken");
 
 const signUp = async (req, res) => {
   const { confirmPassword, name, password, email, role } = req.body;
@@ -14,72 +17,106 @@ const signUp = async (req, res) => {
     return res.status(422).json("Passwords must match.");
   }
 
-  const checkExistingUser = await User.findOne({ email });
+  try {
+    const checkExistingUser = await User.findOne({ email });
 
-  if (checkExistingUser) {
-    return res
-      .status(400)
-      .json("User already exists with that information.");
-  }
+    if (checkExistingUser) {
+      return res
+        .status(400)
+        .json("User already exists with that information.");
+    }
 
-  const salt = await bcrypt.genSalt(10);
-  const passwordHash = await bcrypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(password, salt);
 
-  const newUser = await User.create({
-    name,
-    email,
-    password: passwordHash,
-    role,
-  });
+    const newUser = await User.create({
+      name,
+      email,
+      password: passwordHash,
+      role,
+    });
 
-  //Send back user details to the client, minus the password.
-  let newUserMinusPwd = await User.findById({
-    _id: newUser._id,
-  }).select("-password");
+    //Send back user details to the client, minus the password.
+    let newUserMinusPwd = await User.findById({
+      _id: newUser._id,
+    }).select("-password");
 
-  //create access token
-  let accessToken = createToken(
-    newUser._id,
-    newUser.name,
-    newUser.role
-  );
+    //create access token
+    let accessToken = createAccessToken(
+      newUser._id,
+      newUser.name,
+      newUser.role
+    );
 
-  if (newUser) {
-    return res
-      .status(201)
-      .json({ newUserMinusPwd, access_Token: accessToken });
-  } else {
-    return res
-      .status(400)
-      .json("Something went wrong... Try again later.");
+    if (newUser) {
+      return res
+        .status(201)
+        .json({ newUserMinusPwd, access_Token: accessToken });
+    } else {
+      return res
+        .status(400)
+        .json("Something went wrong... Try again later.");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Something went wrong.");
   }
 };
 
 const login = async (req, res) => {
   const { email, password } = req.body;
 
-  const checkExistingUser = await User.findOne({ email });
-
-  if (!checkExistingUser) {
-    return res.status(404).json("User not found.");
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ message: "Please enter the required fields." });
   }
 
-  if (
-    checkExistingUser &&
-    (await bcrypt.compare(password, checkExistingUser.password))
-  ) {
-    return res.status(200).json({
-      id: checkExistingUser.id,
-      name: checkExistingUser.name,
-      email: checkExistingUser.email,
-      token: createToken(
+  try {
+    const checkExistingUser = await User.findOne({ email });
+
+    if (!checkExistingUser) {
+      return res.status(404).json("User not found.");
+    }
+
+    if (
+      checkExistingUser &&
+      (await bcrypt.compare(password, checkExistingUser.password))
+    ) {
+      let refreshToken = createRefreshToken(
         checkExistingUser.id,
         checkExistingUser.name,
         checkExistingUser.role
-      ),
-    });
-  } else {
-    return res.status(401).json("Invalid login information.");
+      );
+
+      //create http only cookie containing the refresh token.
+      res.cookie("jwt", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
+      });
+
+      //save the refresh token in the db.
+      checkExistingUser.refreshToken = refreshToken;
+      await checkExistingUser.save();
+
+      res.status(200).json({
+        id: checkExistingUser.id,
+        name: checkExistingUser.name,
+        email: checkExistingUser.email,
+        token: createAccessToken(
+          checkExistingUser.id,
+          checkExistingUser.name,
+          checkExistingUser.role
+        ),
+      });
+    } else {
+      return res.status(401).json("Invalid login information.");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Something went wrong.");
   }
 };
 
