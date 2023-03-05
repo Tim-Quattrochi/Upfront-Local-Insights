@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const createToken = require("../config/createToken");
 
 const signUp = async (req, res) => {
-  const { confirmPassword, name, password, email } = req.body;
+  const { confirmPassword, name, password, email, role } = req.body;
 
   if (!name || !email || !password || !confirmPassword) {
     return res
@@ -11,10 +11,10 @@ const signUp = async (req, res) => {
       .json("Please enter all the required fields.");
   }
   if (password !== confirmPassword) {
-    res.status(422).json("Passwords must match.");
+    return res.status(422).json("Passwords must match.");
   }
 
-  const checkExistingUser = await User.findOne(email);
+  const checkExistingUser = await User.findOne({ email });
 
   if (checkExistingUser) {
     return res
@@ -29,11 +29,25 @@ const signUp = async (req, res) => {
     name,
     email,
     password: passwordHash,
-    token: createToken(newUser.id),
+    role,
   });
 
+  //Send back user details to the client, minus the password.
+  let newUserMinusPwd = await User.findById({
+    _id: newUser._id,
+  }).select("-password");
+
+  //create access token
+  let accessToken = createToken(
+    newUser._id,
+    newUser.name,
+    newUser.role
+  );
+
   if (newUser) {
-    return res.status(201).json({ newUser });
+    return res
+      .status(201)
+      .json({ newUserMinusPwd, access_Token: accessToken });
   } else {
     return res
       .status(400)
@@ -58,7 +72,11 @@ const login = async (req, res) => {
       id: checkExistingUser.id,
       name: checkExistingUser.name,
       email: checkExistingUser.email,
-      token: createToken(checkExistingUser.id),
+      token: createToken(
+        checkExistingUser.id,
+        checkExistingUser.name,
+        checkExistingUser.role
+      ),
     });
   } else {
     return res.status(401).json("Invalid login information.");
