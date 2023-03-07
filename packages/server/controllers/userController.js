@@ -92,7 +92,6 @@ const login = async (req, res) => {
       //create http only cookie containing the refresh token.
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
-        secure: true,
         sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
       });

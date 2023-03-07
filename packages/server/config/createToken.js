@@ -7,7 +7,7 @@ const {
 
 const createAccessToken = (id, name, role) => {
   return jwt.sign({ id: id, name: name, role: role }, JWT_SECRET, {
-    expiresIn: "30d",
+    expiresIn: "1d",
   });
 };
 

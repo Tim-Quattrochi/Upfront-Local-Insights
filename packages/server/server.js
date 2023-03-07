@@ -19,10 +19,10 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 //routes
-app.use("/review", require("./routes/reviewRoutes"));
-app.use("/business", require("./routes/businessRoutes"));
-app.use("/auth", require("./routes/authRoutes"));
-app.use("/users", require("./routes/userRoutes"));
+app.use("/api/review", require("./routes/reviewRoutes"));
+app.use("/api/business", require("./routes/businessRoutes"));
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 
 app.listen(port, () => {
   console.log(`Server listening on ${port}`);

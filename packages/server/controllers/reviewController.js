@@ -11,9 +11,10 @@ const createReview = async (req, res) => {
       .status(400)
       .json("Please fill out the required fields.");
   }
-
+  console.log(user);
   let review = await Review.create({
     business: business,
+    user,
     rating: rating,
     comment: comment,
   });

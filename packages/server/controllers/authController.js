@@ -8,7 +8,6 @@ const User = require("../models/userModel");
 
 const refresh = async (req, res) => {
   const cookies = req.cookies;
-  console.log(req.user);
 
   if (!cookies?.jwt) {
     return res.status(401).json({ message: "Not Authorized" });

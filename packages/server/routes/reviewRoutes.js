@@ -3,6 +3,8 @@ const router = express.Router();
 
 const { createReview } = require("../controllers/reviewController");
 
-router.post("/", createReview);
+const protect = require("../middleware/verifyJWT");
+
+router.post("/", protect, createReview);
 
 module.exports = router;

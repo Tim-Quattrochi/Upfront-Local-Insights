@@ -1,6 +1,20 @@
 const mongoose = require("mongoose");
 const Business = require("../models/businessModel");
 
+const getAllBusiness = async (req, res) => {
+  try {
+    let allBusiness = await Business.find({});
+
+    res.status(200).json({ Businesses: allBusiness });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message:
+        "An error occurred while trying to fetch all businesses",
+    });
+  }
+};
+
 const createBusiness = async (req, res) => {
   const {
     name,
@@ -18,7 +32,6 @@ const createBusiness = async (req, res) => {
     !category ||
     !address ||
     !phone ||
-    !email ||
     !website
   ) {
     return res
@@ -39,4 +52,4 @@ const createBusiness = async (req, res) => {
   res.status(201).json(newBusiness);
 };
 
-module.exports = { createBusiness };
+module.exports = { createBusiness, getAllBusiness };
