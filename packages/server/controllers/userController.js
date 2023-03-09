@@ -8,6 +8,8 @@ const {
 const signUp = async (req, res) => {
   const { confirmPassword, name, password, email, role } = req.body;
 
+  console.log(confirmPassword, name, password, email);
+
   if (!name || !email || !password || !confirmPassword) {
     return res
       .status(400)
@@ -21,9 +23,9 @@ const signUp = async (req, res) => {
     const checkExistingUser = await User.findOne({ email });
 
     if (checkExistingUser) {
-      return res
-        .status(400)
-        .json("User already exists with that information.");
+      return res.status(400).json({
+        error: "User already exists with that information.",
+      });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -37,7 +39,7 @@ const signUp = async (req, res) => {
     });
 
     //Send back user details to the client, minus the password.
-    let newUserMinusPwd = await User.findById({
+    let user = await User.findById({
       _id: newUser._id,
     }).select("-password");
 
@@ -51,7 +53,7 @@ const signUp = async (req, res) => {
     if (newUser) {
       return res
         .status(201)
-        .json({ newUserMinusPwd, access_Token: accessToken });
+        .json({ user, access_Token: accessToken });
     } else {
       return res
         .status(400)

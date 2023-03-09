@@ -1,5 +1,11 @@
 import { useState } from "react";
 import registerImage from "../assets/registerImage.svg";
+import {
+  loginUser,
+  useAuthState,
+  useAuthDispatch,
+  registerUser,
+} from "../Context";
 
 import { useNavigate } from "react-router-dom";
 
@@ -8,9 +14,7 @@ import { Link } from "react-router-dom";
 
 export default function Register() {
   const initialValues = {
-    firstName: "",
-    lastName: "",
-    userName: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -18,8 +22,9 @@ export default function Register() {
   };
 
   const [formData, setFormData] = useState(initialValues);
-  const [isLoading, setIsLoading] = useState(false);
+
   //   const [value, setValue] = useLocalStorage("user", null);
+  const dispatch = useAuthDispatch();
 
   const navigate = useNavigate();
 
@@ -33,49 +38,19 @@ export default function Register() {
   const handleRegistration = async (e) => {
     e.preventDefault();
 
-    setIsLoading(true);
-
+    let payload = formData;
     try {
-      const response = await axios.post("/users/signup", formData, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-
-      const auth = {
-        firstName: response.data.data.user.firstName,
-        lastName: response.data.data.user.lastName,
-        userName: response.data.data.user.userName,
-        email: response.data.data.user.email,
-      };
-
-      setValue(auth);
-
-      navigate("/login");
-    } catch (err) {
-      if (!err?.response) {
-        setFormData(
-          ...formData,
-          (formData.error = "No Server Response")
-        );
-      } else if (err.response?.status === 422) {
-        setFormData(
-          ...formData,
-          (formData.error = "User already exists.")
-        );
-      } else {
-        setFormData(
-          ...formData,
-          (formData.error = "Registration failed.")
-        );
+      let response = await registerUser(dispatch, payload);
+      console.log(response);
+      if (response && response.user) {
+        navigate("/");
+      } else if (response && response.error) {
+        setError(response.error);
       }
-    } finally {
-      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
     }
   };
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -109,49 +84,18 @@ export default function Register() {
                       First Name
                     </label>
                     <input
-                      id="firstName"
-                      name="firstName"
+                      id="name"
+                      name="name"
                       type="text"
-                      autoComplete="First Name"
+                      autoComplete="full name"
                       required
                       className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       placeholder="First Name"
                       onChange={handleInputChange}
-                      value={formData.firstName}
+                      value={formData.name}
                     />
                   </div>
-                  <div>
-                    <label htmlFor="lastName" className="sr-only">
-                      Last Name
-                    </label>
-                    <input
-                      id="lastName"
-                      name="lastName"
-                      type="text"
-                      autoComplete="last-name"
-                      required
-                      className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      placeholder="Last Name"
-                      onChange={handleInputChange}
-                      value={formData.lastName}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="userName" className="sr-only">
-                      Username
-                    </label>
-                    <input
-                      id="userName"
-                      name="userName"
-                      type="text"
-                      autoComplete="username"
-                      required
-                      className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      placeholder="Username"
-                      onChange={handleInputChange}
-                      value={formData.userName}
-                    />
-                  </div>
+
                   <div>
                     <label htmlFor="email" className="sr-only">
                       Email

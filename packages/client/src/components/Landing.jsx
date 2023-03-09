@@ -1,4 +1,5 @@
 import landingImage from "../assets/landingImage.svg";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
@@ -20,7 +21,9 @@ const Landing = () => {
           </div>
         </div>
       </div>
-      <button className="btn btn-primary  z-10">Get Started</button>
+      <Link to={"/register"}>
+        <button className="btn btn-primary  z-10">Get Started</button>
+      </Link>
     </>
   );
 };
