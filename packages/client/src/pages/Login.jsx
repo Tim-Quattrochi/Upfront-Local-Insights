@@ -123,7 +123,7 @@ export default function Login() {
                         aria-hidden="true"
                       /> */}
                     </span>
-                    Register
+                    Login
                   </button>
                 </div>
               </form>
