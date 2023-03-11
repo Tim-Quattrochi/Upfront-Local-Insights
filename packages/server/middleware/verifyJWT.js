@@ -11,8 +11,6 @@ const verifyJWT = async (req, res, next) => {
 
   const token = authHeader.split(" ")[1];
 
-  console.log(token);
-
   try {
     jwt.verify(token, JWT_SECRET, (err, decoded) => {
       if (err) {

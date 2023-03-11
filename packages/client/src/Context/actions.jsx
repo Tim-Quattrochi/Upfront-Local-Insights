@@ -4,6 +4,7 @@ export async function loginUser(dispatch, loginPayload) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(loginPayload),
   };
   try {

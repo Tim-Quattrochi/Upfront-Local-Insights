@@ -89,13 +89,6 @@ const login = async (req, res) => {
         checkExistingUser.role
       );
 
-      //create http only cookie containing the refresh token.
-      res.cookie("jwt", refreshToken, {
-        httpOnly: true,
-        sameSite: "None",
-        maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
-      });
-
       //Send back user details to the client, minus the password.
       let user = await User.findById({
         _id: checkExistingUser._id,
@@ -104,6 +97,14 @@ const login = async (req, res) => {
       //save the refresh token in the db.
       checkExistingUser.refreshToken = refreshToken;
       await checkExistingUser.save();
+
+      //create http only cookie containing the refresh token.
+      res.cookie("jwt", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
+      });
 
       res.status(200).json({
         user,

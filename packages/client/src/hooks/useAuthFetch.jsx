@@ -38,7 +38,9 @@ const useAuthFetch = (url, options) => {
         if (response.status === 401) {
           const accessToken = localStorage.getItem("accessToken");
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchData();

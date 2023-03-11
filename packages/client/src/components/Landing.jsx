@@ -1,18 +1,26 @@
 import landingImage from "../assets/landingImage.svg";
 import { Link } from "react-router-dom";
 import useFetchPrivate from "../hooks/useFetchPrivate";
+import { useState } from "react";
 
 const Landing = () => {
-  const fetch = useFetchPrivate();
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
+  const fetchPrivate = useFetchPrivate();
 
   const handleClick = async () => {
-    const options = {
-      method: "GET",
-    };
-
-    await fetch("review", options).then((res) => {
-      console.log(res);
-    });
+    try {
+      const response = await fetchPrivate("review", {
+        method: "GET",
+      });
+      const data = await response.json();
+      console.log(data);
+      setData(data);
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
   };
 
   return (
@@ -38,6 +46,12 @@ const Landing = () => {
         <button className="btn btn-primary  z-10">Get Started</button>
       </Link>
       <button onClick={handleClick}>Press Me</button>
+      {data && (
+        <div>
+          <h2>Private Data</h2>
+          <p>{error ? "Protected stuff" : JSON.stringify(data)}</p>
+        </div>
+      )}
     </>
   );
 };
