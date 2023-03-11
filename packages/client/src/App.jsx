@@ -5,9 +5,14 @@ import { Footer } from "./components/Footer";
 import { Navbar } from "./components/Navbar";
 import Landing from "./components/Landing";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
+import { useAuthState } from "./Context";
 
 function App() {
   const [count, setCount] = useState(0);
+
+  const { isLoggedIn } = useAuthState();
+  console.log(isLoggedIn);
 
   return (
     <>
@@ -15,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
     </>

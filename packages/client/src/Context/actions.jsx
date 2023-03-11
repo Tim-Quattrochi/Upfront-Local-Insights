@@ -8,11 +8,15 @@ export async function loginUser(dispatch, loginPayload) {
   };
   try {
     dispatch({ type: "REQUEST_LOGIN" });
-    let response = await fetch(`${API_URL}/login`, requestOptions);
+    let response = await fetch(
+      `${API_URL}/users/login`,
+      requestOptions
+    );
     let data = await response.json();
 
     if (data.user) {
       dispatch({ type: "LOGIN_SUCCESS", payload: data });
+      console.log(data);
       localStorage.setItem("insightUser", JSON.stringify(data));
       return data;
     }

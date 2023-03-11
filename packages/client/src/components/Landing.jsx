@@ -1,7 +1,20 @@
 import landingImage from "../assets/landingImage.svg";
 import { Link } from "react-router-dom";
+import useFetchPrivate from "../hooks/useFetchPrivate";
 
 const Landing = () => {
+  const fetch = useFetchPrivate();
+
+  const handleClick = async () => {
+    const options = {
+      method: "GET",
+    };
+
+    await fetch("review", options).then((res) => {
+      console.log(res);
+    });
+  };
+
   return (
     <>
       <div className="container mx-auto ">
@@ -24,6 +37,7 @@ const Landing = () => {
       <Link to={"/register"}>
         <button className="btn btn-primary  z-10">Get Started</button>
       </Link>
+      <button onClick={handleClick}>Press Me</button>
     </>
   );
 };

@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const { createReview } = require("../controllers/reviewController");
+const {
+  createReview,
+  getAllReviews,
+} = require("../controllers/reviewController");
 
 const protect = require("../middleware/verifyJWT");
+router.get("/", protect, getAllReviews);
 
-router.post("/", protect, createReview);
+router.post("/", createReview);
 
 module.exports = router;

@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 const Review = require("../models/reviewModel");
 
+const getAllReviews = async (req, res) => {
+  let getReviews = await Review.find({});
+
+  return res.status(200).json({ getReviews });
+};
+
 const createReview = async (req, res) => {
   const { business, user, rating, comment } = req.body;
 
@@ -22,4 +28,4 @@ const createReview = async (req, res) => {
   return res.status(401).json(review);
 };
 
-module.exports = { createReview };
+module.exports = { createReview, getAllReviews };

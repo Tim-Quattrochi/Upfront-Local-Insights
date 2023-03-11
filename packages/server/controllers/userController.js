@@ -51,9 +51,7 @@ const signUp = async (req, res) => {
     );
 
     if (newUser) {
-      return res
-        .status(201)
-        .json({ user, access_Token: accessToken });
+      return res.status(201).json({ user, accessToken: accessToken });
     } else {
       return res
         .status(400)
@@ -98,15 +96,18 @@ const login = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
       });
 
+      //Send back user details to the client, minus the password.
+      let user = await User.findById({
+        _id: checkExistingUser._id,
+      }).select("-password -refreshToken"); //don't send the client the PW || refreshToken.
+
       //save the refresh token in the db.
       checkExistingUser.refreshToken = refreshToken;
       await checkExistingUser.save();
 
       res.status(200).json({
-        id: checkExistingUser.id,
-        name: checkExistingUser.name,
-        email: checkExistingUser.email,
-        token: createAccessToken(
+        user,
+        accessToken: createAccessToken(
           checkExistingUser.id,
           checkExistingUser.name,
           checkExistingUser.role
