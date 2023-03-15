@@ -32,6 +32,7 @@ const SubmitBusiness = () => {
 
       const data = await response.json();
       console.log(data);
+      setFormData(initialFormState);
     } catch (error) {
       console.log(error);
     }

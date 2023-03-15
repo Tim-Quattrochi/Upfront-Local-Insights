@@ -41,6 +41,18 @@ const createBusiness = async (req, res) => {
       .json("Please enter all the required fields.");
   }
 
+  //if the business name exists, we don't want to store it
+
+  const checkBusinessName = await Business.findOne({ name });
+
+  if (checkBusinessName) {
+    return res
+      .status(400)
+      .json({
+        error: "This business already exists in our database.",
+      });
+  }
+
   let newBusiness = await Business.create({
     name,
     description,
