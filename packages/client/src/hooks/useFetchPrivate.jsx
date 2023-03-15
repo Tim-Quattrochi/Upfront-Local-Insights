@@ -65,11 +65,12 @@ const useFetchPrivate = () => {
       }
     };
 
-    const fetchPrivate = async (url, options) => {
-      const request = await requestIntercept(
-        `${API_URL}/${url}`,
-        options
-      );
+    const fetchPrivate = async (url, options, reqBody) => {
+      console.log(reqBody);
+      const request = await requestIntercept(`${API_URL}/${url}`, {
+        ...options,
+        body: reqBody ? JSON.stringify(reqBody) : undefined,
+      });
       const fetchResponse = await fetch(request);
       const response = await handleResponse(fetchResponse);
       return response;
@@ -81,7 +82,8 @@ const useFetchPrivate = () => {
     };
   }, [auth, refresh]);
 
-  return (url, options) => window.fetchPrivate(url, options);
+  return (url, options, reqBody) =>
+    window.fetchPrivate(url, options, reqBody);
 };
 
 export default useFetchPrivate;

@@ -8,24 +8,30 @@ const getAllReviews = async (req, res) => {
 };
 
 const createReview = async (req, res) => {
-  const { business, user, rating, comment } = req.body;
+  const { comment, rating, user } = req.body;
 
-  console.log(business);
+  console.log(req.reqBody);
 
-  if (!business || !rating || !comment) {
+  const { businessId } = req.params;
+
+  console.log(businessId);
+
+  console.log(req.body);
+
+  if (!comment || !rating) {
     return res
       .status(400)
       .json("Please fill out the required fields.");
   }
-  console.log(user);
+
   let review = await Review.create({
-    business: business,
+    business: businessId,
     user,
     rating: rating,
     comment: comment,
   });
 
-  return res.status(401).json(review);
+  return res.status(201).json(review);
 };
 
 module.exports = { createReview, getAllReviews };

@@ -5,6 +5,7 @@ const reviewSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Business",
     required: true,
+    index: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,

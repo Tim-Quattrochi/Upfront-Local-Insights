@@ -1,11 +1,6 @@
 import { useState } from "react";
 import registerImage from "../assets/registerImage.svg";
-import {
-  loginUser,
-  useAuthState,
-  useAuthDispatch,
-  registerUser,
-} from "../Context";
+import { loginUser, useAuthState, useAuthDispatch } from "../Context";
 
 import { useNavigate } from "react-router-dom";
 
@@ -20,8 +15,6 @@ export default function Login() {
   };
 
   const [formData, setFormData] = useState(initialValues);
-
-  //   const [value, setValue] = useLocalStorage("user", null);
   const dispatch = useAuthDispatch();
 
   const navigate = useNavigate();

@@ -9,6 +9,6 @@ const {
 const protect = require("../middleware/verifyJWT");
 router.get("/", protect, getAllReviews);
 
-router.post("/", createReview);
+router.post("/:businessId", createReview);
 
 module.exports = router;
