@@ -8,6 +8,7 @@ import Landing from "./components/Landing";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { useAuthState } from "./Context";
+import SubmitBusiness from "./pages/SubmitBusiness";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -23,6 +24,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/businesses" element={<Businesses />} />
+        <Route path="/submit-business" element={<SubmitBusiness />} />
       </Routes>
       <Footer />
     </>

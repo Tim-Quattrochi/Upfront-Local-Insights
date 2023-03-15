@@ -19,20 +19,22 @@ const createBusiness = async (req, res) => {
   const {
     name,
     description,
-    category,
+    selectedCategory,
     address,
     phone,
     email,
     website,
   } = req.body;
 
+  console.log(req.body);
+
   if (
     !name ||
     !description ||
-    !category ||
     !address ||
     !phone ||
-    !website
+    !website ||
+    !selectedCategory
   ) {
     return res
       .status(400)
@@ -42,7 +44,7 @@ const createBusiness = async (req, res) => {
   let newBusiness = await Business.create({
     name,
     description,
-    category,
+    category: selectedCategory,
     address,
     phone,
     email,

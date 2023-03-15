@@ -7,7 +7,7 @@ const {
   getAllBusiness,
 } = require("../controllers/businessController");
 
-router.get("/", getAllBusiness);
+router.get("/", protect, getAllBusiness);
 
 router.post("/", protect, createBusiness);
 
