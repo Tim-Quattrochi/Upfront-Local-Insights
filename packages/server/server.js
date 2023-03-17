@@ -2,6 +2,7 @@ const dotenv = require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const path = require("path");
 
 const connectMyDB = require("./config/db");
 const { login } = require("./controllers/userController");
@@ -12,11 +13,17 @@ const port = 3001;
 
 connectMyDB();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 //routes
 app.use("/api/review", require("./routes/reviewRoutes"));

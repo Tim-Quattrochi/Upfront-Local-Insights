@@ -8,6 +8,8 @@ const {
 const signUp = async (req, res) => {
   const { confirmPassword, name, password, email, role } = req.body;
 
+  console.log(req.body);
+
   console.log(confirmPassword, name, password, email);
 
   if (!name || !email || !password || !confirmPassword) {
@@ -51,9 +53,7 @@ const signUp = async (req, res) => {
     );
 
     if (newUser) {
-      return res
-        .status(201)
-        .json({ user, access_Token: accessToken });
+      return res.status(201).json({ user, accessToken: accessToken });
     } else {
       return res
         .status(400)
@@ -91,22 +91,26 @@ const login = async (req, res) => {
         checkExistingUser.role
       );
 
-      //create http only cookie containing the refresh token.
-      res.cookie("jwt", refreshToken, {
-        httpOnly: true,
-        sameSite: "None",
-        maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
-      });
+      //Send back user details to the client, minus the password.
+      let user = await User.findById({
+        _id: checkExistingUser._id,
+      }).select("-password -refreshToken"); //don't send the client the PW || refreshToken.
 
       //save the refresh token in the db.
       checkExistingUser.refreshToken = refreshToken;
       await checkExistingUser.save();
 
+      //create http only cookie containing the refresh token.
+      res.cookie("jwt", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
+      });
+
       res.status(200).json({
-        id: checkExistingUser.id,
-        name: checkExistingUser.name,
-        email: checkExistingUser.email,
-        token: createAccessToken(
+        user,
+        accessToken: createAccessToken(
           checkExistingUser.id,
           checkExistingUser.name,
           checkExistingUser.role

@@ -29,7 +29,7 @@ const refresh = async (req, res) => {
       if (err || user.id !== decoded.id) {
         return res.status(403).json({ message: "Forbidden." });
       }
-      let accessToken = createRefreshToken(
+      let accessToken = createAccessToken(
         user.id,
         user.name,
         user.email

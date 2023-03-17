@@ -5,6 +5,7 @@ const reviewSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Business",
     required: true,
+    index: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -23,7 +24,10 @@ const reviewSchema = mongoose.Schema({
     trim: true,
   },
 
-  photos: [{ type: String, required: false }],
+  photo: {
+    type: String,
+    required: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

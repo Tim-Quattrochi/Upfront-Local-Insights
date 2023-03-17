@@ -40,6 +40,13 @@ const businessSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Business", businessSchema);
