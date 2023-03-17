@@ -1,30 +1,41 @@
-import React, { useState } from "react";
-import useFetchPrivate from "../hooks/useFetchPrivate";
+import React, { useState, useRef } from "react";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useAuthState } from "../Context";
 
 const LeaveRating = ({ businessId }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [img, setImg] = useState(null);
 
   const { user } = useAuthState();
 
-  const fetchPrivate = useFetchPrivate();
+  const axios = useAxiosPrivate();
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Submit the form data to the server
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("comment", comment);
+    formData.append("rating", rating);
+    formData.append("user", user._id);
+
     try {
-      const response = await fetchPrivate(
+      const response = await axios.post(
         `review/${businessId}`,
+        formData,
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        },
-        { rating, comment, user: user._id }
+          headers: { "Content-Type": "multipart/formdata" },
+        }
       );
 
-      const data = await response.json();
-      console.log(data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -35,8 +46,10 @@ const LeaveRating = ({ businessId }) => {
     setComment("");
   };
 
+  //get secure url from server
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} type="multipart/form-data">
       <div className="rating">
         <input
           type="radio"
@@ -86,7 +99,13 @@ const LeaveRating = ({ businessId }) => {
           onChange={(e) => setComment(e.target.value)}
         />
       </label>
+      <img src={img} alt="" />
       <button type="submit">Submit Review</button>
+      <input
+        type="file"
+        name="file"
+        onChange={(e) => setSelectedFile(e.target.files[0])}
+      />
     </form>
   );
 };

@@ -24,7 +24,10 @@ const reviewSchema = mongoose.Schema({
     trim: true,
   },
 
-  photos: [{ type: String, required: false }],
+  photo: {
+    type: String,
+    required: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
