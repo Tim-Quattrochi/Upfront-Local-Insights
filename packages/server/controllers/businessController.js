@@ -1,13 +1,19 @@
 const mongoose = require("mongoose");
 const Business = require("../models/businessModel");
 
-const getAllBusiness = async (req, res) => {
+const getAllBusinesses = async (req, res) => {
   try {
-    let allBusiness = await Business.find({});
-
-    res.status(200).json({ Businesses: allBusiness });
+    const businesses = await Business.find().populate({
+      path: "reviews",
+      select: ["rating", "comment"],
+      populate: {
+        path: "user",
+        select: "name",
+      },
+    });
+    res.status(200).json({ businesses });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({
       message:
         "An error occurred while trying to fetch all businesses",
@@ -46,11 +52,9 @@ const createBusiness = async (req, res) => {
   const checkBusinessName = await Business.findOne({ name });
 
   if (checkBusinessName) {
-    return res
-      .status(400)
-      .json({
-        error: "This business already exists in our database.",
-      });
+    return res.status(400).json({
+      error: "This business already exists in our database.",
+    });
   }
 
   let newBusiness = await Business.create({
@@ -59,11 +63,11 @@ const createBusiness = async (req, res) => {
     category: selectedCategory,
     address,
     phone,
-    email,
+    email: email ? email : "null",
     website,
   });
 
   res.status(201).json(newBusiness);
 };
 
-module.exports = { createBusiness, getAllBusiness };
+module.exports = { createBusiness, getAllBusinesses };

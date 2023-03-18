@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useFetchPrivate from "../hooks/useFetchPrivate";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const initialFormState = {
   name: "",
@@ -13,25 +13,16 @@ const initialFormState = {
 };
 
 const SubmitBusiness = () => {
+  const axios = useAxiosPrivate();
   const [formData, setFormData] = useState(initialFormState);
-
-  const fetchPrivate = useFetchPrivate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetchPrivate(
-        "business",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        },
-        formData
-      );
+      const response = await axios.post("business", formData);
 
-      const data = await response.json();
-      console.log(data);
+      console.log(response.data);
       setFormData(initialFormState);
     } catch (error) {
       console.log(error);

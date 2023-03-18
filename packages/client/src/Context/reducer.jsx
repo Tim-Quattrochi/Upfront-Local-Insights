@@ -20,6 +20,7 @@ export const initialState = {
 };
 
 export const AuthReducer = (initialState, action) => {
+  console.log(action.payload);
   switch (action.type) {
     case "REQUEST_LOGIN":
       return {
@@ -30,7 +31,7 @@ export const AuthReducer = (initialState, action) => {
       return {
         ...initialState,
         user: action.payload.user,
-        accessToken: action.payload.accessToken,
+        accessToken: action.payload.user.accessToken,
         loading: false,
         isLoggedIn: true,
       };

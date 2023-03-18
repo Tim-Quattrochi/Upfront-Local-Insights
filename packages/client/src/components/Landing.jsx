@@ -1,19 +1,17 @@
 import landingImage from "../assets/landingImage.svg";
 import { Link } from "react-router-dom";
-import useFetchPrivate from "../hooks/useFetchPrivate";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useState } from "react";
 
 const Landing = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const fetchPrivate = useFetchPrivate();
+  const axios = useAxiosPrivate();
 
   const handleClick = async () => {
     try {
-      const response = await fetchPrivate("review", {
-        method: "GET",
-      });
+      const response = await axios.get("review");
       const data = await response.json();
       console.log(data);
       setData(data);

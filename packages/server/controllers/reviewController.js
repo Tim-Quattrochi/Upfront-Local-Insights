@@ -1,11 +1,16 @@
 const mongoose = require("mongoose");
 const Review = require("../models/reviewModel");
+const Business = require("../models/businessModel");
+
 const multer = require("multer");
 const uuid = require("uuid");
 const path = require("path");
 
 const getAllReviews = async (req, res) => {
-  let getReviews = await Review.find({});
+  let getReviews = await Review.find({}).populate({
+    path: "business",
+    select: ["user", "rating", "photo", "comment", "name"],
+  });
 
   return res.status(200).json({ getReviews });
 };
@@ -30,7 +35,7 @@ const createReview = async (req, res) => {
   const { businessId } = req.params;
 
   upload(req, res, async (err) => {
-    console.log(req.file.path);
+    console.log(req.file);
 
     const { comment, user, rating } = req.body;
     if (!rating) {
@@ -48,6 +53,12 @@ const createReview = async (req, res) => {
         comment: comment,
         photo: req.file.path,
       });
+
+      await Business.findByIdAndUpdate(
+        businessId,
+        { $push: { reviews: review._id } },
+        { new: true }
+      );
 
       return res.status(201).json(review);
     }

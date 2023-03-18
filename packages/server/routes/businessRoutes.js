@@ -4,11 +4,11 @@ const protect = require("../middleware/verifyJWT");
 
 const {
   createBusiness,
-  getAllBusiness,
+  getAllBusinesses,
 } = require("../controllers/businessController");
 
-router.get("/", protect, getAllBusiness);
+router.get("/", getAllBusinesses);
 
-router.post("/", protect, createBusiness);
+router.post("/", createBusiness);
 
 module.exports = router;

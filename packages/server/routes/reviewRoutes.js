@@ -7,7 +7,7 @@ const {
 } = require("../controllers/reviewController");
 
 const protect = require("../middleware/verifyJWT");
-router.get("/", protect, getAllReviews);
+router.get("/", getAllReviews);
 
 router.post("/:businessId", createReview);
 

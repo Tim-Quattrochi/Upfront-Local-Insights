@@ -33,7 +33,7 @@ export default function Login() {
     try {
       let response = await loginUser(dispatch, payload);
       console.log(response);
-      if (response && response.user) {
+      if (response && response.data.user) {
         navigate("/");
       } else if (response && response.error) {
         setError(response.error);

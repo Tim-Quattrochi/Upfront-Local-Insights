@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import ListBusiness from "../components/ListBusiness";
-import useFetchPrivate from "../hooks/useFetchPrivate";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const Businesses = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const fetchPrivate = useFetchPrivate();
+  const axios = useAxiosPrivate();
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetchPrivate("business", {
-          method: "GET",
-        });
-        const data = await response.json();
-        console.log(data);
-        setData(data.Businesses);
+        const response = await axios.get("business");
+
+        console.log(response);
+        setData(response.data.businesses);
       } catch (error) {
         console.log(error);
         setError(error);

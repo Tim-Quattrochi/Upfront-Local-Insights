@@ -1,4 +1,5 @@
 import { useAuthDispatch, useAuthState } from "../Context";
+import axios from "./useAxios";
 import { useEffect } from "react";
 
 const useRefreshToken = () => {
@@ -6,30 +7,22 @@ const useRefreshToken = () => {
   const { accessToken } = useAuthState();
 
   const refresh = async () => {
-    const options = {
-      method: "GET",
-      credentials: "include",
-    };
-    const response = await fetch(
+    const response = await axios.get(
       "http://localhost:3001/api/auth/refresh",
-      options
+      {
+        withCredentials: true,
+      }
     );
-    const data = await response.json();
 
-    console.log(data);
-    const newAccessToken = data.accessToken;
+    console.log(response);
+
+    const newAccessToken = response.data.accessToken;
     dispatch({
       type: "REFRESH_ACCESS_TOKEN",
       payload: { accessToken: newAccessToken },
     });
     return newAccessToken;
   };
-
-  useEffect(() => {
-    if (!accessToken) {
-      refresh();
-    }
-  }, []);
 
   return refresh;
 };
