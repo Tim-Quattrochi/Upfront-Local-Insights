@@ -5,9 +5,11 @@ const protect = require("../middleware/verifyJWT");
 const {
   createBusiness,
   getAllBusinesses,
+  getBusinessById,
 } = require("../controllers/businessController");
 
 router.get("/", getAllBusinesses);
+router.get("/:businessId", getBusinessById);
 
 router.post("/", createBusiness);
 

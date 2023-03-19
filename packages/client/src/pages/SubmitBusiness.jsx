@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import { FileUpload } from "../components/FileUpload";
+import ViewSingleBusiness from "../components/ViewSingleBusiness";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const initialFormState = {
@@ -17,6 +19,9 @@ const SubmitBusiness = () => {
   const axios = useAxiosPrivate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [formFields, setFormFields] = useState(initialFormState);
+  const [businessId, setBusinessId] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +42,9 @@ const SubmitBusiness = () => {
       });
 
       console.log(response.data);
+      setBusinessId(response.data._id);
       setFormFields(initialFormState);
+      navigate(`/submit-business/${response.data._id}`);
     } catch (error) {
       console.log(error);
     }

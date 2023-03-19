@@ -40,6 +40,23 @@ const getAllBusinesses = async (req, res) => {
   }
 };
 
+const getBusinessById = async (req, res) => {
+  let { businessId } = req.params;
+
+  try {
+    const findBusiness = await Business.findOne({ _id: businessId });
+
+    if (!findBusiness) {
+      return res.status(404).json({ Error: "Business not found." });
+    } else {
+      res.status(200).json({ business: findBusiness });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ Error: "Something went wrong.." });
+  }
+};
+
 const createBusiness = async (req, res) => {
   try {
     //multer file upload
@@ -96,4 +113,8 @@ const createBusiness = async (req, res) => {
   }
 };
 
-module.exports = { createBusiness, getAllBusinesses };
+module.exports = {
+  createBusiness,
+  getAllBusinesses,
+  getBusinessById,
+};
