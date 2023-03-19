@@ -30,10 +30,14 @@ const businessSchema = mongoose.Schema({
     type: String,
     trim: true,
     lowercase: true,
+    required: false,
   },
   website: {
     type: String,
     trim: true,
+  },
+  photo: {
+    type: String,
   },
   createdAt: {
     type: Date,

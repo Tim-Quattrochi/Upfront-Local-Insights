@@ -3,12 +3,12 @@ import LeaveRating from "./LeaveRating";
 
 const ListBusiness = ({ businesses }) => {
   return (
-    <div className="flex flex-col items-center gap-8 shadow-sm ">
+    <div className="flex flex-col items-center gap-8  ">
       {businesses &&
         businesses.map((business) => (
           <div
             key={business._id}
-            className="w-full max-w-3xl bg-slate-300 overflow-hidden shadow-md rounded-lg"
+            className="w-full  bg-gray-100 overflow-hidden shadow-md rounded-xl"
           >
             <div className="px-6 py-8">
               <h3 className="text-3xl font-bold text-slate-700 mb-4">
@@ -22,12 +22,12 @@ const ListBusiness = ({ businesses }) => {
                   Category: {business.category}
                 </p>
                 <p className="text-gray-700 text-base">
-                  {business.address}
+                  📍{business.address}
                 </p>
               </div>
               <div className="flex justify-between mb-4">
                 <p className="text-gray-700 text-base">
-                  {business.phone}
+                  ☏ {business.phone}
                 </p>
                 <p className="text-gray-700 text-base">
                   {business.email}
@@ -35,7 +35,14 @@ const ListBusiness = ({ businesses }) => {
               </div>
               <div className="flex justify-between mb-8">
                 <p className="text-gray-700 text-base">
-                  {business.website}
+                  <a
+                    className="link link-hover"
+                    href={business.website}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {business.website}
+                  </a>{" "}
                 </p>
               </div>
             </div>

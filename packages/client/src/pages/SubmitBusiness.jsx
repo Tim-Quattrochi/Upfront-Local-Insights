@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FileUpload } from "../components/FileUpload";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const initialFormState = {
@@ -14,16 +15,29 @@ const initialFormState = {
 
 const SubmitBusiness = () => {
   const axios = useAxiosPrivate();
-  const [formData, setFormData] = useState(initialFormState);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [formFields, setFormFields] = useState(initialFormState);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("name", formFields.name);
+    formData.append("description", formFields.description);
+    formData.append("selectedCategory", formFields.selectedCategory);
+    formData.append("address", formFields.address);
+    formData.append("phone", formFields.phone);
+    formData.append("email", formFields.email);
+    formData.append("website", formFields.website);
+
     try {
-      const response = await axios.post("business", formData);
+      const response = await axios.post("business", formData, {
+        headers: { "Content-Type": "multipart/formdata" },
+      });
 
       console.log(response.data);
-      setFormData(initialFormState);
+      setFormFields(initialFormState);
     } catch (error) {
       console.log(error);
     }
@@ -31,15 +45,15 @@ const SubmitBusiness = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormFields({
+      ...formFields,
       [name]: name === "selectedCategory" ? value : e.target.value,
     });
   };
 
   return (
     <form
-      className="flex flex-col py-4 items-center bg-secondary  "
+      className="flex flex-col py-4 items-center bg-gray-300  "
       onSubmit={handleSubmit}
     >
       <label htmlFor="name">
@@ -69,12 +83,12 @@ const SubmitBusiness = () => {
         <select
           id="category"
           name="selectedCategory"
-          value={formData.selectedCategory}
+          value={formFields.selectedCategory}
           className="input input-bordered input-sm w-full max-w-xs"
           onChange={handleChange}
         >
-          <option value={formData.category}>Select One</option>
-          {formData.category.map((category) => (
+          <option value={formFields.category}>Select One</option>
+          {formFields.category.map((category) => (
             <option key={category} value={category}>
               {category}
             </option>
@@ -127,6 +141,7 @@ const SubmitBusiness = () => {
           onChange={handleChange}
         />
       </label>
+      <FileUpload setSelectedFile={setSelectedFile} />
       <button className="btn btn-primary mt-4">
         Submit Business
       </button>

@@ -1,21 +1,13 @@
 import { useReducer } from "react";
 
-let user = localStorage.getItem("insightUser")
-  ? JSON.parse(localStorage.getItem("insightUser")).user
-  : "";
-
-let accessToken = localStorage.getItem("insightUser")
-  ? JSON.parse(localStorage.getItem("insightUser")).accessToken
-  : "";
-
 //is there an insightUser in local storage? have logged in be true.
 //We may need to refactor this if the auth flow gets more complex.
 
 export const initialState = {
-  user: "" || user,
-  accessToken: "" || accessToken,
+  user: "",
+  accessToken: "",
   loading: false,
-  isLoggedIn: user ? true : false, //is there a user in localStorage?
+  isLoggedIn: false, //is there a user in localStorage?
   errorMessage: null,
 };
 

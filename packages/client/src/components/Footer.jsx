@@ -37,7 +37,7 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <footer className="footer p-4 border-info border-t-[1px] text-neutral-content absolute inset-x-0 bottom-0 h-16">
+    <footer className="footer p-4 border-info border-t-[1px] text-neutral-content relative inset-x-0 bottom-0 h-16">
       <div className="items-center grid-flow-col">
         <svg
           width="36"

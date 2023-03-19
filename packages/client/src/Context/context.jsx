@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState, useEffect } from "react";
 import { AuthReducer } from "./reducer";
 import { initialState } from "./reducer";
 
@@ -27,11 +27,23 @@ export function useAuthDispatch() {
 
 export const AuthProvider = ({ children }) => {
   const [user, dispatch] = useReducer(AuthReducer, initialState);
+  const [token, setToken] = useState(initialState.accessToken); //accessToken
+  const [loggedInUser, setLoggedInUser] = useState(initialState.user);
 
-  // useEffect(() => {});
+  useEffect(() => {
+    let user = localStorage.getItem("insightUser")
+      ? JSON.parse(localStorage.getItem("insightUser")).user
+      : "";
+
+    let accessToken = localStorage.getItem("insightUser")
+      ? JSON.parse(localStorage.getItem("insightUser")).accessToken
+      : "";
+
+    setToken(accessToken);
+  }, []);
 
   return (
-    <AuthStateContext.Provider value={user}>
+    <AuthStateContext.Provider value={{ user, token, loggedInUser }}>
       <AuthDispatchContext.Provider value={dispatch}>
         {children}
       </AuthDispatchContext.Provider>

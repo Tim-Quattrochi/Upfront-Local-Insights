@@ -1,5 +1,24 @@
 const mongoose = require("mongoose");
 const Business = require("../models/businessModel");
+const multer = require("multer");
+const uuid = require("uuid");
+const path = require("path");
+
+// Multer Middle Ware
+const storage = multer.diskStorage({
+  destination: "./uploads/businessPhotos",
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      "BUSINESS-PHOTO-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+}).single("file");
 
 const getAllBusinesses = async (req, res) => {
   try {
@@ -22,52 +41,59 @@ const getAllBusinesses = async (req, res) => {
 };
 
 const createBusiness = async (req, res) => {
-  const {
-    name,
-    description,
-    selectedCategory,
-    address,
-    phone,
-    email,
-    website,
-  } = req.body;
+  try {
+    //multer file upload
+    upload(req, res, async (err) => {
+      const {
+        name,
+        description,
+        selectedCategory,
+        address,
+        phone,
+        email,
+        website,
+        photo,
+      } = req.body;
 
-  console.log(req.body);
+      if (
+        !name ||
+        !description ||
+        !address ||
+        !phone ||
+        !website ||
+        !selectedCategory
+      ) {
+        return res
+          .status(400)
+          .json("Please enter all the required fields.");
+      }
 
-  if (
-    !name ||
-    !description ||
-    !address ||
-    !phone ||
-    !website ||
-    !selectedCategory
-  ) {
-    return res
-      .status(400)
-      .json("Please enter all the required fields.");
-  }
+      //if the business name exists, we don't want to store it
 
-  //if the business name exists, we don't want to store it
+      const checkBusinessName = await Business.findOne({ name });
 
-  const checkBusinessName = await Business.findOne({ name });
-
-  if (checkBusinessName) {
-    return res.status(400).json({
-      error: "This business already exists in our database.",
+      if (checkBusinessName) {
+        return res.status(400).json({
+          error: "This business already exists in our database.",
+        });
+      } else {
+        let newBusiness = await Business.create({
+          name,
+          description,
+          category: selectedCategory,
+          address,
+          phone,
+          email: email.length > 0 ? email : "null",
+          website,
+          photo: req.file ? req.file.path : "null",
+        });
+        res.status(201).json(newBusiness);
+      }
     });
+  } catch (error) {
+    console.log(error);
+    res.send(error);
   }
-
-  let newBusiness = await Business.create({
-    name,
-    description,
-    category: selectedCategory,
-    address,
-    phone,
-    email: email ? email : "null",
-    website,
-  });
-
-  res.status(201).json(newBusiness);
 };
 
 module.exports = { createBusiness, getAllBusinesses };
