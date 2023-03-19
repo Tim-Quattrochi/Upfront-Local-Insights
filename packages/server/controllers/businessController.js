@@ -5,7 +5,7 @@ const getAllBusinesses = async (req, res) => {
   try {
     const businesses = await Business.find().populate({
       path: "reviews",
-      select: ["rating", "comment"],
+      select: ["rating", "comment", "photo"],
       populate: {
         path: "user",
         select: "name",

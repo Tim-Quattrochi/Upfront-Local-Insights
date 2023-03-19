@@ -3,38 +3,76 @@ import LeaveRating from "./LeaveRating";
 
 const ListBusiness = ({ businesses }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="flex flex-col items-center gap-8 shadow-sm ">
       {businesses &&
         businesses.map((business) => (
           <div
             key={business._id}
-            className="bg-white overflow-hidden shadow-md rounded-lg"
+            className="w-full max-w-3xl bg-slate-300 overflow-hidden shadow-md rounded-lg"
           >
-            <div className="px-4 py-2">
-              <h3 className="text-xl font-medium text-gray-800 mb-2">
+            <div className="px-6 py-8">
+              <h3 className="text-3xl font-bold text-slate-700 mb-4">
                 {business.name}
               </h3>
-              <p className="text-gray-600 text-sm mb-4">
+              <p className="text-gray-600 text-lg mb-6">
                 {business.description}
               </p>
-              <p className="text-gray-700 text-base mb-2">
-                Category: {business.category}
-              </p>
-              <p className="text-gray-700 text-base mb-2">
-                {business.address}
-              </p>
-              <p className="text-gray-700 text-base mb-2">
-                {business.phone}
-              </p>
-              <p className="text-gray-700 text-base mb-2">
-                {business.email}
-              </p>
-              <p className="text-gray-700 text-base mb-2">
-                {business.website}
-              </p>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-                View Reviews
-              </button>
+              <div className="flex justify-between mb-4">
+                <p className="text-gray-700 text-base">
+                  Category: {business.category}
+                </p>
+                <p className="text-gray-700 text-base">
+                  {business.address}
+                </p>
+              </div>
+              <div className="flex justify-between mb-4">
+                <p className="text-gray-700 text-base">
+                  {business.phone}
+                </p>
+                <p className="text-gray-700 text-base">
+                  {business.email}
+                </p>
+              </div>
+              <div className="flex justify-between mb-8">
+                <p className="text-gray-700 text-base">
+                  {business.website}
+                </p>
+              </div>
+            </div>
+            <div className="px-6 pb-8">
+              {business.reviews.length > 0 ? (
+                <div>
+                  <h4 className="text-2xl font-bold text-gray-800 mb-4 ">
+                    Reviews:
+                  </h4>
+                  {business.reviews.map((review) => (
+                    <div
+                      key={review._id}
+                      className="mb-8  border-white border-2 rounded"
+                    >
+                      <div className="flex flex-col items-center ">
+                        <div>
+                          <p className="text-gray-600 text-base">
+                            User: {review.user.name}
+                          </p>
+                          <p className="text-gray-600 text-base">
+                            <div className="font-bold">Rating:</div>
+                            {review.rating}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-gray-600 text-base ">
+                        Comment: {review.comment}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-700 text-base">
+                  No reviews yet. Be the first to leave one!
+                </p>
+              )}
+              Link here to see more
             </div>
             <LeaveRating businessId={business._id} />
           </div>
