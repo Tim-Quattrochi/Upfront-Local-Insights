@@ -52,6 +52,12 @@ const ViewSingleBusiness = (props) => {
               <p className="text-gray-700 text-base">
                 📍{singleBusiness.address}
               </p>
+              <span>
+                <img
+                  src={`http://localhost:3001/${singleBusiness.photo}`}
+                  alt="Photo of particular business."
+                />
+              </span>
             </div>
             <div className="flex justify-between mb-4">
               <p className="text-gray-700 text-base">

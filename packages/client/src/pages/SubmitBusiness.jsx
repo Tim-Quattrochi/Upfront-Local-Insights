@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FileUpload } from "../components/FileUpload";
 import ViewSingleBusiness from "../components/ViewSingleBusiness";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -44,7 +44,7 @@ const SubmitBusiness = () => {
       console.log(response.data);
       setBusinessId(response.data._id);
       setFormFields(initialFormState);
-      navigate(`/submit-business/${response.data._id}`);
+      navigate(`/businesses/${response.data._id}`);
     } catch (error) {
       console.log(error);
     }

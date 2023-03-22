@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import { useAuthState } from "./Context";
 import SubmitBusiness from "./pages/SubmitBusiness";
 import ViewSingleBusiness from "./components/ViewSingleBusiness";
+import ErrorPage from "./components/RouteError";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,13 +22,18 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/businesses" element={<Businesses />} />
-        <Route path="/submit-business" element={<SubmitBusiness />} />
         <Route
-          path="/submit-business/:businessId"
+          path="/"
+          element={<Landing />}
+          errorElement={<ErrorPage />}
+        />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+        <Route path="businesses" element={<Businesses />}>
+          <Route path="" element={<SubmitBusiness />} />
+        </Route>
+        <Route
+          path="businesses/:businessId"
           element={<ViewSingleBusiness />}
         />
       </Routes>

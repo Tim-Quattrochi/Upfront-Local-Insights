@@ -1,5 +1,6 @@
 import React from "react";
 import LeaveRating from "./LeaveRating";
+import { Link } from "react-router-dom";
 
 const ListBusiness = ({ businesses }) => {
   return (
@@ -12,7 +13,9 @@ const ListBusiness = ({ businesses }) => {
           >
             <div className="px-6 py-8">
               <h3 className="text-3xl font-bold text-slate-700 mb-4">
-                {business.name}
+                <Link to={`/businesses/${business._id}`}>
+                  {business.name}
+                </Link>
               </h3>
               <p className="text-gray-600 text-lg mb-6">
                 {business.description}
