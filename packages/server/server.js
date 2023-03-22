@@ -3,6 +3,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
+const morgan = require("morgan");
 
 const connectMyDB = require("./config/db");
 const { login } = require("./controllers/userController");
@@ -20,6 +21,7 @@ app.use(
   })
 );
 
+app.use(morgan("tiny"));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
