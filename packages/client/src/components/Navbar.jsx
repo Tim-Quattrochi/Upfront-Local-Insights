@@ -1,12 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">
-          Upfront Local Insights
-        </a>
+        <Link to={"/"}>
+          <a className="btn btn-ghost normal-case text-xl">
+            Upfront Local Insights
+          </a>
+        </Link>
       </div>
       <div className="flex-none gap-2">
         <div className="form-control">

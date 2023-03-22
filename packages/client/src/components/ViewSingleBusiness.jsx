@@ -32,32 +32,36 @@ const ViewSingleBusiness = (props) => {
   console.log(singleBusiness);
 
   return (
-    <div className="flex flex-col items-center gap-8  ">
+    <div
+      className="flex flex-col justify-center items-center gap-8  prose lg:prose-xl"
+      data-theme="corporate"
+    >
       {
         <div
           key={singleBusiness._id}
           className="w-full  bg-gray-100 overflow-hidden shadow-md rounded-xl"
         >
+          <span>
+            <img
+              src={`http://localhost:3001/${singleBusiness.photo}`}
+              alt="Photo of particular business."
+              className="mx-auto object-cover"
+            />
+          </span>
           <div className="px-6 py-8">
-            <h3 className="text-3xl font-bold text-slate-700 mb-4">
+            <h3 className="text-3xl font-bold text-accent mb-4 rounded-sm border-2 border:sm outline-1 shadow-md w-2/3 mx-auto bg-slate-200">
               {singleBusiness.name}
             </h3>
-            <p className="text-gray-600 text-lg mb-6">
+            <p className="text-gray-600 text-lg mb-6 italic">
               {singleBusiness.description}
             </p>
-            <div className="flex justify-between mb-4">
+            <div className="mb-4">
               <p className="text-gray-700 text-base">
                 Category: {singleBusiness.category}
               </p>
               <p className="text-gray-700 text-base">
                 📍{singleBusiness.address}
               </p>
-              <span>
-                <img
-                  src={`http://localhost:3001/${singleBusiness.photo}`}
-                  alt="Photo of particular business."
-                />
-              </span>
             </div>
             <div className="flex justify-between mb-4">
               <p className="text-gray-700 text-base">

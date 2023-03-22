@@ -12,7 +12,7 @@ const ListBusiness = ({ businesses }) => {
             className="w-full  bg-gray-100 overflow-hidden shadow-md rounded-xl"
           >
             <div className="px-6 py-8">
-              <h3 className="text-3xl font-bold text-slate-700 mb-4">
+              <h3 className="text-3xl font-bold text-primary mb-4">
                 <Link to={`/businesses/${business._id}`}>
                   {business.name}
                 </Link>
