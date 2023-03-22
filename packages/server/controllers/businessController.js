@@ -100,7 +100,7 @@ const createBusiness = async (req, res) => {
           category: selectedCategory,
           address,
           phone,
-          email: email.length > 0 ? email : "null",
+          email,
           website,
           photo: req.file ? req.file.path : "null",
         });

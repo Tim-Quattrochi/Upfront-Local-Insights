@@ -31,6 +31,7 @@ const businessSchema = mongoose.Schema({
     trim: true,
     lowercase: true,
     required: false,
+    unique: false,
   },
   website: {
     type: String,
