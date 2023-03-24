@@ -11,6 +11,7 @@ import { useAuthState } from "./Context";
 import SubmitBusiness from "./pages/SubmitBusiness";
 import ViewSingleBusiness from "./components/ViewSingleBusiness";
 import ErrorPage from "./components/RouteError";
+import LeaveRating from "./components/LeaveRating";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -35,6 +36,10 @@ function App() {
         <Route
           path="businesses/:businessId"
           element={<ViewSingleBusiness />}
+        />
+        <Route
+          path="businesses/leave-rating"
+          element={<LeaveRating />}
         />
       </Routes>
       <Footer />

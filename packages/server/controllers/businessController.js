@@ -44,16 +44,25 @@ const getBusinessById = async (req, res) => {
   let { businessId } = req.params;
 
   try {
-    const findBusiness = await Business.findOne({ _id: businessId });
+    const findBusiness = await Business.findOne({
+      _id: businessId,
+    }).populate({
+      path: "reviews",
+      select: ["user", "rating", "photo", "comment", "name"],
+      populate: {
+        path: "user",
+        select: "name",
+      },
+    });
 
     if (!findBusiness) {
       return res.status(404).json({ Error: "Business not found." });
     } else {
-      res.status(200).json({ business: findBusiness });
+      res.status(200).json(findBusiness);
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ Error: "Something went wrong.." });
+    res.status(500).json({ Error: error.name });
   }
 };
 

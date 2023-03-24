@@ -51,7 +51,7 @@ const createReview = async (req, res) => {
         user,
         rating: rating,
         comment: comment,
-        photo: req.file.path,
+        photo: req.file?.path,
       });
 
       await Business.findByIdAndUpdate(

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "../hooks/useAxios";
 import LeaveRating from "./LeaveRating";
+import ReviewModal from "./ReviewModal";
 
 const ViewSingleBusiness = (props) => {
   const [singleBusiness, setSingleBusiness] = useState({});
+  const [reviews, setReviews] = useState([]);
 
   const { businessId } = useParams();
 
@@ -16,8 +18,9 @@ const ViewSingleBusiness = (props) => {
         .get(`business/${businessId}`)
         .then((data) => {
           console.log(data);
-          if (data.data.business) {
-            setSingleBusiness(data.data.business);
+          if (data.data) {
+            setSingleBusiness(data.data);
+            setReviews(data.data.reviews);
           }
         })
         .catch((err) => console.log(err));
@@ -30,100 +33,93 @@ const ViewSingleBusiness = (props) => {
   }, [businessId]);
 
   console.log(singleBusiness);
+  console.log(reviews);
 
   return (
-    <div
-      className="flex flex-col justify-center items-center gap-8  prose lg:prose-xl"
-      data-theme="corporate"
-    >
-      {
-        <div
-          key={singleBusiness._id}
-          className="w-full  bg-gray-100 overflow-hidden shadow-md rounded-xl"
-        >
-          <span>
+    <div className="">
+      <div
+        key={singleBusiness._id}
+        className="bg-white rounded-lg shadow-md"
+      >
+        <div className="relative">
+          {singleBusiness.photo ? (
             <img
               src={`http://localhost:3001/${singleBusiness.photo}`}
-              alt="Photo of particular business."
-              className="mx-auto object-cover"
+              alt=""
+              className="w-full h-64 object-cover rounded-t-lg"
             />
-          </span>
-          <div className="px-6 py-8">
-            <h3 className="text-3xl font-bold text-accent mb-4 rounded-sm border-2 border:sm outline-1 shadow-md w-2/3 mx-auto bg-slate-200">
-              {singleBusiness.name}
-            </h3>
-            <p className="text-gray-600 text-lg mb-6 italic">
-              {singleBusiness.description}
-            </p>
-            <div className="mb-4">
-              <p className="text-gray-700 text-base">
-                Category: {singleBusiness.category}
-              </p>
-              <p className="text-gray-700 text-base">
-                📍{singleBusiness.address}
-              </p>
-            </div>
-            <div className="flex justify-between mb-4">
-              <p className="text-gray-700 text-base">
-                ☏ {singleBusiness.phone}
-              </p>
-              <p className="text-gray-700 text-base">
-                {singleBusiness.email}
-              </p>
-            </div>
-            <div className="flex justify-between mb-8">
-              <p className="text-gray-700 text-base">
-                <a
-                  className="link link-hover"
-                  href={singleBusiness.website}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {singleBusiness.website}
-                </a>{" "}
-              </p>
-            </div>
+          ) : (
+            <span>"No Photo yet</span>
+          )}
+
+          <div className="absolute top-0 right-0 px-2 py-1 bg-gray-800 text-white rounded-bl-lg">
+            {singleBusiness.category}
           </div>
-          <div className="px-6 pb-8">
-            {singleBusiness.reviews &&
-            singleBusiness.reviews.length > 0 ? (
-              <div>
-                <h4 className="text-2xl font-bold text-gray-800 mb-4 ">
-                  Reviews:
-                </h4>
-                {singleBusiness &&
-                  singleBusiness.reviews.map((review) => (
-                    <div
-                      key={review._id}
-                      className="mb-8  border-white border-2 rounded"
-                    >
-                      <div className="flex flex-col items-center ">
-                        <div>
-                          <p className="text-gray-600 text-base">
-                            User: {review.user.name}
-                          </p>
-                          <p className="text-gray-600 text-base">
-                            <div className="font-bold">Rating:</div>
-                            {review.rating}
-                          </p>
-                        </div>
-                      </div>
-                      <p className="text-gray-600 text-base ">
-                        Comment: {review.comment}
-                      </p>
-                    </div>
-                  ))}
-              </div>
-            ) : (
-              <p className="text-gray-700 text-base">
-                No reviews yet. Be the first to leave one!
-              </p>
-            )}
-            Link here to see more
-          </div>
-          <LeaveRating singleBusinessId={singleBusiness._id} />
         </div>
-      }
+        <div className="p-6">
+          <h3 className="text-2xl font-bold mb-4">
+            {singleBusiness.name}
+          </h3>
+          <p className="text-gray-700 text-sm mb-2">
+            📍 {singleBusiness.address}
+          </p>
+          <p className="text-gray-700 text-sm mb-2">
+            ☏ {singleBusiness.phone}
+          </p>
+          <p className="text-gray-700 text-base mb-4">
+            {singleBusiness.description}
+          </p>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center">
+              <img
+                src={`http://localhost:3001/${singleBusiness.photo}`}
+                alt=""
+                className="w-8 h-8 object-cover rounded-full mr-2"
+              />
+              <p className="text-gray-700 text-sm">
+                {singleBusiness.name}
+              </p>
+            </div>
+            <p className="text-gray-700 text-sm">
+              {singleBusiness.email}
+            </p>
+          </div>
+          <div className="flex items-center justify-between">
+            <a
+              href={singleBusiness.website}
+              target="_blank"
+              rel="noreferrer"
+              className="text-gray-700 text-sm hover:text-gray-600"
+            >
+              {singleBusiness.website}
+            </a>
+            <div className="flex items-center">
+              <svg
+                className="w-4 h-4 fill-current text-gray-600 mr-2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path d="M7 10l5 5 5-5H7z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {reviews &&
+          reviews.map((review) => (
+            <div key={review._id}>
+              <p>Review By: {review.user.name}</p>
+              <p>Rating: {review.rating} ⭐️</p>
+              <p>Comment: {review.comment}</p>
+            </div>
+          ))}
+
+        <LeaveRating
+          singleBusinessId={singleBusiness._id}
+          setReviews={setReviews}
+          reviews={reviews}
+        />
+      </div>
     </div>
   );
 };

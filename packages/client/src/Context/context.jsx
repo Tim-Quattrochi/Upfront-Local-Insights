@@ -30,18 +30,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(initialState.accessToken); //accessToken
   const [loggedInUser, setLoggedInUser] = useState(initialState.user);
 
-  useEffect(() => {
-    let user = localStorage.getItem("insightUser")
-      ? JSON.parse(localStorage.getItem("insightUser")).user
-      : "";
-
-    let accessToken = localStorage.getItem("insightUser")
-      ? JSON.parse(localStorage.getItem("insightUser")).accessToken
-      : "";
-
-    setToken(accessToken);
-  }, []);
-
   return (
     <AuthStateContext.Provider value={{ user, token, loggedInUser }}>
       <AuthDispatchContext.Provider value={dispatch}>

@@ -16,11 +16,14 @@ export async function loginUser(dispatch, loginPayload) {
     console.log(response);
 
     if (response.data.user) {
-      dispatch({ type: "LOGIN_SUCCESS", payload: response.data });
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: response.data,
+      });
 
       localStorage.setItem(
         "insightUser",
-        JSON.stringify(response.data.user)
+        JSON.stringify(response.data)
       );
       return response;
     }
