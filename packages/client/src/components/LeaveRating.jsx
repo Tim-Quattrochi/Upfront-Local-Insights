@@ -4,7 +4,7 @@ import { useAuthState } from "../Context";
 import { FileUpload } from "./FileUpload";
 import { useLocation } from "react-router-dom";
 
-const LeaveRating = ({ singleBusinessId, reviews, setReviews }) => {
+const LeaveRating = ({ singleBusinessId, setReviews }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -44,7 +44,10 @@ const LeaveRating = ({ singleBusinessId, reviews, setReviews }) => {
         }
       );
 
-      console.log(response);
+      console.log(response.data);
+      //grab the newly created review and update the review state.
+      setReviews((prev) => [...prev, response.data]);
+
       //I want to take the response and have it update the reviews it state to re-render the SingleBusiness Component.
 
       setShowForm(false);
@@ -58,9 +61,6 @@ const LeaveRating = ({ singleBusinessId, reviews, setReviews }) => {
     setComment("");
   };
 
-  //get secure url from server
-
-  console.log(user);
   return (
     <>
       <button
