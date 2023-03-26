@@ -21,6 +21,9 @@ const userSchema = mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    photo: {
+      type: String,
+    },
     refreshToken: String,
   },
   { timestamps: true }
