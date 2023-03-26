@@ -5,8 +5,13 @@ import { FileUpload } from "./FileUpload";
 import { useLocation } from "react-router-dom";
 import Toast from "./Toast";
 
-const LeaveRating = ({ singleBusinessId, setReviews }) => {
-  const [rating, setRating] = useState(0);
+const LeaveRating = ({
+  singleBusinessId,
+  setReviews,
+  currentRating,
+}) => {
+  const [rating, setRating] = useState(currentRating);
+  const [showRating, setShowRating] = useState(currentRating); //calculated rating after to render.
   const [comment, setComment] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [img, setImg] = useState(null);
@@ -46,6 +51,17 @@ const LeaveRating = ({ singleBusinessId, setReviews }) => {
           headers: { "Content-Type": "multipart/formdata" },
         }
       );
+
+      const { rating } = response.data;
+
+      const updateRating = await axios.put(
+        `business/${singleBusinessId}`
+      ); //update business overall rating.
+
+      console.log(updateRating);
+      setRating(updateRating.data.rating);
+      setShowRating(updateRating.data.rating);
+
       setShowToast(true);
 
       console.log(response.data);
@@ -98,7 +114,7 @@ const LeaveRating = ({ singleBusinessId, setReviews }) => {
                 name="rating"
                 className="mask mask-star-2 bg-primary"
                 value="1"
-                checked={rating === 1}
+                checked={currentRating}
                 onChange={(e) => setRating(Number(e.target.value))}
               />
 
@@ -107,7 +123,6 @@ const LeaveRating = ({ singleBusinessId, setReviews }) => {
                 name="rating"
                 className="mask mask-star-2 bg-primary"
                 value="2"
-                checked={rating === 2}
                 onChange={(e) => setRating(Number(e.target.value))}
               />
               <input
@@ -115,7 +130,6 @@ const LeaveRating = ({ singleBusinessId, setReviews }) => {
                 name="rating"
                 className="mask mask-star-2 bg-primary"
                 value="3"
-                checked={rating === 3}
                 onChange={(e) => setRating(Number(e.target.value))}
               />
               <input
@@ -130,7 +144,6 @@ const LeaveRating = ({ singleBusinessId, setReviews }) => {
                 name="rating"
                 className="mask mask-star-2 bg-primary"
                 value="5"
-                c
                 onChange={(e) => setRating(Number(e.target.value))}
               />
             </div>

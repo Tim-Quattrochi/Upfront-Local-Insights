@@ -31,19 +31,6 @@ const getAllBusinesses = async (req, res) => {
       },
     });
 
-    businesses.forEach((business) => {
-      const numReviews = business.reviews.length;
-      if (numReviews === 0) {
-        business.rating = 0;
-      } else {
-        const totalRating = business.reviews.reduce(
-          (acc, review) => acc + review.rating,
-          0
-        );
-        business.rating = totalRating / numReviews;
-      }
-    });
-
     res.status(200).json({ businesses });
   } catch (error) {
     console.error(error);
@@ -136,8 +123,32 @@ const createBusiness = async (req, res) => {
   }
 };
 
+const updateBusinessRating = async (req, res) => {
+  const { businessId } = req.params;
+
+  const business = await Business.findById(businessId).populate(
+    "reviews"
+  );
+
+  if (!business) {
+    return res.status(404).json({ error: "Business not found." });
+  }
+
+  const totalRatings = business.reviews.reduce(
+    (acc, review) => acc + review.rating,
+    0
+  );
+  const avgRating = totalRatings / business.reviews.length;
+
+  business.rating = avgRating;
+  await business.save();
+
+  return res.status(200).json({ rating: business.rating });
+};
+
 module.exports = {
   createBusiness,
   getAllBusinesses,
   getBusinessById,
+  updateBusinessRating,
 };

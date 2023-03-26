@@ -3,10 +3,12 @@ import { useParams, Link } from "react-router-dom";
 import axios from "../hooks/useAxios";
 import LeaveRating from "./LeaveRating";
 import ReviewModal from "./ReviewModal";
+import ShowRating from "./ShowRating";
 
 const ViewSingleBusiness = (props) => {
   const [singleBusiness, setSingleBusiness] = useState({});
   const [reviews, setReviews] = useState([]);
+  const [currentRating, setCurrentRating] = useState();
 
   const { businessId } = useParams();
 
@@ -22,6 +24,7 @@ const ViewSingleBusiness = (props) => {
             console.log(data);
             setSingleBusiness(data.data);
             setReviews(data.data.reviews);
+            setCurrentRating(data.data.rating);
           }
         })
         .catch((err) => console.log(err));
@@ -37,7 +40,7 @@ const ViewSingleBusiness = (props) => {
   console.log(reviews);
 
   return (
-    <div className="">
+    <div className="bg-gray-100">
       <div
         key={singleBusiness._id}
         className="bg-white rounded-lg shadow-md"
@@ -57,7 +60,7 @@ const ViewSingleBusiness = (props) => {
             {singleBusiness.category}
           </div>
         </div>
-        <div className="p-6">
+        <div className="p-6 py-4">
           <h3 className="text-2xl font-bold mb-4">
             {singleBusiness.name}
           </h3>
@@ -115,7 +118,7 @@ const ViewSingleBusiness = (props) => {
                 {review.user.name || review.name}
               </p>
               <p className="text-yellow-400 text-lg mb-2">
-                {review.rating} ⭐️
+                {review.rating} <ShowRating rating={review.rating} />
               </p>
               <p className="text-gray-700">{review.comment}</p>
               {review.photo ? (
@@ -134,6 +137,7 @@ const ViewSingleBusiness = (props) => {
           singleBusinessId={singleBusiness._id}
           setReviews={setReviews}
           reviews={reviews}
+          currentRating={currentRating}
         />
       </div>
     </div>
