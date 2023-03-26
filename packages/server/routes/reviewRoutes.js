@@ -1,4 +1,7 @@
 const express = require("express");
+const {
+  getBusinessById,
+} = require("../controllers/businessController");
 const router = express.Router();
 
 const {

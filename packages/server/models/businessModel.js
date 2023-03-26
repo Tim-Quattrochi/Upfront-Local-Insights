@@ -40,6 +40,11 @@ const businessSchema = mongoose.Schema({
   photo: {
     type: String,
   },
+  rating: {
+    type: Number,
+    default: 0,
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,

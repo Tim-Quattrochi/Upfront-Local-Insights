@@ -19,6 +19,7 @@ const ViewSingleBusiness = (props) => {
         .then((data) => {
           console.log(data);
           if (data.data) {
+            console.log(data);
             setSingleBusiness(data.data);
             setReviews(data.data.reviews);
           }
@@ -104,13 +105,28 @@ const ViewSingleBusiness = (props) => {
             </div>
           </div>
         </div>
-
         {reviews &&
           reviews.map((review) => (
-            <div key={review._id}>
-              <p>Review By: {review.user.name}</p>
-              <p>Rating: {review.rating} ⭐️</p>
-              <p>Comment: {review.comment}</p>
+            <div
+              key={review._id}
+              className="p-6 border rounded-md shadow-md"
+            >
+              <p className="text-lg font-semibold">
+                {review.user.name || review.name}
+              </p>
+              <p className="text-yellow-400 text-lg mb-2">
+                {review.rating} ⭐️
+              </p>
+              <p className="text-gray-700">{review.comment}</p>
+              {review.photo ? (
+                <img
+                  src={`http://localhost:3001/${review.photo}`}
+                  alt="User's review picture"
+                  className="h-32 w-64 mt-4 rounded-md shadow-md"
+                />
+              ) : (
+                ""
+              )}
             </div>
           ))}
 

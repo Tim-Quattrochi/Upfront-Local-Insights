@@ -3,6 +3,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useAuthState } from "../Context";
 import { FileUpload } from "./FileUpload";
 import { useLocation } from "react-router-dom";
+import Toast from "./Toast";
 
 const LeaveRating = ({ singleBusinessId, setReviews }) => {
   const [rating, setRating] = useState(0);
@@ -10,6 +11,7 @@ const LeaveRating = ({ singleBusinessId, setReviews }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [img, setImg] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   let { state } = useLocation();
 
@@ -34,6 +36,7 @@ const LeaveRating = ({ singleBusinessId, setReviews }) => {
     formData.append("comment", comment);
     formData.append("rating", rating);
     formData.append("user", user.user._id);
+    formData.append("name", user.user.name);
 
     try {
       const response = await axios.post(
@@ -43,15 +46,19 @@ const LeaveRating = ({ singleBusinessId, setReviews }) => {
           headers: { "Content-Type": "multipart/formdata" },
         }
       );
+      setShowToast(true);
 
       console.log(response.data);
       //grab the newly created review and update the review state.
       setReviews((prev) => [...prev, response.data]);
 
       //I want to take the response and have it update the reviews it state to re-render the SingleBusiness Component.
-
       setShowForm(false);
+      setShowToast(true); // show the toast
+      setTimeout(() => setShowToast(false), 5000);
     } catch (error) {
+      setShowToast(false);
+
       console.log(error);
     }
 
@@ -63,6 +70,13 @@ const LeaveRating = ({ singleBusinessId, setReviews }) => {
 
   return (
     <>
+      {showToast && (
+        <Toast
+          position="toast-end toast-middle"
+          appearance="alert-info"
+          message="Review Posted."
+        />
+      )}
       <button
         className="btn"
         onClick={() => setShowForm((prev) => !prev)}

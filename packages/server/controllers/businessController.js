@@ -30,6 +30,20 @@ const getAllBusinesses = async (req, res) => {
         select: "name",
       },
     });
+
+    businesses.forEach((business) => {
+      const numReviews = business.reviews.length;
+      if (numReviews === 0) {
+        business.rating = 0;
+      } else {
+        const totalRating = business.reviews.reduce(
+          (acc, review) => acc + review.rating,
+          0
+        );
+        business.rating = totalRating / numReviews;
+      }
+    });
+
     res.status(200).json({ businesses });
   } catch (error) {
     console.error(error);

@@ -37,7 +37,9 @@ const createReview = async (req, res) => {
   upload(req, res, async (err) => {
     console.log(req.file);
 
-    const { comment, user, rating } = req.body;
+    const { comment, user, rating, name } = req.body;
+    //bring in the name of the user to reference.
+
     if (!rating) {
       return res.status(400).json("Please include a rating.");
     }
@@ -49,6 +51,7 @@ const createReview = async (req, res) => {
       let review = await Review.create({
         business: businessId,
         user,
+        name,
         rating: rating,
         comment: comment,
         photo: req.file?.path,
