@@ -39,31 +39,36 @@ const createReview = async (req, res) => {
 
     const { comment, user, rating, name } = req.body;
     //bring in the name of the user to reference.
-
     if (!rating) {
       return res.status(400).json("Please include a rating.");
     }
-    if (err) {
-      // handle errors
-      console.error(err);
-      return res.status(400).json({ error: err.message });
-    } else {
-      let review = await Review.create({
-        business: businessId,
-        user,
-        name,
-        rating: rating,
-        comment: comment,
-        photo: req.file?.path,
-      });
 
-      await Business.findByIdAndUpdate(
-        businessId,
-        { $push: { reviews: review._id } },
-        { new: true }
-      );
+    try {
+      if (err) {
+        // handle errors
+        console.error(err);
+        return res.status(400).json({ error: err.message });
+      } else {
+        let review = await Review.create({
+          business: businessId,
+          user,
+          name,
+          rating: rating,
+          comment: comment,
+          photo: req.file?.path,
+        });
 
-      return res.status(201).json(review);
+        await Business.findByIdAndUpdate(
+          businessId,
+          { $push: { reviews: review._id } },
+          { new: true }
+        );
+
+        return res.status(201).json(review);
+      }
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
     }
   });
 };

@@ -23,6 +23,7 @@ const LeaveRating = ({
   if (!state) {
     state = null;
   }
+  console.log(state);
 
   console.log(singleBusinessId);
 
@@ -91,78 +92,71 @@ const LeaveRating = ({
           position="toast-end toast-middle"
           appearance="alert-info"
           message="Review Posted."
+          onHide={() => setShowToast(false)}
         />
       )}
-      <button
-        className="btn"
-        onClick={() => setShowForm((prev) => !prev)}
-      >
-        {showForm ? "hide" : "show"}
-      </button>
 
-      {showForm && (
-        <div>
-          <h1>{state && state.businessName}</h1>
-          <form
-            onSubmit={handleSubmit}
-            type="multipart/form-data"
-            className="flex flex-col flex-wrap justify-center align-center items-center"
-          >
-            <div className="rating">
-              <input
-                type="radio"
-                name="rating"
-                className="mask mask-star-2 bg-primary"
-                value="1"
-                checked={currentRating}
-                onChange={(e) => setRating(Number(e.target.value))}
-              />
+      <div>
+        <h1>{state && state.businessName}</h1>
+        <form
+          onSubmit={handleSubmit}
+          type="multipart/form-data"
+          className="flex flex-col flex-wrap justify-center align-center items-center"
+        >
+          <div className="rating">
+            <input
+              type="radio"
+              name="rating"
+              className="mask mask-star-2 bg-primary"
+              value="1"
+              checked={currentRating}
+              onChange={(e) => setRating(Number(e.target.value))}
+            />
 
-              <input
-                type="radio"
-                name="rating"
-                className="mask mask-star-2 bg-primary"
-                value="2"
-                onChange={(e) => setRating(Number(e.target.value))}
-              />
-              <input
-                type="radio"
-                name="rating"
-                className="mask mask-star-2 bg-primary"
-                value="3"
-                onChange={(e) => setRating(Number(e.target.value))}
-              />
-              <input
-                type="radio"
-                name="rating"
-                className="mask mask-star-2 bg-primary"
-                value="4"
-                onChange={(e) => setRating(Number(e.target.value))}
-              />
-              <input
-                type="radio"
-                name="rating"
-                className="mask mask-star-2 bg-primary"
-                value="5"
-                onChange={(e) => setRating(Number(e.target.value))}
-              />
-            </div>
-            <label className="m-4 p-1 text-slate-900">
-              Comment:
-              <textarea
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                className="textarea textarea-bordered textarea-lg w-full max-w-xs"
-              />
-            </label>
-            <img src={img} alt="" />
-            <button type="submit" className="btn btn-info mb-2">
-              Submit Review
-            </button>
-            <FileUpload setSelectedFile={setSelectedFile} />
-          </form>
-        </div>
-      )}
+            <input
+              type="radio"
+              name="rating"
+              className="mask mask-star-2 bg-primary"
+              value="2"
+              onChange={(e) => setRating(Number(e.target.value))}
+            />
+            <input
+              type="radio"
+              name="rating"
+              className="mask mask-star-2 bg-primary"
+              value="3"
+              onChange={(e) => setRating(Number(e.target.value))}
+            />
+            <input
+              type="radio"
+              name="rating"
+              className="mask mask-star-2 bg-primary"
+              value="4"
+              onChange={(e) => setRating(Number(e.target.value))}
+            />
+            <input
+              type="radio"
+              name="rating"
+              className="mask mask-star-2 bg-primary"
+              value="5"
+              onChange={(e) => setRating(Number(e.target.value))}
+            />
+          </div>
+          <label className="m-4 p-1 text-slate-900">
+            Comment:
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              className="textarea textarea-bordered textarea-lg w-full max-w-xs"
+            />
+          </label>
+          <img src={img} alt="" />
+          <button type="submit" className="btn btn-info mb-2">
+            Submit Review
+          </button>
+          <FileUpload setSelectedFile={setSelectedFile} />
+        </form>
+      </div>
     </>
   );
 };

@@ -30,9 +30,8 @@ function App() {
         />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
-        <Route path="businesses" element={<Businesses />}>
-          <Route path="" element={<SubmitBusiness />} />
-        </Route>
+        <Route path="businesses" element={<Businesses />} />
+
         <Route
           path="businesses/:businessId"
           element={<ViewSingleBusiness />}

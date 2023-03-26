@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import LeaveRating from "./LeaveRating";
 import { Link } from "react-router-dom";
 import ShowRating from "./ShowRating";
-import Fuse from "fuse.js";
-
+import ReviewModal from "./ReviewModal";
+import SubmitBusiness from "../pages/SubmitBusiness";
 const ListBusiness = ({ businesses }) => {
   const [searchFilter, setSearchFilter] = useState(businesses);
   const [searchTerm, setSearchTerm] = useState();
@@ -115,25 +115,6 @@ const ListBusiness = ({ businesses }) => {
                   >
                     {business.website}
                   </a>
-                  <div className="flex items-center">
-                    <svg
-                      className="w-4 h-4 fill-current text-gray-600 mr-2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M0 0h24v24H0z" fill="none" />
-                      <path d="M7 10l5 5 5-5H7z" />
-                    </svg>
-                    <Link
-                      to={"/businesses/leave-rating"}
-                      state={{
-                        businessId: business._id,
-                        businessName: business.name,
-                      }}
-                      className="text-gray-700 text-sm hover:text-gray-600"
-                    >
-                      Leave a review
-                    </Link>
-                  </div>
                 </div>
               </div>
             </div>

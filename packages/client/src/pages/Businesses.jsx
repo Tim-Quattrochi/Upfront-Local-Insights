@@ -36,13 +36,6 @@ const Businesses = () => {
       ) : (
         <ListBusiness businesses={data} />
       )}
-      <p className="m-2 p-2 font-bold text-secondary">
-        Want to add a business?
-      </p>
-      <button className="btn btn-accent mb-2" onClick={handleShow}>
-        Click to show Form
-      </button>
-      {showBusinessForm ? <Outlet /> : ""}
     </div>
   );
 };

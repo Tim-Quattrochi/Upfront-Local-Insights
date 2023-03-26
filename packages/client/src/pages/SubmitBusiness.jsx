@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileUpload } from "../components/FileUpload";
+import ReviewModal from "../components/ReviewModal";
 import ViewSingleBusiness from "../components/ViewSingleBusiness";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
@@ -20,7 +21,7 @@ const SubmitBusiness = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [formFields, setFormFields] = useState(initialFormState);
   const [businessId, setBusinessId] = useState(null);
-
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -43,7 +44,8 @@ const SubmitBusiness = () => {
 
       console.log(response.data);
       setBusinessId(response.data._id);
-      setFormFields(initialFormState);
+      setShowModal(false); // close modal after form submission
+      setFormFields({ ...initialFormState });
       navigate(`/businesses/${response.data._id}`);
     } catch (error) {
       console.log(error);
@@ -59,100 +61,106 @@ const SubmitBusiness = () => {
   };
 
   return (
-    <form
-      className="flex flex-col py-4 items-center bg-gray-300  "
-      onSubmit={handleSubmit}
+    <ReviewModal
+      title="Submit Business"
+      handleSubmit={handleSubmit}
+      showModal={showModal}
+      setShowModal={setShowModal}
     >
-      <label htmlFor="name">
-        Business Name:
-        <input
-          id="name"
-          type="text"
-          name="name"
-          placeholder="Type here"
-          className="input input-bordered input-sm w-full max-w-xs m-1"
-          onChange={handleChange}
-        />
-      </label>
-      <label htmlFor="description">
-        Description:
-        <input
-          id="description"
-          type="text"
-          name="description"
-          placeholder="Type here"
-          className="input input-bordered input-sm w-full max-w-xs m-1"
-          onChange={handleChange}
-        />
-      </label>
-      <label htmlFor="category">
-        Category:
-        <select
-          id="category"
-          name="selectedCategory"
-          value={formFields.selectedCategory}
-          className="input input-bordered input-sm w-full max-w-xs"
-          onChange={handleChange}
-        >
-          <option value={formFields.category}>Select One</option>
-          {formFields.category.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label htmlFor="address">
-        Address:
-        <input
-          id="address"
-          type="text"
-          name="address"
-          placeholder="Type here"
-          className="input input-bordered input-sm w-full max-w-xs m-1"
-          onChange={handleChange}
-        />
-      </label>
-      <label htmlFor="Phone Number ">
-        Phone Number:
-        <input
-          id="phone"
-          type="text"
-          name="phone"
-          maxLength={10}
-          pattern="[0-9]*"
-          placeholder="xxx-xxx-xxxx"
-          className="input input-bordered input-sm w-full max-w-xs"
-          onChange={handleChange}
-        />
-      </label>
-      <label htmlFor="email ">
-        Email:
-        <input
-          id="email"
-          type="email"
-          name="email"
-          placeholder="company@company.com"
-          className="input input-bordered input-sm w-full max-w-xs"
-          onChange={handleChange}
-        />
-      </label>
-      <label htmlFor="website ">
-        Website URL:
-        <input
-          id="website"
-          type="website"
-          name="website"
-          placeholder="www.company.com"
-          className="input input-bordered input-sm w-full max-w-xs m-1"
-          onChange={handleChange}
-        />
-      </label>
-      <FileUpload setSelectedFile={setSelectedFile} />
-      <button className="btn btn-primary mt-4">
-        Submit Business
-      </button>
-    </form>
+      <div className="flex justify-center mt-2">
+        <form className="flex flex-col  py-4 items-center bg-gray-300 w-full max-w-md">
+          <label htmlFor="name" className="w-full">
+            Business Name:
+            <input
+              id="name"
+              type="text"
+              name="name"
+              placeholder="Type here"
+              className="input input-bordered input-sm w-full mt-1"
+              onChange={handleChange}
+            />
+          </label>
+          <label htmlFor="description" className="w-full">
+            Description:
+            <input
+              id="description"
+              type="text"
+              name="description"
+              placeholder="Type here"
+              className="input input-bordered input-sm w-full mt-1"
+              onChange={handleChange}
+            />
+          </label>
+          <label htmlFor="category" className="w-full">
+            Category:
+            <select
+              id="category"
+              name="selectedCategory"
+              value={formFields.selectedCategory}
+              className="input input-bordered input-sm w-full mt-1"
+              onChange={handleChange}
+            >
+              <option value={formFields.category}>Select One</option>
+              {formFields.category.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label htmlFor="address" className="w-full">
+            Address:
+            <input
+              id="address"
+              type="text"
+              name="address"
+              placeholder="Type here"
+              className="input input-bordered input-sm w-full mt-1"
+              onChange={handleChange}
+            />
+          </label>
+          <label htmlFor="phone" className="w-full">
+            Phone Number:
+            <input
+              id="phone"
+              type="text"
+              name="phone"
+              maxLength={10}
+              pattern="[0-9]*"
+              placeholder="xxx-xxx-xxxx"
+              className="input input-bordered input-sm w-full mt-1"
+              onChange={handleChange}
+            />
+          </label>
+          <label htmlFor="email" className="w-full">
+            Email:
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="company@company.com"
+              className="input input-bordered input-sm w-full mt-1"
+              onChange={handleChange}
+            />
+          </label>
+          <label htmlFor="website" className="w-full">
+            Website URL:
+            <input
+              id="website"
+              type="website"
+              name="website"
+              placeholder="www.company.com"
+              className="input input-bordered input-sm w-full mt-1"
+              onChange={handleChange}
+            />
+          </label>
+          <button type="submit" className="btn">
+            Submit
+          </button>
+          <FileUpload setSelectedFile={setSelectedFile} />
+        </form>
+      </div>
+    </ReviewModal>
   );
 };
 
