@@ -4,7 +4,7 @@ const multer = require("multer");
 const uuid = require("uuid");
 const path = require("path");
 
-// Multer Middle Ware
+/* This is the multer configuration. It is telling multer where to store the file and what to name it. */
 const storage = multer.diskStorage({
   destination: "./uploads/businessPhotos",
   filename: function (req, file, cb) {
@@ -20,6 +20,12 @@ const upload = multer({
   limits: { fileSize: 1000000 },
 }).single("file");
 
+/**
+ * It fetches all businesses and populates the reviews and user fields
+ * @param req - The request object. This contains information about the HTTP request that raised the
+ * event.
+ * @param res - The response object.
+ */
 const getAllBusinesses = async (req, res) => {
   try {
     const businesses = await Business.find().populate({
@@ -41,6 +47,12 @@ const getAllBusinesses = async (req, res) => {
   }
 };
 
+/**
+ * It finds a business by its id and populates the reviews and the user of the review
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The business with the id that was passed in the params.
+ */
 const getBusinessById = async (req, res) => {
   let { businessId } = req.params;
 
@@ -67,6 +79,11 @@ const getBusinessById = async (req, res) => {
   }
 };
 
+/**
+ * We're creating a new business and storing it in the database
+ * @param req - the request object
+ * @param res - the response object
+ */
 const createBusiness = async (req, res) => {
   try {
     //multer file upload
@@ -123,6 +140,13 @@ const createBusiness = async (req, res) => {
   }
 };
 
+/**
+ * It finds a business by its id, calculates the average rating of all its reviews, and updates the
+ * business's rating with the new average
+ * @param req - The request object.
+ * @param res - The response object.
+ * @returns The average rating of the business.
+ */
 const updateBusinessRating = async (req, res) => {
   const { businessId } = req.params;
 
