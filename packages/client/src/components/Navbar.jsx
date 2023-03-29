@@ -1,8 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SubmitBusiness from "../pages/SubmitBusiness";
+import { logout } from "../Context";
+import { useAuthState, useAuthDispatch } from "../Context";
 
 export const Navbar = () => {
+  const auth = useAuthState();
+  const dispatch = useAuthDispatch();
+
+  console.log(auth);
+
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
@@ -14,12 +21,20 @@ export const Navbar = () => {
       </div>
       <div className="flex-none gap-2">
         <div className="flex gap-2">
-          <Link to={"/login"}>
-            <button className="btn">Login</button>
-          </Link>
-          <Link to={"/register"}>
-            <button className="btn">Register</button>
-          </Link>
+          {/* /* Checking if the user is logged in. If they are, it will not show the register and login
+         buttons. If they are not logged in, it will show the register and login buttons. */}
+          {auth.user.isLoggedIn ? (
+            ""
+          ) : (
+            <>
+              <Link to={"/register"}>
+                <button className="btn">Register</button>
+              </Link>
+              <Link to={"/login"}>
+                <button className="btn">Login</button>
+              </Link>
+            </>
+          )}
 
           <SubmitBusiness />
 
@@ -50,7 +65,11 @@ export const Navbar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              {auth.user.isLoggedIn ? (
+                <a onClick={() => logout(dispatch)}>Logout</a>
+              ) : (
+                ""
+              )}
             </li>
           </ul>
         </div>
