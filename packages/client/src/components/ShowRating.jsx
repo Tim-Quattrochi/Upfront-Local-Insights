@@ -1,8 +1,10 @@
+/* A React component that takes a rating prop and returns a div with 5 svg stars. The stars are filled
+in based on the rating prop. */
 import React from "react";
 
 const ShowRating = ({ rating }) => {
   return (
-    <div className="rating flex items-center">
+    <div className="rating flex items-center content-center justify-center">
       {[...Array(5)].map((_, i) => (
         <svg
           key={i}

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "../hooks/useAxios";
 import LeaveRating from "./LeaveRating";
-import ReviewModal from "./ReviewModal";
+
 import ShowRating from "./ShowRating";
+import placeHolderImage from "../assets/Place-holder-image.svg";
 
 const ViewSingleBusiness = (props) => {
   const [singleBusiness, setSingleBusiness] = useState({});
@@ -15,13 +16,15 @@ const ViewSingleBusiness = (props) => {
   console.log(businessId);
 
   useEffect(() => {
+    /**
+     * The function gets a single business from the database and sets the state of the single business,
+     * reviews and current rating
+     */
     const getSingleBusiness = async () => {
       const response = await axios
         .get(`business/${businessId}`)
         .then((data) => {
-          console.log(data);
           if (data.data) {
-            console.log(data);
             setSingleBusiness(data.data);
             setReviews(data.data.reviews);
             setCurrentRating(data.data.rating);
@@ -30,10 +33,6 @@ const ViewSingleBusiness = (props) => {
         .catch((err) => console.log(err));
     };
     getSingleBusiness();
-    console.log(singleBusiness);
-    return () => {
-      console.log("unmounted");
-    };
   }, [businessId]);
 
   console.log(singleBusiness);
@@ -53,7 +52,11 @@ const ViewSingleBusiness = (props) => {
               className="w-full h-64 object-cover rounded-t-lg"
             />
           ) : (
-            <span>"No Photo yet</span>
+            <img
+              src={placeHolderImage}
+              alt=""
+              className="w-full h-64 object-cover rounded-t-lg"
+            />
           )}
 
           <div className="absolute top-0 right-0 px-2 py-1 bg-gray-800 text-white rounded-bl-lg">
@@ -68,21 +71,16 @@ const ViewSingleBusiness = (props) => {
             📍 {singleBusiness.address}
           </p>
           <p className="text-gray-700 text-sm mb-2">
-            ☏ {singleBusiness.phone}
+            maybe something else here?
           </p>
           <p className="text-gray-700 text-base mb-4">
             {singleBusiness.description}
           </p>
+
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <img
-                src={`http://localhost:3001/${singleBusiness.photo}`}
-                alt=""
-                className="w-8 h-8 object-cover rounded-full mr-2"
-              />
-              <p className="text-gray-700 text-sm">
-                {singleBusiness.name}
-              </p>
+            <div className="flex items-center ">
+              {" "}
+              ☏ {singleBusiness.phone}
             </div>
             <p className="text-gray-700 text-sm">
               {singleBusiness.email}
@@ -107,20 +105,27 @@ const ViewSingleBusiness = (props) => {
               </svg>
             </div>
           </div>
+          <div className="text-5xl font-bold tracking-wide m-3 ">
+            <p>Reviews</p>
+          </div>
         </div>
+
         {reviews &&
           reviews.map((review) => (
             <div
               key={review._id}
-              className="p-6 border rounded-md shadow-md"
+              className="sm:w-full p-6 border rounded-md shadow-md md:w-1/2 mx-auto "
             >
               <p className="text-lg font-semibold">
                 {review.user.name || review.name}
               </p>
               <p className="text-yellow-400 text-lg mb-2">
                 {review.rating} <ShowRating rating={review.rating} />
+                {review.createdAt}
               </p>
-              <p className="text-gray-700">{review.comment}</p>
+              <p className="text-gray-700 whitespace-pre-line">
+                {review.comment}
+              </p>
               {review.photo ? (
                 <img
                   src={`http://localhost:3001/${review.photo}`}

@@ -23,15 +23,11 @@ const LeaveRating = ({
   if (!state) {
     state = null;
   }
-  console.log(state);
 
-  console.log(singleBusinessId);
-
-  const { user, loggedInUser } = useAuthState();
-  console.log(user);
+  const { user } = useAuthState();
 
   const axios = useAxiosPrivate();
-  console.log(state);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Submit the form data to the server

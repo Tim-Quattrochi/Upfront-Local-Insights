@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ShowRating from "./ShowRating";
 import ReviewModal from "./ReviewModal";
 import SubmitBusiness from "../pages/SubmitBusiness";
+import placeHolderImage from "../assets/Place-holder-image.svg";
 const ListBusiness = ({ businesses }) => {
   const [searchFilter, setSearchFilter] = useState(businesses);
   const [searchTerm, setSearchTerm] = useState();
@@ -12,11 +13,11 @@ const ListBusiness = ({ businesses }) => {
     setSearchFilter(businesses);
   }, [businesses]);
 
-/**
- * The function takes in an event, sets the search term to the value of the event, filters the
- * businesses based on the search term, and sets the search filter to the results
- */
-/* Filtering the businesses based on the search term. */
+  /**
+   * The function takes in an event, sets the search term to the value of the event, filters the
+   * businesses based on the search term, and sets the search filter to the results
+   */
+  /* Filtering the businesses based on the search term. */
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     const results = businesses.filter((business) =>
@@ -68,7 +69,11 @@ const ListBusiness = ({ businesses }) => {
                     className="w-full h-64 object-cover rounded-t-lg"
                   />
                 ) : (
-                  <span>"No Photo yet</span>
+                  <img
+                    src={placeHolderImage}
+                    alt=""
+                    className="w-full h-64 object-cover rounded-t-lg"
+                  />
                 )}
 
                 <div className="absolute top-0 right-0 px-2 py-1 bg-gray-800 text-white rounded-bl-lg">
