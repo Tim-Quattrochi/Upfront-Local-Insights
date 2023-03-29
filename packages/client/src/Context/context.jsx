@@ -5,6 +5,10 @@ import { initialState } from "./reducer";
 const AuthStateContext = React.createContext();
 const AuthDispatchContext = React.createContext();
 
+/**
+ * It returns the context value of the AuthStateContext
+ * @returns The AuthStateContext
+ */
 export function useAuthState() {
   const context = React.useContext(AuthStateContext);
 
@@ -14,6 +18,11 @@ export function useAuthState() {
   return context;
 }
 
+/**
+ * UseAuthDispatch is a React hook that returns the AuthDispatchContext, which is a function that
+ * dispatches actions to the AuthReducer.
+ * @returns The AuthDispatchContext is being returned.
+ */
 export function useAuthDispatch() {
   const context = React.useContext(AuthDispatchContext);
 
@@ -25,13 +34,17 @@ export function useAuthDispatch() {
   return context;
 }
 
+/**
+ * The AuthProvider function is a React component that provides the current user state and a dispatch
+ * function to the AuthStateContext and AuthDispatchContext
+ * @returns The AuthProvider is returning the AuthStateContext.Provider and the
+ * AuthDispatchContext.Provider.
+ */
 export const AuthProvider = ({ children }) => {
   const [user, dispatch] = useReducer(AuthReducer, initialState);
-  const [token, setToken] = useState(initialState.accessToken); //accessToken
-  const [loggedInUser, setLoggedInUser] = useState(initialState.user);
 
   return (
-    <AuthStateContext.Provider value={{ user, token, loggedInUser }}>
+    <AuthStateContext.Provider value={{ user }}>
       <AuthDispatchContext.Provider value={dispatch}>
         {children}
       </AuthDispatchContext.Provider>

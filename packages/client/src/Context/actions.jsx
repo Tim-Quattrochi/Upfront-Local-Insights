@@ -1,6 +1,12 @@
 import axios from "../hooks/useAxios";
 const API_URL = "http://localhost:3001/api";
 
+/**
+ * It takes in a dispatch function and a loginPayload object, and then it makes a post request to the
+ * backend, and if the response is successful, it dispatches a login success action, and if the
+ * response is unsuccessful, it dispatches a login error action
+ * @returns The response from the server.
+ */
 export async function loginUser(dispatch, loginPayload) {
   try {
     console.log(loginPayload);
@@ -35,6 +41,12 @@ export async function loginUser(dispatch, loginPayload) {
   }
 }
 
+/**
+ * It takes in a dispatch function and a register payload, and then dispatches a request register
+ * action, makes a post request to the register endpoint, and then dispatches a register success action
+ * if the response is successful, or a register error action if the response is not successful
+ * @returns The response from the server.
+ */
 export async function registerUser(dispatch, registerPayload) {
   try {
     dispatch({ type: "REQUEST_REGISTER" });
@@ -63,6 +75,10 @@ export async function registerUser(dispatch, registerPayload) {
   }
 }
 
+/**
+ * It takes a dispatch function as an argument, and then dispatches an action to the reducer, and then
+ * removes the user and access token from local storage
+ */
 export async function logout(dispatch) {
   dispatch({ type: "LOGOUT" });
   localStorage.removeItem("insightUser");

@@ -12,6 +12,11 @@ const ListBusiness = ({ businesses }) => {
     setSearchFilter(businesses);
   }, [businesses]);
 
+/**
+ * The function takes in an event, sets the search term to the value of the event, filters the
+ * businesses based on the search term, and sets the search filter to the results
+ */
+/* Filtering the businesses based on the search term. */
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     const results = businesses.filter((business) =>

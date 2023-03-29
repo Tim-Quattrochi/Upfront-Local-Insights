@@ -27,6 +27,7 @@ const SubmitBusiness = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    /* Creating a new form data object and appending the form fields to it. */
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("name", formFields.name);
@@ -37,6 +38,7 @@ const SubmitBusiness = () => {
     formData.append("email", formFields.email);
     formData.append("website", formFields.website);
 
+    /* This is the code that is being executed when the user clicks the submit button. */
     try {
       const response = await axios.post("business", formData, {
         headers: { "Content-Type": "multipart/formdata" },
@@ -52,6 +54,10 @@ const SubmitBusiness = () => {
     }
   };
 
+  /**
+   * The handleChange function takes an event as an argument, and then sets the formFields state to the
+   * name and value of the event target
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormFields({
@@ -61,6 +67,7 @@ const SubmitBusiness = () => {
   };
 
   return (
+    /* This is a modal that is being used to submit a business. */
     <ReviewModal
       title="Submit Business"
       handleSubmit={handleSubmit}
@@ -68,7 +75,7 @@ const SubmitBusiness = () => {
       setShowModal={setShowModal}
     >
       <div className="flex justify-center mt-2">
-        <form className="flex flex-col  py-4 items-center bg-gray-300 w-full max-w-md">
+        <div className="flex flex-col  py-4 items-center bg-gray-300 w-full max-w-md">
           <label htmlFor="name" className="w-full">
             Business Name:
             <input
@@ -158,7 +165,7 @@ const SubmitBusiness = () => {
             Submit
           </button>
           <FileUpload setSelectedFile={setSelectedFile} />
-        </form>
+        </div>
       </div>
     </ReviewModal>
   );

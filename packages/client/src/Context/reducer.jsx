@@ -1,3 +1,4 @@
+/* Setting up the initial state of the app. */
 let user = localStorage.getItem("insightUser")
   ? JSON.parse(localStorage.getItem("insightUser")).user
   : "";
@@ -13,10 +14,14 @@ export const initialState = {
   user: user || "",
   accessToken: accessToken || "",
   loading: false,
-  isLoggedIn: false, //is there a user in localStorage?
+  isLoggedIn: user ? true : false,
   errorMessage: null,
 };
 
+/**
+ * It takes in an initial state and an action, and returns a new state based on the action type
+ * @returns The AuthReducer is returning the initialState, which is an empty object.
+ */
 export const AuthReducer = (initialState, action) => {
   console.log(action.payload);
   switch (action.type) {
