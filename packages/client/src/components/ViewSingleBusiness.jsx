@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../hooks/useAxios";
 import LeaveRating from "./LeaveRating";
+import { formatDate } from "../utilities/formateDate";
+import { FaRegStar } from "react-icons/fa";
 
 import ShowRating from "./ShowRating";
 import placeHolderImage from "../assets/Place-holder-image.svg";
@@ -35,15 +37,9 @@ const ViewSingleBusiness = (props) => {
     getSingleBusiness();
   }, [businessId]);
 
-  console.log(singleBusiness);
-  console.log(reviews);
-
   return (
     <div className="bg-gray-100">
-      <div
-        key={singleBusiness._id}
-        className="bg-white rounded-lg shadow-md"
-      >
+      <div className="bg-white rounded-lg shadow-md">
         <div className="relative">
           {singleBusiness.photo ? (
             <img
@@ -63,7 +59,7 @@ const ViewSingleBusiness = (props) => {
             {singleBusiness.category}
           </div>
         </div>
-        <div className="p-6 py-4">
+        <div className="p-6 py-4 text-center sm:p-8 sm:m-8">
           <h3 className="text-2xl font-bold mb-4">
             {singleBusiness.name}
           </h3>
@@ -80,11 +76,8 @@ const ViewSingleBusiness = (props) => {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center ">
               {" "}
-              ☏ {singleBusiness.phone}
+              ☏ <a href="tel:PHONE_NUM">{singleBusiness.phone}</a>
             </div>
-            <p className="text-gray-700 text-sm">
-              {singleBusiness.email}
-            </p>
           </div>
           <div className="flex items-center justify-between">
             <a
@@ -105,8 +98,9 @@ const ViewSingleBusiness = (props) => {
               </svg>
             </div>
           </div>
-          <div className="text-5xl font-bold tracking-wide m-3 ">
-            <p>Reviews</p>
+          <div className="flex text-5xl font-bold tracking-wide m-3 justify-center ">
+            <p className="mr-2 text-info">Reviews</p>{" "}
+            <FaRegStar fill="gold" />
           </div>
         </div>
 
@@ -114,18 +108,20 @@ const ViewSingleBusiness = (props) => {
           reviews.map((review) => (
             <div
               key={review._id}
-              className="sm:w-full p-6 border rounded-md shadow-md md:w-1/2 mx-auto "
+              className="sm:w-full p-6 border rounded-md shadow-md md:w-1/2 mx-auto mb-4"
             >
-              <p className="text-lg font-semibold">
+              <p className="text-lg font-semibold text-center">
                 {review.user.name || review.name}
               </p>
-              <p className="text-yellow-400 text-lg mb-2">
+              <p className="text-yellow-400 text-lg mb-2 text-center">
                 {review.rating} <ShowRating rating={review.rating} />
-                {review.createdAt}
               </p>
-              <p className="text-gray-700 whitespace-pre-line">
+              <p className="text-gray-700 whitespace-pre-line text-center">
                 {review.comment}
               </p>
+              <div className="text-xs font-light m-1 p-1 italic">
+                {formatDate(review.createdAt)}
+              </div>
               {review.photo ? (
                 <img
                   src={`http://localhost:3001/${review.photo}`}
@@ -142,7 +138,8 @@ const ViewSingleBusiness = (props) => {
           singleBusinessId={singleBusiness._id}
           setReviews={setReviews}
           reviews={reviews}
-          currentRating={currentRating}
+          current
+          Rating={currentRating}
         />
       </div>
     </div>

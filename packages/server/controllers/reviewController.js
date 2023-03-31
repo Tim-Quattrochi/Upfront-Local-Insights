@@ -7,16 +7,9 @@ const uuid = require("uuid");
 const path = require("path");
 
 const getAllReviews = async (req, res) => {
-  let getReviews = await Review.find({}).populate({
+  let getReviews = await Review.find({ sort: -1 }).populate({
     path: "business",
-    select: [
-      "user",
-      "rating",
-      "photo",
-      "comment",
-      "name",
-      "createdAt",
-    ],
+    select: ["user", "rating", "photo", "comment", "name"],
   });
 
   return res.status(200).json({ getReviews });

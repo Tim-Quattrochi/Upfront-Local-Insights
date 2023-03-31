@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
+
 import { Footer } from "./components/Footer";
 import Businesses from "./pages/Businesses";
 import { Navbar } from "./components/Navbar";
@@ -14,8 +14,6 @@ import ErrorPage from "./components/RouteError";
 import LeaveRating from "./components/LeaveRating";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   const { isLoggedIn } = useAuthState();
   console.log(isLoggedIn);
 

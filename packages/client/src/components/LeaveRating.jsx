@@ -105,7 +105,6 @@ const LeaveRating = ({
               name="rating"
               className="mask mask-star-2 bg-primary"
               value="1"
-              checked={currentRating}
               onChange={(e) => setRating(Number(e.target.value))}
             />
 

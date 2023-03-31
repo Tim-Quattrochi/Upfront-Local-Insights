@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SubmitBusiness from "../pages/SubmitBusiness";
 import { logout } from "../Context";
 import { useAuthState, useAuthDispatch } from "../Context";
+import { Avatar } from "./Avatar";
 
 export const Navbar = () => {
   const auth = useAuthState();
@@ -11,10 +12,10 @@ export const Navbar = () => {
   console.log(auth);
 
   return (
-    <div className="navbar bg-base-100">
+    <div data-theme="corporate" className="navbar">
       <div className="flex-1">
         <Link to={"/"}>
-          <a className="btn btn-ghost normal-case text-xl">
+          <a className="btn btn-ghost normal-case text-xl flex-nowrap">
             Upfront Local Insights
           </a>
         </Link>
@@ -28,10 +29,14 @@ export const Navbar = () => {
           ) : (
             <>
               <Link to={"/register"}>
-                <button className="btn">Register</button>
+                <button className="btn-base-100 btn-xs sm:btn-sm md:btn-md lg:btn-md">
+                  Register
+                </button>
               </Link>
               <Link to={"/login"}>
-                <button className="btn">Login</button>
+                <button className="btn-base-100  btn-xs sm:btn-sm md:btn-md lg:btn-md">
+                  Login
+                </button>
               </Link>
             </>
           )}
@@ -39,7 +44,9 @@ export const Navbar = () => {
           <SubmitBusiness />
 
           <Link to={"/businesses"}>
-            <button className="btn">Search</button>
+            <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">
+              Search
+            </button>
           </Link>
         </div>
         <div className="dropdown dropdown-end">
@@ -47,8 +54,12 @@ export const Navbar = () => {
             tabIndex={0}
             className="btn btn-ghost btn-circle avatar"
           >
-            <div className="w-10 rounded-full">
-              <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <div className="rounded-full w-12">
+              <Avatar
+                name={
+                  auth.user.user ? auth.user.user.name[0] : "Guest"
+                }
+              />
             </div>
           </label>
           <ul

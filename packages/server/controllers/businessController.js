@@ -61,7 +61,14 @@ const getBusinessById = async (req, res) => {
       _id: businessId,
     }).populate({
       path: "reviews",
-      select: ["user", "rating", "photo", "comment", "name"],
+      select: [
+        "user",
+        "rating",
+        "photo",
+        "comment",
+        "name",
+        "createdAt",
+      ],
       populate: {
         path: "user",
         select: "name",

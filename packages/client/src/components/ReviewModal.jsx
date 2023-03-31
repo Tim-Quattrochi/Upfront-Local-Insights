@@ -7,7 +7,11 @@ const ReviewModal = ({
 }) => {
   return (
     <>
-      <label htmlFor="my-modal-4" className="btn">
+      <label
+        data-theme="corporate"
+        htmlFor="my-modal-4"
+        className=" btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-md"
+      >
         {title}
       </label>
       <input

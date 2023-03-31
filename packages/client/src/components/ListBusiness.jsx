@@ -81,7 +81,7 @@ const ListBusiness = ({ businesses }) => {
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-2xl font-bold mb-4">
+                <h3 className="text-2xl font-bold mb-4 text-center">
                   <Link
                     to={`/businesses/${business._id}`}
                     className="text-gray-800 hover:text-gray-600"
@@ -89,11 +89,11 @@ const ListBusiness = ({ businesses }) => {
                     {business.name}
                   </Link>
                 </h3>
-                <p className="text-gray-700 text-sm mb-2">
+                <div className="text-gray-700 text-sm mb-2 text-center">
                   📍 {business.address}
-                </p>
+                </div>
                 <p className="text-gray-700 text-sm mb-2">
-                  ☏ {business.phone}
+                  ☏ <a href="tel:PHONE_NUM"> {business.phone}</a>
                 </p>
                 <p className="text-gray-700 text-base mb-4">
                   {business.description}
