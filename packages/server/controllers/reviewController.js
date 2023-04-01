@@ -29,13 +29,35 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   limits: { fileSize: 1000000 },
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/jpeg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(
+        new Error("Only .png .jpg and .jpeg pictures allowed.")
+      );
+    }
+  },
 }).single("file");
 
 const createReview = async (req, res) => {
   const { businessId } = req.params;
 
   upload(req, res, async (err) => {
-    console.log(req.body);
+    //from multer cb aka call back regarding file types allowed.
+    if (err.name) {
+      return res
+        .status(422)
+        .json({
+          error:
+            "only jpg, jpeg, and png picture allowed. Also only one picture per review at this time.",
+        });
+    }
 
     const { comment, user, rating, name } = req.body;
     //bring in the name of the user to reference.
