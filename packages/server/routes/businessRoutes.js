@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const protect = require("../middleware/verifyJWT");
 
 const {
   createBusiness,
@@ -8,11 +7,12 @@ const {
   getBusinessById,
   updateBusinessRating,
 } = require("../controllers/businessController");
+const verifyJWT = require("../middleware/verifyJWT");
 
 router.get("/", getAllBusinesses);
 router.get("/:businessId", getBusinessById);
 
 router.post("/", createBusiness);
-router.put("/:businessId", updateBusinessRating);
+router.put("/:businessId", verifyJWT, updateBusinessRating);
 
 module.exports = router;

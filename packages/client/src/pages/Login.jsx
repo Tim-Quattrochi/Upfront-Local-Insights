@@ -34,7 +34,7 @@ export default function Login() {
       let response = await loginUser(dispatch, payload);
       console.log(response);
       if (response && response.data.user) {
-        navigate("/");
+        navigate("/businesses");
       } else if (response && response.error) {
         setError(response.error);
       }

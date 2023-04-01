@@ -35,12 +35,20 @@ const createReview = async (req, res) => {
   const { businessId } = req.params;
 
   upload(req, res, async (err) => {
-    console.log(req.file);
+    console.log(req.body);
 
     const { comment, user, rating, name } = req.body;
     //bring in the name of the user to reference.
-    if (!rating) {
-      return res.status(400).json("Please include a rating.");
+
+    if (
+      !rating ||
+      rating === "0" ||
+      rating === undefined ||
+      rating === "undefined"
+    ) {
+      return res
+        .status(400)
+        .json({ error: "Please include a rating" });
     }
 
     try {

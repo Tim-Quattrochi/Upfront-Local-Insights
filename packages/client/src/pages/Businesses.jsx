@@ -19,7 +19,6 @@ const Businesses = () => {
       try {
         const response = await axios.get("business");
 
-        console.log(response);
         setData(response.data.businesses);
       } catch (error) {
         console.log(error);

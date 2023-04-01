@@ -23,7 +23,6 @@ export const initialState = {
  * @returns The AuthReducer is returning the initialState, which is an empty object.
  */
 export const AuthReducer = (initialState, action) => {
-  console.log(action.payload);
   switch (action.type) {
     case "REQUEST_LOGIN":
       return {
@@ -72,7 +71,9 @@ export const AuthReducer = (initialState, action) => {
       };
 
     case "CHECK_AUTH_STATUS":
-      return initialState;
+      return {
+        ...initialState,
+      };
 
     case "REFRESH_ACCESS_TOKEN":
       return {

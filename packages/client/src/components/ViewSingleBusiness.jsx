@@ -15,8 +15,6 @@ const ViewSingleBusiness = (props) => {
 
   const { businessId } = useParams();
 
-  console.log(businessId);
-
   useEffect(() => {
     /**
      * The function gets a single business from the database and sets the state of the single business,

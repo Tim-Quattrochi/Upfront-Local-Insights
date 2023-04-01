@@ -14,8 +14,6 @@ const useRefreshToken = () => {
       }
     );
 
-    console.log(response);
-
     const newAccessToken = response.data.accessToken;
     dispatch({
       type: "REFRESH_ACCESS_TOKEN",

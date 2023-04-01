@@ -4,6 +4,6 @@ const verifyJWT = require("../middleware/verifyJWT");
 
 const router = express.Router();
 
-router.route("/refresh").get(refresh);
+router.get("/refresh", verifyJWT, refresh);
 
 module.exports = router;

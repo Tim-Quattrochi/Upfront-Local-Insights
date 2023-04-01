@@ -9,8 +9,6 @@ export const Navbar = () => {
   const auth = useAuthState();
   const dispatch = useAuthDispatch();
 
-  console.log(auth);
-
   return (
     <div
       data-theme="corporate"

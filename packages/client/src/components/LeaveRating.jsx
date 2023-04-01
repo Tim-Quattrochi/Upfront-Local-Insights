@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useAuthState } from "../Context";
 import { FileUpload } from "./FileUpload";
@@ -17,6 +17,8 @@ const LeaveRating = ({
   const [img, setImg] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [errorToast, setErrorToast] = useState(false);
+  const [error, setError] = useState(null);
 
   let { state } = useLocation();
 
@@ -49,19 +51,15 @@ const LeaveRating = ({
         }
       );
 
-      const { rating } = response.data;
-
       const updateRating = await axios.put(
         `business/${singleBusinessId}`
       ); //update business overall rating.
 
-      console.log(updateRating);
       setRating(updateRating.data.rating);
       setShowRating(updateRating.data.rating);
 
       setShowToast(true);
 
-      console.log(response.data);
       //grab the newly created review and update the review state.
       setReviews((prev) => [...prev, response.data]);
 
@@ -70,16 +68,31 @@ const LeaveRating = ({
       setShowToast(true); // show the toast
       setTimeout(() => setShowToast(false), 5000);
     } catch (error) {
-      setShowToast(false);
-
       console.log(error);
+      //if the user is not logged in, show a user friendly error in a toast.
+      if (error.response.statusText === "Unauthorized") {
+        setErrorToast(true);
+        setTimeout(() => setErrorToast(false), 5000);
+      }
+
+      if (error.response.data.error) {
+        return setError({ errorMessage: error.response.data.error });
+      }
     }
 
-    console.log(`Rating: ${rating}, Comment: ${comment}`);
     // Reset the form after submission
     setRating(0);
     setComment("");
+    setError(null);
   };
+
+  //if an error for no rating shows and the user enters a
+  //rating then the error will disappear.
+  useEffect(() => {
+    if (rating !== undefined) {
+      setError(null);
+    }
+  }, [rating]);
 
   return (
     <>
@@ -89,6 +102,16 @@ const LeaveRating = ({
           appearance="alert-info"
           message="Review Posted."
           onHide={() => setShowToast(false)}
+        />
+      )}
+
+      {errorToast && (
+        <Toast
+          position="toast-end toast-middle"
+          appearance="alert-error"
+          error="true"
+          errorMsg="You must be logged in."
+          onHide={() => setErrorToast(false)}
         />
       )}
 
@@ -152,6 +175,33 @@ const LeaveRating = ({
           <button type="submit" className="btn btn-info mb-2">
             Submit Review
           </button>
+
+          {/* //error message */}
+
+          {error && (
+            <div
+              className="flex bg-red-100 rounded-lg p-4 mb-4 text-sm text-red-700"
+              role="alert"
+            >
+              <svg
+                className="w-5 h-5 inline mr-3"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+              <div>
+                <span className="font-medium">Error</span>{" "}
+                {error && error.errorMessage}
+              </div>
+            </div>
+          )}
+
           <FileUpload setSelectedFile={setSelectedFile} />
         </form>
       </div>

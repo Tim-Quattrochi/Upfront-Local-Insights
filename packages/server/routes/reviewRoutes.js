@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getBusinessById,
 } = require("../controllers/businessController");
+
 const router = express.Router();
 
 const {
@@ -12,6 +13,6 @@ const {
 const protect = require("../middleware/verifyJWT");
 router.get("/", getAllReviews);
 
-router.post("/:businessId", createReview);
+router.post("/:businessId", protect, createReview);
 
 module.exports = router;

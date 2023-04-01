@@ -19,7 +19,6 @@ export async function loginUser(dispatch, loginPayload) {
         withCredentials: true,
       }
     );
-    console.log(response);
 
     if (response.data.user) {
       dispatch({
