@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 
-const Toast = ({ position, appearance, message, onHide }) => {
+const Toast = ({
+  position,
+  appearance,
+  message,
+  onHide,
+  error,
+  errorMsg,
+}) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onHide();
@@ -15,7 +22,7 @@ const Toast = ({ position, appearance, message, onHide }) => {
     <div className={`toast ${position}`}>
       <div className={`alert ${appearance}`}>
         <div>
-          <span>{message}</span>
+          <span>{error ? errorMsg : message}</span>
         </div>
       </div>
     </div>
