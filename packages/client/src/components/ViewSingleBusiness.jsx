@@ -59,16 +59,14 @@ const ViewSingleBusiness = (props) => {
             {singleBusiness.category}
           </div>
         </div>
-        <div className="p-6 py-4 text-center sm:p-8 sm:m-8">
-          <h3 className="text-2xl font-bold mb-4">
+        <div className=" flex flex-col items-center justify-center p-6 py-4 text-center sm:p-8 sm:m-8">
+          <h1 className="text-2xl font-bold mb-4 ">
             {singleBusiness.name}
-          </h3>
+          </h1>
           <p className="text-gray-700 text-sm mb-2">
             📍 {singleBusiness.address}
           </p>
-          <p className="text-gray-700 text-sm mb-2">
-            maybe something else here?
-          </p>
+
           <p className="text-gray-700 text-base mb-4">
             {singleBusiness.description}
           </p>
@@ -98,30 +96,32 @@ const ViewSingleBusiness = (props) => {
               </svg>
             </div>
           </div>
-          <div className="flex text-5xl font-bold tracking-wide m-3 justify-center ">
-            <p className="mr-2 text-info">Reviews</p>{" "}
-            <FaRegStar fill="gold" />
-          </div>
+        </div>
+        <div className="flex text-5xl sm:text-sm font-bold tracking-wide m-3 justify-center ">
+          <p className="mr-2 text-info  ">Reviews</p>{" "}
+          <FaRegStar fill="gold" />
         </div>
 
         {reviews &&
           reviews.map((review) => (
             <div
               key={review._id}
-              className="sm:w-full p-6 border rounded-md shadow-md md:w-1/2 mx-auto mb-4"
+              className="prose sm:w-full p-6 border rounded-md shadow-md md:w-1/2 mx-auto mb-4"
             >
-              <p className="text-lg font-semibold text-center">
+              <div className=" flex justify-around text-lg font-semibold text-center">
                 {review.user.name || review.name}
-              </p>
-              <p className="text-yellow-400 text-lg mb-2 text-center">
-                {review.rating} <ShowRating rating={review.rating} />
-              </p>
-              <p className="text-gray-700 whitespace-pre-line text-center">
+                <div className="text-xs font-light m-1 p-1 italic">
+                  {formatDate(review.createdAt)}
+                </div>
+              </div>
+              <div className=" flex justify-center text-yellow-400 text-lg mb-2 text-center p-3 ">
+                <ShowRating rating={review.rating} />
+                <div className="ml-2">{review.rating}</div>
+              </div>
+              <p className=" text-gray-700 whitespace-pre-line text-center ">
                 {review.comment}
               </p>
-              <div className="text-xs font-light m-1 p-1 italic">
-                {formatDate(review.createdAt)}
-              </div>
+
               {review.photo ? (
                 <img
                   src={`http://localhost:3001/${review.photo}`}

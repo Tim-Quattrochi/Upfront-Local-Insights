@@ -12,31 +12,32 @@ export const Navbar = () => {
   console.log(auth);
 
   return (
-    <div data-theme="corporate" className="navbar">
-      <div className="flex-1">
-        <Link to={"/"}>
-          <a className="btn btn-ghost normal-case text-xl flex-nowrap">
-            Upfront Local Insights
-          </a>
-        </Link>
-      </div>
+    <div
+      data-theme="corporate"
+      className="navbar bg-gray-900 flex items-center justify-between text-white border-b-2"
+    >
+      <Link to={"/"}>
+        <a className="btn btn-ghost normal-case text-sm flex-nowrap">
+          Upfront Local Insights
+        </a>
+      </Link>
       <div className="flex-none gap-2">
         <div className="flex gap-2">
-          {/* /* Checking if the user is logged in. If they are, it will not show the register and login
-         buttons. If they are not logged in, it will show the register and login buttons. */}
+          {/* Checking if the user is logged in. If they are, it will not show the register and login
+      buttons. If they are not logged in, it will show the register and login buttons. */}
           {auth.user.isLoggedIn ? (
             ""
           ) : (
             <>
               <Link to={"/register"}>
-                <button className="btn-base-100 btn-xs sm:btn-sm md:btn-md lg:btn-md">
+                <div className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:text-gray-300 transition-all">
                   Register
-                </button>
+                </div>
               </Link>
               <Link to={"/login"}>
-                <button className="btn-base-100  btn-xs sm:btn-sm md:btn-md lg:btn-md">
+                <div className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:text-gray-300 transition-all">
                   Login
-                </button>
+                </div>
               </Link>
             </>
           )}
@@ -44,9 +45,9 @@ export const Navbar = () => {
           <SubmitBusiness />
 
           <Link to={"/businesses"}>
-            <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md">
+            <div className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:text-gray-300 transition-all">
               Search
-            </button>
+            </div>
           </Link>
         </div>
         <div className="dropdown dropdown-end">

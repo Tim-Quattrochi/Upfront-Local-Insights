@@ -32,7 +32,7 @@ const ListBusiness = ({ businesses }) => {
 
   return (
     <>
-      <div className="relative">
+      <div className=" flex justify-around mb-5">
         <input
           type="text"
           value={searchTerm}
@@ -54,7 +54,7 @@ const ListBusiness = ({ businesses }) => {
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <div className="prose prose-sm mx-auto">
         {searchFilter &&
           searchFilter.map((business) => (
             <div

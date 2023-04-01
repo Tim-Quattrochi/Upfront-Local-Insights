@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Landing = () => {
   return (
     <>
-      <div className="container mx-auto ">
+      <div className="prose xl container mx-auto ">
         <div className="hero-content">
           <div className="max-w-md">
             <h1 className="text-2xl mb-2  text-white">
@@ -20,10 +20,12 @@ const Landing = () => {
             </p>
           </div>
         </div>
+        <Link to={"/register"}>
+          <button className="btn btn-primary mx-auto ">
+            Get Started
+          </button>
+        </Link>
       </div>
-      <Link to={"/register"}>
-        <button className="btn btn-primary  z-10">Get Started</button>
-      </Link>
     </>
   );
 };

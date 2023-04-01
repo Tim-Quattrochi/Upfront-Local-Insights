@@ -10,7 +10,7 @@ const ReviewModal = ({
       <label
         data-theme="corporate"
         htmlFor="my-modal-4"
-        className=" btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-md"
+        className=" btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:text-gray-300 transition-all"
       >
         {title}
       </label>
