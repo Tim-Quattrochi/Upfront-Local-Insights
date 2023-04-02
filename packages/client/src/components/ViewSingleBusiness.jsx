@@ -43,7 +43,7 @@ const ViewSingleBusiness = (props) => {
             <img
               src={`http://localhost:3001/${singleBusiness.photo}`}
               alt=""
-              className="w-full h-64 object-cover rounded-t-lg"
+              className="xs:w-full xs:object-contain w-1/2 h-60 object-cover rounded-t-lg mx-auto"
             />
           ) : (
             <img

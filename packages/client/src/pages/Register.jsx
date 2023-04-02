@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import registerImage from "../assets/registerImage.svg";
 import {
   loginUser,
@@ -9,21 +9,23 @@ import {
 
 import { useNavigate } from "react-router-dom";
 
-// import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
 export default function Register() {
+  const auth = useAuthState();
+
+  const error = auth.user.errorMessage;
+
   const initialValues = {
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    error: "",
+    error: error,
   };
 
   const [formData, setFormData] = useState(initialValues);
 
-  //   const [value, setValue] = useLocalStorage("user", null);
   const dispatch = useAuthDispatch();
 
   const navigate = useNavigate();
@@ -32,164 +34,181 @@ export default function Register() {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+      error: null,
     });
   };
 
   const handleRegistration = async (e) => {
     e.preventDefault();
 
-    let payload = formData;
+    if (formData.password !== formData.confirmPassword) {
+      return setFormData({
+        ...formData,
+        error: "Passwords must match",
+      });
+    } else if (
+      formData.password.length <= 8 ||
+      formData.password.length >= 20
+    ) {
+      return setFormData({
+        ...formData,
+        error: "Password must be between 8 and 20 characters.",
+      });
+    }
+
     try {
+      let payload = formData;
+
       let response = await registerUser(dispatch, payload);
-      console.log(response);
       if (response && response.user) {
         navigate("/");
       } else if (response && response.error) {
-        setError(response.error);
+        setFormData({ ...formData, error: response.error });
       }
     } catch (error) {
-      console.log(error);
+      dispatch({ type: "REGISTER_ERROR", error });
     }
   };
+  useEffect(() => {
+    if (auth.user.errorMessage) {
+      setFormData({
+        ...formData,
+        error: auth.user.errorMessage,
+      });
+    }
+  }, [auth.user]);
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className=" w-full max-w-md flex flex-col items-center justify-center mx-auto">
       <img
         src={registerImage}
+        className="object-fit"
         alt="people gather by a laptop"
-        style={{ maxHeight: "100%" }}
       />
-      <div className="flex min-h-full items-center bg-primary mx-auto mt-5 justify-center content-center py-2 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md space-y-8">
-          <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md space-y-8">
-              <div>
-                <h2 className="  text-2xl font-bold tracking-tight text-white">
-                  Register now to see what consumers are saying about
-                  local businesses!
-                </h2>
-              </div>
-              <form
-                className="mt-8 space-y-6"
-                onSubmit={handleRegistration}
+      <div className=" flex flex-col items-center justify-center bg-gray-100">
+        <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold text-center mb-6">
+            Register an Account to review local businesses
+          </h2>
+          <form onSubmit={handleRegistration} className="space-y-4">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-gray-700 font-medium mb-2"
               >
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="name"
+                required
+                className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={formData.name}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-gray-700 font-medium mb-2"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-gray-700 font-medium mb-2"
+              >
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="password"
+                required
+                className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <div>
+                <label
+                  htmlFor="confirmPassword"
+                  className="block text-gray-700 font-medium mb-2"
+                >
+                  Confirm Password
+                </label>
                 <input
-                  type="hidden"
-                  name="remember"
-                  defaultValue="true"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="password"
+                  required
+                  className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter your password"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
                 />
-                <div className="-space-y-px rounded-md shadow-sm">
-                  <div>
-                    <label htmlFor="firstName" className="sr-only">
-                      First Name
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      autoComplete="full name"
-                      required
-                      className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      placeholder="First Name"
-                      onChange={handleInputChange}
-                      value={formData.name}
-                    />
-                  </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full m-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Register
+              </button>
 
-                  <div>
-                    <label htmlFor="email" className="sr-only">
-                      Email
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      placeholder="Email"
-                      onChange={handleInputChange}
-                      value={formData.email}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="password" className="sr-only">
-                      Password
-                    </label>
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      required
-                      className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      placeholder="Password"
-                      onChange={handleInputChange}
-                      value={formData.password}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="confirmPassword"
-                      className="sr-only"
-                    >
-                      Confirm Password
-                    </label>
-                    <input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type="password"
-                      autoComplete="current-password"
-                      required
-                      className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      placeholder="Confirm Password"
-                      onChange={handleInputChange}
-                      value={formData.confirmPassword}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                    />
-                    <label
-                      htmlFor="remember-me"
-                      className="ml-2 block text-sm text-gray-900"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-
-                  <div className="text-sm">
-                    <Link
-                      to="/login"
-                      className="font-medium text-sky-900 hover:text-indigo-500"
-                    >
-                      Already have an account?
-                    </Link>
-                  </div>
-                </div>
-
-                <div>
-                  <button
-                    type="submit"
-                    className="group relative flex w-full justify-center rounded-md border border-transparent bg-base-100 py-2 px-4 text-sm font-medium text-white hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              {formData.error && (
+                <div
+                  className="flex bg-red-100 rounded-lg p-3 mb-3 mt-1 text-sm text-red-700"
+                  role="alert"
+                >
+                  <svg
+                    className="w-5 h-5 inline mr-3"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                      {/* <LockClosedIcon
-                        className="h-5 w-5 text-indigo-500 group-hover:text-white"
-                        aria-hidden="true"
-                      /> */}
-                    </span>
-                    Register
-                  </button>
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clipRule="evenodd"
+                    ></path>
+                  </svg>
+                  <div>
+                    <span className="font-medium">Error</span>{" "}
+                    {formData.error || auth.user.errorMessage}
+                  </div>
                 </div>
-              </form>
+              )}
+            </div>
+          </form>
+          <div className="text-center mt-4">
+            <span className="text-gray-600">
+              Already have an account?{" "}
+            </span>
+            <div className="m-2">
+              <Link
+                to="/login"
+                className="text-blue-500 hover:text-blue-600"
+              >
+                Login
+              </Link>
             </div>
           </div>
         </div>

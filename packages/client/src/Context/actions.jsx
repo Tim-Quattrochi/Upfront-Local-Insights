@@ -47,6 +47,8 @@ export async function loginUser(dispatch, loginPayload) {
  * @returns The response from the server.
  */
 export async function registerUser(dispatch, registerPayload) {
+  console.log(dispatch);
+  console.log(registerPayload);
   try {
     dispatch({ type: "REQUEST_REGISTER" });
     let response = await axios.post(
@@ -54,9 +56,12 @@ export async function registerUser(dispatch, registerPayload) {
       registerPayload
     );
 
+    console.log(response);
+
     if (response.error) {
       dispatch({ type: "REGISTER_ERROR", error });
-      return null;
+      console.log(response.error);
+      return error;
     }
 
     if (response.data.user) {
@@ -67,9 +72,9 @@ export async function registerUser(dispatch, registerPayload) {
       );
       return response;
     }
-
-    const error = response.error;
   } catch (error) {
+    error = error.response.data.error;
+    console.log(error);
     dispatch({ type: "REGISTER_ERROR", error });
   }
 }

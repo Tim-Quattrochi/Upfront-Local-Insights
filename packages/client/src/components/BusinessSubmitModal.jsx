@@ -1,4 +1,4 @@
-const ReviewModal = ({
+const BusinessSubmitModal = ({
   children,
   title,
   handleSubmit,
@@ -8,9 +8,8 @@ const ReviewModal = ({
   return (
     <>
       <label
-        data-theme="corporate"
         htmlFor="my-modal-4"
-        className=" btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:text-gray-300 transition-all"
+        className=" btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:text-gray-800 transition-all"
       >
         {title}
       </label>
@@ -22,9 +21,9 @@ const ReviewModal = ({
         onChange={() => setShowModal(!showModal)}
       />
       <label htmlFor="my-modal-4" className="modal cursor-pointer">
-        <label className="modal-box relative " htmlFor="">
+        <label className="modal-box relative bg-inherit " htmlFor="">
           <form
-            className="flex flex-col  py-4 items-center bg-gray-300 w-full max-w-md"
+            className="flex flex-col  py-4 items-center text-black bg-gray-500 w-full max-w-md"
             onSubmit={handleSubmit}
           >
             {children}
@@ -35,4 +34,4 @@ const ReviewModal = ({
   );
 };
 
-export default ReviewModal;
+export default BusinessSubmitModal;

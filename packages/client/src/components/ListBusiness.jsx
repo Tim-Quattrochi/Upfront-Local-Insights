@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LeaveRating from "./LeaveRating";
 import { Link } from "react-router-dom";
 import ShowRating from "./ShowRating";
-import ReviewModal from "./ReviewModal";
+import ReviewModal from "./BusinessSubmitModal";
 import SubmitBusiness from "../pages/SubmitBusiness";
 import placeHolderImage from "../assets/Place-holder-image.svg";
 const ListBusiness = ({ businesses }) => {
@@ -66,7 +66,7 @@ const ListBusiness = ({ businesses }) => {
                   <img
                     src={`http://localhost:3001/${business.photo}`}
                     alt=""
-                    className="w-full h-64 object-cover rounded-t-lg"
+                    className="w-full  object-cover rounded-t-lg"
                   />
                 ) : (
                   <img

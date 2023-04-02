@@ -1,10 +1,6 @@
 import { useState } from "react";
-import registerImage from "../assets/registerImage.svg";
-import { loginUser, useAuthState, useAuthDispatch } from "../Context";
-
+import { loginUser, useAuthDispatch } from "../Context";
 import { useNavigate } from "react-router-dom";
-
-// import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
 export default function Login() {
@@ -44,84 +40,69 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex min-h-full items-center bg-primary mx-auto mt-5 justify-center content-center py-2 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md space-y-8">
-          <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md space-y-8">
-              <div>
-                <h2 className="  text-2xl font-bold tracking-tight text-white">
-                  Welcome Back. Login.
-                </h2>
-              </div>
-              <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-                <input
-                  type="hidden"
-                  name="remember"
-                  defaultValue="true"
-                />
-
-                <div>
-                  <label htmlFor="email" className="sr-only">
-                    Email
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    placeholder="Email"
-                    onChange={handleInputChange}
-                    value={formData.email}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="password" className="sr-only">
-                    Password
-                  </label>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    placeholder="Password"
-                    onChange={handleInputChange}
-                    value={formData.password}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="text-sm">
-                    <Link
-                      to="/register"
-                      className="font-medium text-sky-900 hover:text-indigo-500"
-                    >
-                      Need an account?
-                    </Link>
-                  </div>
-                </div>
-
-                <div>
-                  <button
-                    type="submit"
-                    className="group relative flex w-full justify-center rounded-md border border-transparent bg-base-100 py-2 px-4 text-sm font-medium text-white hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                      {/* <LockClosedIcon
-                        className="h-5 w-5 text-indigo-500 group-hover:text-white"
-                        aria-hidden="true"
-                      /> */}
-                    </span>
-                    Login
-                  </button>
-                </div>
-              </form>
-            </div>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-center mb-6">
+          Welcome back! Login
+        </h2>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleInputChange}
+            />
           </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Login
+            </button>
+          </div>
+        </form>
+        <div className="text-center mt-4">
+          <span className="text-gray-600">
+            Don't have an account yet?{" "}
+          </span>
+          <Link
+            to="/register"
+            className="text-blue-500 hover:text-blue-600"
+          >
+            Register here
+          </Link>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FileUpload } from "../components/FileUpload";
-import ReviewModal from "../components/ReviewModal";
+import BusinessSubmitModal from "../components/BusinessSubmitModal";
 import ViewSingleBusiness from "../components/ViewSingleBusiness";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
@@ -83,7 +83,7 @@ const SubmitBusiness = () => {
 
   return (
     /* This is a modal that is being used to submit a business. */
-    <ReviewModal
+    <BusinessSubmitModal
       title="Submit Business"
       handleSubmit={handleSubmit}
       showModal={showModal}
@@ -97,7 +97,6 @@ const SubmitBusiness = () => {
               id="name"
               type="text"
               name="name"
-              placeholder="Type here"
               className="input input-bordered  input-sm w-full mt-1"
               onChange={handleChange}
             />
@@ -108,7 +107,6 @@ const SubmitBusiness = () => {
               id="description"
               type="text"
               name="description"
-              placeholder="Type here"
               className="input input-bordered input-sm w-full mt-1"
               onChange={handleChange}
             />
@@ -136,7 +134,6 @@ const SubmitBusiness = () => {
               id="address"
               type="text"
               name="address"
-              placeholder="Type here"
               className="input input-bordered input-sm w-full mt-1"
               onChange={handleChange}
             />
@@ -149,7 +146,7 @@ const SubmitBusiness = () => {
               name="phone"
               maxLength={10}
               pattern="[0-9]*"
-              placeholder="xxx-xxx-xxxx"
+              placeholder="numbers only no dashes"
               className="input input-bordered input-sm w-full mt-1"
               onChange={handleChange}
             />
@@ -195,7 +192,7 @@ const SubmitBusiness = () => {
           <FileUpload setSelectedFile={setSelectedFile} />
         </div>
       </div>
-    </ReviewModal>
+    </BusinessSubmitModal>
   );
 };
 

@@ -19,6 +19,7 @@ const LeaveRating = ({
   const [showToast, setShowToast] = useState(false);
   const [errorToast, setErrorToast] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   let { state } = useLocation();
 
@@ -33,6 +34,7 @@ const LeaveRating = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Submit the form data to the server
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("file", selectedFile);
@@ -67,8 +69,10 @@ const LeaveRating = ({
       setShowForm(false);
       setShowToast(true); // show the toast
       setTimeout(() => setShowToast(false), 5000);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
       //if the user is not logged in, show a user friendly error in a toast.
       if (error.response.statusText === "Unauthorized") {
         setErrorToast(true);
@@ -172,9 +176,19 @@ const LeaveRating = ({
             />
           </label>
           <img src={img} alt="" />
-          <button type="submit" className="btn btn-info mb-2">
-            Submit Review
-          </button>
+
+          {/* //is the form submitting? if so show a loading btn, if not
+        //show regular btn */}
+
+          {loading ? (
+            <button className="btn btn-info loading">
+              Submitting
+            </button>
+          ) : (
+            <button type="submit" className="btn btn-info mb-2">
+              Submit Review
+            </button>
+          )}
 
           {/* //error message */}
 

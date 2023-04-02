@@ -50,13 +50,11 @@ const createReview = async (req, res) => {
 
   upload(req, res, async (err) => {
     //from multer cb aka call back regarding file types allowed.
-    if (err.name) {
-      return res
-        .status(422)
-        .json({
-          error:
-            "only jpg, jpeg, and png picture allowed. Also only one picture per review at this time.",
-        });
+    if (err) {
+      return res.status(422).json({
+        error:
+          "only jpg, jpeg, and png picture allowed. Also only one picture per review at this time.",
+      });
     }
 
     const { comment, user, rating, name } = req.body;
@@ -76,7 +74,7 @@ const createReview = async (req, res) => {
     try {
       if (err) {
         // handle errors
-        console.error(err);
+        console.error(err.message);
         return res.status(400).json({ error: err.message });
       } else {
         let review = await Review.create({
