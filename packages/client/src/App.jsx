@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-
+import ErrorBoundary from "./components/ErrorBoundary";
 import { Footer } from "./components/Footer";
-import Businesses from "./pages/Businesses";
 import { Navbar } from "./components/Navbar";
 import Landing from "./components/Landing";
 import Register from "./pages/Register";
@@ -12,13 +11,14 @@ import SubmitBusiness from "./pages/SubmitBusiness";
 import ViewSingleBusiness from "./components/ViewSingleBusiness";
 import ErrorPage from "./components/RouteError";
 import LeaveRating from "./components/LeaveRating";
+import ListBusiness from "./components/ListBusiness";
 
 function App() {
   const { isLoggedIn } = useAuthState();
   console.log(isLoggedIn);
 
   return (
-    <>
+    <ErrorBoundary>
       <Navbar />
       <Routes>
         <Route
@@ -28,7 +28,7 @@ function App() {
         />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
-        <Route path="businesses" element={<Businesses />} />
+        <Route path="businesses" element={<ListBusiness />} />
 
         <Route
           path="businesses/:businessId"
@@ -40,7 +40,7 @@ function App() {
         />
       </Routes>
       <Footer />
-    </>
+    </ErrorBoundary>
   );
 }
 

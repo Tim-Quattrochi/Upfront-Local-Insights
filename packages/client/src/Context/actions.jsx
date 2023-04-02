@@ -1,4 +1,5 @@
 import axios from "../hooks/useAxios";
+
 const API_URL = "http://localhost:3001/api";
 
 /**
@@ -58,20 +59,28 @@ export async function registerUser(dispatch, registerPayload) {
 
     console.log(response);
 
-    if (response.error) {
+    if (response.data?.error) {
       dispatch({ type: "REGISTER_ERROR", error });
       console.log(response.error);
       return error;
     }
 
-    if (response.data.user) {
-      dispatch({ type: "REGISTER_SUCCESS", payload: response.user });
-      localStorage.setItem(
-        "insightUser",
-        JSON.stringify(response.data.user)
-      );
-      return response;
-    }
+    dispatch({
+      type: "REGISTER_SUCCESS",
+      payload: response.data,
+    });
+    localStorage.setItem(
+      "insightUser",
+      JSON.stringify(response.data.user)
+    );
+
+    /* Logging in the user after they have registered. */
+    await loginUser(dispatch, {
+      email: registerPayload.email,
+      password: registerPayload.password,
+    });
+
+    return response;
   } catch (error) {
     error = error.response.data.error;
     console.log(error);

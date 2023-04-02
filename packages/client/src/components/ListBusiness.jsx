@@ -1,17 +1,40 @@
 import React, { useState, useEffect } from "react";
-import LeaveRating from "./LeaveRating";
+import ReactPaginate from "react-paginate";
+import axios from "../hooks/useAxios";
 import { Link } from "react-router-dom";
 import ShowRating from "./ShowRating";
-import ReviewModal from "./BusinessSubmitModal";
-import SubmitBusiness from "../pages/SubmitBusiness";
+
 import placeHolderImage from "../assets/Place-holder-image.svg";
-const ListBusiness = ({ businesses }) => {
-  const [searchFilter, setSearchFilter] = useState(businesses);
+import Search from "./Search";
+const ListBusiness = () => {
+  const [searchFilter, setSearchFilter] = useState([]);
   const [searchTerm, setSearchTerm] = useState();
+  const [businesses, setBusinesses] = useState([]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [error, setError] = useState(null);
+
+  const businessesPerPage = 5;
+  const pagesVisited = pageNumber * businessesPerPage;
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get("business");
+
+        setBusinesses(response.data.businesses);
+      } catch (error) {
+        console.log(error);
+        setError(error);
+      }
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     setSearchFilter(businesses);
   }, [businesses]);
+
+  const pageCount = Math.ceil(businesses.length / businessesPerPage);
 
   /**
    * The function takes in an event, sets the search term to the value of the event, filters the
@@ -30,106 +53,109 @@ const ListBusiness = ({ businesses }) => {
     console.log(searchFilter);
   };
 
-  return (
-    <>
-      <div className=" flex justify-around mb-5">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleSearch}
-          placeholder="Search businesses"
-          className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-        />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 absolute right-0 top-0 mt-3 mr-4 text-gray-400"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-      </div>
-      <div className="prose prose-sm mx-auto">
-        {searchFilter &&
-          searchFilter.map((business) => (
-            <div
-              key={business._id}
-              className="bg-white rounded-lg shadow-md"
-            >
-              <div className="relative">
-                {business.photo ? (
+  const displayBusinesses = businesses
+    .slice(pagesVisited, pagesVisited + businessesPerPage)
+    .map((business) => (
+      <>
+        <div className="prose prose-sm mx-auto">
+          <div
+            key={business._id}
+            className="bg-white rounded-lg shadow-md"
+          >
+            <div className="relative">
+              {business.photo ? (
+                <img
+                  src={`http://localhost:3001/${business.photo}`}
+                  alt=""
+                  className="w-full  object-cover rounded-t-lg"
+                />
+              ) : (
+                <img
+                  src={placeHolderImage}
+                  alt=""
+                  className="w-full h-64 object-cover rounded-t-lg"
+                />
+              )}
+
+              <div className="absolute top-0 right-0 px-2 py-1 bg-gray-800 text-white rounded-bl-lg">
+                {business.category}
+              </div>
+            </div>
+            <div className="p-6">
+              <h3 className="text-2xl font-bold mb-4 text-center">
+                <Link
+                  to={`/businesses/${business._id}`}
+                  className="text-gray-800 hover:text-gray-600"
+                >
+                  {business.name}
+                </Link>
+              </h3>
+              <div className="text-gray-700 text-sm mb-2 text-center">
+                📍 {business.address}
+              </div>
+              <p className="text-gray-700 text-sm mb-2">
+                ☏ <a href="tel:PHONE_NUM"> {business.phone}</a>
+              </p>
+              <p className="text-gray-700 text-base mb-4">
+                {business.description}
+              </p>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
                   <img
                     src={`http://localhost:3001/${business.photo}`}
                     alt=""
-                    className="w-full  object-cover rounded-t-lg"
+                    className="w-8 h-8 object-cover rounded-full mr-2"
                   />
-                ) : (
-                  <img
-                    src={placeHolderImage}
-                    alt=""
-                    className="w-full h-64 object-cover rounded-t-lg"
-                  />
-                )}
-
-                <div className="absolute top-0 right-0 px-2 py-1 bg-gray-800 text-white rounded-bl-lg">
-                  {business.category}
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-2xl font-bold mb-4 text-center">
-                  <Link
-                    to={`/businesses/${business._id}`}
-                    className="text-gray-800 hover:text-gray-600"
-                  >
-                    {business.name}
-                  </Link>
-                </h3>
-                <div className="text-gray-700 text-sm mb-2 text-center">
-                  📍 {business.address}
-                </div>
-                <p className="text-gray-700 text-sm mb-2">
-                  ☏ <a href="tel:PHONE_NUM"> {business.phone}</a>
-                </p>
-                <p className="text-gray-700 text-base mb-4">
-                  {business.description}
-                </p>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center">
-                    <img
-                      src={`http://localhost:3001/${business.photo}`}
-                      alt=""
-                      className="w-8 h-8 object-cover rounded-full mr-2"
-                    />
-                    <p className="text-gray-700 text-sm">
-                      {business.name}
-                    </p>
-
-                    <ShowRating rating={business.rating} />
-                    {Math.round(business.rating)}
-                  </div>
                   <p className="text-gray-700 text-sm">
-                    {business.email}
+                    {business.name}
                   </p>
+
+                  <ShowRating rating={business.rating} />
+                  {Math.round(business.rating)}
                 </div>
-                <div className="flex items-center justify-between">
-                  <a
-                    href={business.website}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-gray-700 text-sm hover:text-gray-600"
-                  >
-                    {business.website}
-                  </a>
-                </div>
+                <p className="text-gray-700 text-sm">
+                  {business.email}
+                </p>
+              </div>
+              <div className="flex items-center justify-between">
+                <a
+                  href={business.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-gray-700 text-sm hover:text-gray-600"
+                >
+                  {business.website}
+                </a>
               </div>
             </div>
-          ))}
-      </div>
+          </div>
+        </div>
+      </>
+    ));
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
+
+  return (
+    <>
+      <Search searchTerm={searchTerm} handleSearch={handleSearch} />
+      {displayBusinesses}
+      <ReactPaginate
+        pageCount={pageCount}
+        onPageChange={changePage}
+        containerClassName={"pagination"}
+        activeClassName={"active"}
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        disabledClassName={"disabled"}
+        pageClassName={"page-item"}
+        breakClassName={"break-me"}
+        pageLinkClassName={"page-link"}
+        previousClassName={"page-link"}
+        nextClassName={"page-link"}
+        breakLinkClassName={"page-link"}
+      />
     </>
   );
 };

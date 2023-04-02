@@ -12,16 +12,12 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function Register() {
-  const auth = useAuthState();
-
-  const error = auth.user.errorMessage;
-
   const initialValues = {
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    error: error,
+    error: null,
   };
 
   const [formData, setFormData] = useState(initialValues);
@@ -60,23 +56,25 @@ export default function Register() {
       let payload = formData;
 
       let response = await registerUser(dispatch, payload);
-      if (response && response.user) {
-        navigate("/");
-      } else if (response && response.error) {
-        setFormData({ ...formData, error: response.error });
+
+      if (response.data.user) {
+        navigate("/businesses");
       }
     } catch (error) {
       dispatch({ type: "REGISTER_ERROR", error });
     }
   };
-  useEffect(() => {
-    if (auth.user.errorMessage) {
-      setFormData({
-        ...formData,
-        error: auth.user.errorMessage,
-      });
-    }
-  }, [auth.user]);
+
+  /* This is a hook that is watching for changes in the auth.user object. If there is a change, it will
+ update the error message in the formData object. */
+  // useEffect(() => {
+  //   if (auth.user.errorMessage) {
+  //     setFormData({
+  //       ...formData,
+  //       error: auth.user.errorMessage,
+  //     });
+  //   }
+  // }, [auth.user]);
 
   return (
     <div className=" w-full max-w-md flex flex-col items-center justify-center mx-auto">

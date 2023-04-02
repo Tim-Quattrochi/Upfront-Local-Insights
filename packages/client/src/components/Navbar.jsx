@@ -10,10 +10,7 @@ export const Navbar = () => {
   const dispatch = useAuthDispatch();
 
   return (
-    <div
-      data-theme="corporate"
-      className="navbar bg-gray-900 flex items-center justify-between text-white border-b-2"
-    >
+    <div className="navbar bg-gray-900 flex items-center justify-between text-white border-b-2">
       <Link to={"/"}>
         <a className="btn btn-ghost normal-case text-sm flex-nowrap">
           Upfront Local Insights
@@ -66,14 +63,9 @@ export const Navbar = () => {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
+              <a className="justify-between">Profile</a>
             </li>
-            <li>
-              <a>Settings</a>
-            </li>
+
             <li>
               {auth.user.isLoggedIn ? (
                 <a onClick={() => logout(dispatch)}>Logout</a>
