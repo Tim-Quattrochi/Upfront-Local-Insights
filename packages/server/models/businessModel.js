@@ -14,7 +14,18 @@ const businessSchema = mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ["Restaurant", "Bar", "Cafe", "Retail", "Salon", "Other"],
+    enum: [
+      "Restaurant",
+      "Bar",
+      "Cafe",
+      "Retail",
+      "Salon",
+      "Animal",
+      "Auto",
+      "Hardware",
+      "Gas Station",
+      "Other",
+    ],
   },
   address: {
     type: String,
@@ -26,13 +37,7 @@ const businessSchema = mongoose.Schema({
     required: true,
     trim: true,
   },
-  email: {
-    type: String,
-    trim: true,
-    lowercase: true,
-    required: false,
-    unique: false,
-  },
+
   website: {
     type: String,
     trim: true,

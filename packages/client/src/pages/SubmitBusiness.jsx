@@ -8,12 +8,23 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const initialFormState = {
   name: "",
   description: "",
-  category: ["Restaurant", "Bar", "Cafe", "Retail", "Salon", "Other"],
+  category: [
+    "Restaurant",
+    "Bar",
+    "Cafe",
+    "Retail",
+    "Salon",
+    "Animal",
+    "Auto",
+    "Hardware",
+    "Gas Station",
+    "Other",
+  ],
   address: "",
   phone: "",
-  email: "",
   website: "",
   selectedCategory: "",
+  errorMsg: null,
 };
 
 const SubmitBusiness = () => {
@@ -22,6 +33,7 @@ const SubmitBusiness = () => {
   const [formFields, setFormFields] = useState(initialFormState);
   const [businessId, setBusinessId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -35,7 +47,6 @@ const SubmitBusiness = () => {
     formData.append("selectedCategory", formFields.selectedCategory);
     formData.append("address", formFields.address);
     formData.append("phone", formFields.phone);
-    formData.append("email", formFields.email);
     formData.append("website", formFields.website);
 
     /* This is the code that is being executed when the user clicks the submit button. */
@@ -50,6 +61,10 @@ const SubmitBusiness = () => {
       setFormFields({ ...initialFormState });
       navigate(`/businesses/${response.data._id}`);
     } catch (error) {
+      setFormFields({
+        ...formFields,
+        errorMsg: error.response.data.error,
+      });
       console.log(error);
     }
   };
@@ -75,19 +90,19 @@ const SubmitBusiness = () => {
       setShowModal={setShowModal}
     >
       <div className="flex justify-center mt-2">
-        <div className="flex flex-col  py-4 items-center bg-gray-300 w-full max-w-md">
-          <label htmlFor="name" className="w-full">
+        <div className="flex flex-col  py-4 items-center w-full max-w-md">
+          <label htmlFor="name" className="w-full font-bold">
             Business Name:
             <input
               id="name"
               type="text"
               name="name"
               placeholder="Type here"
-              className="input input-bordered input-sm w-full mt-1"
+              className="input input-bordered  input-sm w-full mt-1"
               onChange={handleChange}
             />
           </label>
-          <label htmlFor="description" className="w-full">
+          <label htmlFor="description" className="w-full font-bold">
             Description:
             <input
               id="description"
@@ -98,7 +113,7 @@ const SubmitBusiness = () => {
               onChange={handleChange}
             />
           </label>
-          <label htmlFor="category" className="w-full">
+          <label htmlFor="category" className="w-full font-bold">
             Category:
             <select
               id="category"
@@ -115,7 +130,7 @@ const SubmitBusiness = () => {
               ))}
             </select>
           </label>
-          <label htmlFor="address" className="w-full">
+          <label htmlFor="address" className="w-full font-bold">
             Address:
             <input
               id="address"
@@ -126,7 +141,7 @@ const SubmitBusiness = () => {
               onChange={handleChange}
             />
           </label>
-          <label htmlFor="phone" className="w-full">
+          <label htmlFor="phone" className="w-full font-bold">
             Phone Number:
             <input
               id="phone"
@@ -139,18 +154,8 @@ const SubmitBusiness = () => {
               onChange={handleChange}
             />
           </label>
-          <label htmlFor="email" className="w-full">
-            Email:
-            <input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="company@company.com"
-              className="input input-bordered input-sm w-full mt-1"
-              onChange={handleChange}
-            />
-          </label>
-          <label htmlFor="website" className="w-full">
+
+          <label htmlFor="website" className="w-full font-bold">
             Website URL:
             <input
               id="website"
@@ -164,6 +169,29 @@ const SubmitBusiness = () => {
           <button type="submit" className="btn">
             Submit
           </button>
+          {formFields.errorMsg && (
+            <div
+              className="flex bg-red-100 rounded-lg p-3 mb-3 mt-1 text-sm text-red-700"
+              role="alert"
+            >
+              <svg
+                className="w-5 h-5 inline mr-3"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+              <div>
+                <span className="font-medium">Error</span>{" "}
+                {formFields.errorMsg && formFields.errorMsg}
+              </div>
+            </div>
+          )}
           <FileUpload setSelectedFile={setSelectedFile} />
         </div>
       </div>
