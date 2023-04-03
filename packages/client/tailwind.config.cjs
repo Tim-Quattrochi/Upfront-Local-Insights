@@ -29,6 +29,7 @@ module.exports = {
           warning: "#FCBD36",
 
           error: "#F35E68",
+          blue: "#0000FF",
         },
       },
       "corporate",

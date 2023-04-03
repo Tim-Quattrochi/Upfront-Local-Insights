@@ -4,6 +4,7 @@ const Search = ({ searchTerm, handleSearch }) => {
   return (
     <div className="flex m-5 justify-center">
       <input
+        name={searchTerm}
         type="text"
         value={searchTerm}
         onChange={handleSearch}

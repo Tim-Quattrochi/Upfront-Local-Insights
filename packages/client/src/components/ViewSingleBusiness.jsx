@@ -114,7 +114,9 @@ const ViewSingleBusiness = (props) => {
               </div>
               <div className=" flex justify-center text-yellow-400 text-lg mb-2 text-center p-3 ">
                 <ShowRating rating={review.rating} />
-                <div className="ml-2">{review.rating}</div>
+                <div className="ml-2">
+                  {Math.round(review.rating)}
+                </div>
               </div>
               <p className=" text-gray-700 whitespace-pre-line text-center ">
                 {review.comment}

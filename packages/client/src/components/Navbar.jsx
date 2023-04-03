@@ -10,7 +10,7 @@ export const Navbar = () => {
   const dispatch = useAuthDispatch();
 
   return (
-    <div className="navbar bg-gray-900 flex items-center justify-between text-white border-b-2">
+    <div className="navbar bg-gray-900 justify-between  text-white border-b-2">
       <Link to={"/"}>
         <a className="btn btn-ghost normal-case text-sm flex-nowrap">
           Upfront Local Insights
@@ -38,12 +38,6 @@ export const Navbar = () => {
           )}
 
           <SubmitBusiness />
-
-          <Link to={"/businesses"}>
-            <div className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:text-gray-300 transition-all">
-              Search
-            </div>
-          </Link>
         </div>
         <div className="dropdown dropdown-end">
           <label
@@ -60,7 +54,7 @@ export const Navbar = () => {
           </label>
           <ul
             tabIndex={0}
-            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-accent rounded-box w-52"
           >
             <li>
               <a className="justify-between">Profile</a>

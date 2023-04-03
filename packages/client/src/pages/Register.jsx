@@ -65,17 +65,6 @@ export default function Register() {
     }
   };
 
-  /* This is a hook that is watching for changes in the auth.user object. If there is a change, it will
- update the error message in the formData object. */
-  // useEffect(() => {
-  //   if (auth.user.errorMessage) {
-  //     setFormData({
-  //       ...formData,
-  //       error: auth.user.errorMessage,
-  //     });
-  //   }
-  // }, [auth.user]);
-
   return (
     <div className=" w-full max-w-md flex flex-col items-center justify-center mx-auto">
       <img
