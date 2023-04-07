@@ -21,9 +21,9 @@ const BusinessSubmitModal = ({
         onChange={() => setShowModal(!showModal)}
       />
       <label htmlFor="my-modal-4" className="modal cursor-pointer">
-        <label className="modal-box relative bg-inherit " htmlFor="">
+        <label className="relative w-full max-w-sm mx-auto mt-8 ">
           <form
-            className="flex flex-col  py-4 items-center text-black bg-gray-500 w-full max-w-md"
+            className="flex flex-col mx-auto py-4 items-center text-black bg-gray-400 w-full max-w-md"
             onSubmit={handleSubmit}
           >
             {children}
