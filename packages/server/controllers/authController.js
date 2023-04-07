@@ -15,7 +15,9 @@ const refresh = async (req, res) => {
 
   const refreshToken = cookies.jwt;
 
-  const user = await User.findOne({ refreshToken }).exec();
+  const user = await User.findOne({
+    refreshToken: refreshToken,
+  }).exec();
 
   if (!user) {
     return res.status(401).json({ message: "Not Authorized." });

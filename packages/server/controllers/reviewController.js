@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 const Review = require("../models/reviewModel");
 const Business = require("../models/businessModel");
+const User = require("../models/userModel");
 
 const multer = require("multer");
 const uuid = require("uuid");
 const path = require("path");
 
 const getAllReviews = async (req, res) => {
-  let getReviews = await Review.find({ sort: -1 }).populate({
+  let getReviews = await Review.find({}).populate({
     path: "business",
     select: ["user", "rating", "photo", "comment", "name"],
   });
@@ -60,6 +61,8 @@ const createReview = async (req, res) => {
     const { comment, user, rating, name } = req.body;
     //bring in the name of the user to reference.
 
+    console.log(user);
+
     if (
       !rating ||
       rating === "0" ||
@@ -86,8 +89,16 @@ const createReview = async (req, res) => {
           photo: req.file?.path,
         });
 
+        //push the review id to the Business object.
         await Business.findByIdAndUpdate(
           businessId,
+          { $push: { reviews: review._id } },
+          { new: true }
+        );
+
+        //push the review id to the user object
+        await User.findByIdAndUpdate(
+          user,
           { $push: { reviews: review._id } },
           { new: true }
         );
@@ -101,4 +112,21 @@ const createReview = async (req, res) => {
   });
 };
 
-module.exports = { createReview, getAllReviews };
+const getReviewsByUserId = async (req, res) => {
+  const { userId } = req.params;
+  console.log(userId);
+  const ownedReviews = await User.findById(userId)
+    .populate({
+      path: "reviews",
+      populate: {
+        path: "business",
+        select: "name",
+      },
+    })
+
+    .select("-password -refreshToken")
+    .exec();
+  res.status(200).json({ ownedReviews });
+};
+
+module.exports = { createReview, getAllReviews, getReviewsByUserId };

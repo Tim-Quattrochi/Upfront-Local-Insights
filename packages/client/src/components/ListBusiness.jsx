@@ -12,7 +12,7 @@ const ListBusiness = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [businesses, setBusinesses] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
-  const [selected, setSelected] = useState([]); //selected for filter by category.
+  const [selected, setSelected] = useState(""); //selected for filter by category.
   const [error, setError] = useState(null);
 
   const businessesPerPage = 5;
@@ -54,7 +54,7 @@ const ListBusiness = () => {
         selected === "" || business.category === selected;
       return nameMatch && categoryMatch;
     });
-
+    console.log(results);
     setSearchFilter(results);
   };
 
@@ -70,7 +70,7 @@ const ListBusiness = () => {
             {business.photo ? (
               <img
                 src={`http://localhost:3001/${business.photo}`}
-                alt=""
+                alt="Photo of the establishment"
                 className="w-full object-cover rounded-t-lg"
               />
             ) : (
@@ -85,8 +85,8 @@ const ListBusiness = () => {
               {business.category}
             </div>
           </div>
-          <div className="p-6">
-            <h3 className="text-2xl font-bold mb-4 text-center">
+          <div className="p-1">
+            <h3 className="text-2xl font-bold text-center">
               <Link
                 to={`/businesses/${business._id}`}
                 className="text-gray-800 hover:text-gray-600"
@@ -141,7 +141,6 @@ const ListBusiness = () => {
    * the pageNumber state
    */
   const changePage = ({ selected }) => {
-    console.log(selected);
     setPageNumber(selected);
   };
 

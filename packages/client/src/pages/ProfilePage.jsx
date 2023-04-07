@@ -8,8 +8,6 @@ const ProfilePage = () => {
   const { user } = useAuthState();
   const axios = useAxiosPrivate();
 
-  console.log(user.user._id);
-
   useEffect(() => {
     async function getSelfReviews() {
       try {
@@ -23,7 +21,12 @@ const ProfilePage = () => {
     getSelfReviews();
   }, []);
 
-  return <SelfReviews userReviews={userReviews} />;
+  return (
+    <div className="min-h-screen">
+      <h1 className="text-center py-5">My Reviews</h1>
+      <SelfReviews userReviews={userReviews} />;
+    </div>
+  );
 };
 
 export default ProfilePage;

@@ -21,10 +21,20 @@ const userSchema = mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
+
     photo: {
       type: String,
     },
-    refreshToken: String,
+
+    refreshToken: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

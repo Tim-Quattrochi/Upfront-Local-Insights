@@ -123,7 +123,14 @@ const login = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  const users = await User.find({}).populate("reviews");
+
+  res.status(200).json({ users });
+};
+
 module.exports = {
   signUp,
   login,
+  getAllUsers,
 };

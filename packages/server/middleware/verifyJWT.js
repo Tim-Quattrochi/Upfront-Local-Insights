@@ -8,7 +8,7 @@ const verifyJWT = async (req, res, next) => {
   if (!authHeader?.startsWith("Bearer")) {
     return res.status(401).json({ message: "Not Authorized." });
   }
-  console.log(authHeader);
+
   const token = authHeader.split(" ")[1];
 
   try {

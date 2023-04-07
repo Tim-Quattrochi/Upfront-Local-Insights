@@ -61,12 +61,13 @@ export default function Register() {
         navigate("/businesses");
       }
     } catch (error) {
+      console.log(error);
       dispatch({ type: "REGISTER_ERROR", error });
     }
   };
 
   return (
-    <div className=" w-full max-w-md flex flex-col items-center justify-center mx-auto">
+    <div className=" w-full min-h-screen max-w-md flex flex-col items-center justify-center mx-auto">
       <img
         src={registerImage}
         className="object-fit"

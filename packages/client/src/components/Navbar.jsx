@@ -57,7 +57,9 @@ export const Navbar = () => {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-accent rounded-box w-52"
           >
             <li>
-              <a className="justify-between">Profile</a>
+              <Link to={"/profile"} className="justify-between">
+                Profile
+              </Link>
             </li>
 
             <li>
