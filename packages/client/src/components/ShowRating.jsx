@@ -1,5 +1,10 @@
-/* A React component that takes a rating prop and returns a div with 5 svg stars. The stars are filled
-in based on the rating prop. */
+/* This code defines a React component called `ShowRating` that takes in a prop called `rating`. The
+component returns a div with a class of "rating" and contains an array of 5 SVG elements. The fill
+color of each SVG element is determined by whether its index is less than the rounded value of the
+`rating` prop. If it is, the fill color is set to "#ffd700" (gold), otherwise it is set to "#e5e7eb"
+(light gray). The SVG elements are defined using a path that creates a star shape. The component is
+exported as the default export of the module. */
+
 import React from "react";
 
 const ShowRating = ({ rating }) => {
