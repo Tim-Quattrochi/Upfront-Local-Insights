@@ -52,10 +52,6 @@ const ViewSingleBusiness = (props) => {
               className="w-full h-64 object-cover rounded-t-lg"
             />
           )}
-
-          <div className="absolute top-0 right-0 px-2 py-1 bg-gray-800 text-white rounded-bl-lg">
-            {singleBusiness.category}
-          </div>
         </div>
         <div className=" flex flex-col items-center justify-center p-6 py-4 text-center sm:p-8 sm:m-8">
           <h1 className="text-2xl font-bold mb-4 ">
@@ -84,15 +80,7 @@ const ViewSingleBusiness = (props) => {
             >
               {singleBusiness.website}
             </a>
-            <div className="flex items-center">
-              <svg
-                className="w-4 h-4 fill-current text-gray-600 mr-2"
-                viewBox="0 0 24 24"
-              >
-                <path d="M0 0h24v24H0z" fill="none" />
-                <path d="M7 10l5 5 5-5H7z" />
-              </svg>
-            </div>
+            <div className="flex items-center"></div>
           </div>
         </div>
         <div className="flex text-5xl sm:text-sm font-bold tracking-wide m-3 justify-center ">

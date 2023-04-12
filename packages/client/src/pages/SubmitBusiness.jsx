@@ -55,7 +55,6 @@ const SubmitBusiness = () => {
         headers: { "Content-Type": "multipart/formdata" },
       });
 
-      console.log(response.data);
       setBusinessId(response.data._id);
       setShowModal(false); // close modal after form submission
       setFormFields({ ...initialFormState });
@@ -91,7 +90,7 @@ const SubmitBusiness = () => {
     >
       <div className="flex justify-center mt-2">
         <div className="flex flex-col  py-4 items-center w-full max-w-md">
-          <label htmlFor="name" className="w-full font-bold">
+          <label htmlFor="name" className="w-full ">
             Business Name:
             <input
               id="name"
@@ -101,7 +100,7 @@ const SubmitBusiness = () => {
               onChange={handleChange}
             />
           </label>
-          <label htmlFor="description" className="w-full font-bold">
+          <label htmlFor="description" className="w-full ">
             Description:
             <input
               id="description"
@@ -111,7 +110,7 @@ const SubmitBusiness = () => {
               onChange={handleChange}
             />
           </label>
-          <label htmlFor="category" className="w-full font-bold">
+          <label htmlFor="category" className="w-full ">
             Category:
             <select
               id="category"
@@ -128,7 +127,7 @@ const SubmitBusiness = () => {
               ))}
             </select>
           </label>
-          <label htmlFor="address" className="w-full font-bold">
+          <label htmlFor="address" className="w-full ">
             Address:
             <input
               id="address"
@@ -138,7 +137,7 @@ const SubmitBusiness = () => {
               onChange={handleChange}
             />
           </label>
-          <label htmlFor="phone" className="w-full font-bold">
+          <label htmlFor="phone" className="w-full ">
             Phone Number:
             <input
               id="phone"
@@ -152,7 +151,7 @@ const SubmitBusiness = () => {
             />
           </label>
 
-          <label htmlFor="website" className="w-full font-bold">
+          <label htmlFor="website" className="w-full ">
             Website URL:
             <input
               id="website"
@@ -163,7 +162,7 @@ const SubmitBusiness = () => {
               onChange={handleChange}
             />
           </label>
-          <button type="submit" className="btn">
+          <button type="submit" className="btn m-1">
             Submit
           </button>
           {formFields.errorMsg && (

@@ -10,11 +10,11 @@ export const Navbar = () => {
   const dispatch = useAuthDispatch();
 
   return (
-    <div className="navbar bg-gray-900 justify-between  text-white border-b-2">
+    <div className=" navbar bg-gray-900 justify-between  text-white border-b-2">
       <Link to={"/"}>
-        <a className="btn btn-ghost normal-case text-sm flex-nowrap">
+        <div className="btn btn-ghost normal-case text-sm flex-nowrap">
           Upfront Local Insights
-        </a>
+        </div>
       </Link>
       <div className="flex-none gap-2">
         <div className="flex gap-2">
@@ -44,6 +44,11 @@ export const Navbar = () => {
             tabIndex={0}
             className="btn btn-ghost btn-circle avatar"
           >
+            {/* /* This code is rendering an Avatar component with a circular shape and a width of 12. The
+           Avatar component is receiving a prop called "name" which is being set to the first letter
+           of the user's name if they are logged in, or "Guest" if they are not logged in. The
+           Avatar component is likely responsible for rendering a user's profile picture or a
+           default icon if no picture is available. */}
             <div className="rounded-full w-12">
               <Avatar
                 name={
@@ -57,7 +62,10 @@ export const Navbar = () => {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-accent rounded-box w-52"
           >
             <li>
-              <Link to={"/profile"} className="justify-between">
+              <Link
+                to={auth.user.isLoggedIn ? "/profile" : "/login"}
+                className="justify-between"
+              >
                 Profile
               </Link>
             </li>

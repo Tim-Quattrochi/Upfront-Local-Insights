@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 import axios from "../hooks/useAxios";
 import { Link } from "react-router-dom";
 import ShowRating from "./ShowRating";
-
+import { formatPhone } from "../utilities/formatPhone";
 import placeHolderImage from "../assets/Place-holder-image.svg";
 import Search from "./Search";
 import FilterByCat from "./FilterByCat";
@@ -67,6 +67,12 @@ const ListBusiness = () => {
       <div className="prose prose-sm mx-auto" key={business._id}>
         <div className="bg-white rounded-lg shadow-md">
           <div className="relative">
+            {/* /* This code is rendering an image element with a conditional statement. If the
+           `business.photo` property exists, it will render an image with the source set to
+           `http://localhost:3001/${business.photo}` and alt text "Photo of the establishment". If
+           `business.photo` does not exist, it will render a placeholder image with the source set
+           to `placeHolderImage` and no alt text. The `className` properties are setting the styling
+           for the image element. */}
             {business.photo ? (
               <img
                 src={`http://localhost:3001/${business.photo}`}
@@ -85,53 +91,38 @@ const ListBusiness = () => {
               {business.category}
             </div>
           </div>
-          <div className="p-1">
-            <h3 className="text-2xl font-bold text-center">
-              <Link
-                to={`/businesses/${business._id}`}
-                className="text-gray-800 hover:text-gray-600"
-              >
-                {business.name}
-              </Link>
-            </h3>
-            <div className="text-gray-700 text-sm mb-2 text-center">
-              📍 {business.address}
-            </div>
-            <p className="text-gray-700 text-sm mb-2">
-              ☏ <a href="tel:PHONE_NUM"> {business.phone}</a>
-            </p>
-            <p className="text-gray-700 text-base mb-4">
-              {business.description}
-            </p>
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center">
-                <img
-                  src={`http://localhost:3001/${business.photo}`}
-                  alt=""
-                  className="w-8 h-8 object-cover rounded-full mr-2"
-                />
-                <p className="text-gray-700 text-sm">
-                  {business.name}
-                </p>
 
-                <ShowRating rating={business.rating} />
-                {Math.round(business.rating)}
-              </div>
-              <p className="text-gray-700 text-sm">
-                {business.email}
-              </p>
+          <h3 className="text-2xl font-bold text-center">
+            <Link
+              to={`/businesses/${business._id}`}
+              className="text-gray-800 hover:text-gray-600"
+            >
+              {business.name}
+            </Link>
+            <div className="text-gray-700 text-base italic m-1">
+              {business.description}
             </div>
-            <div className="flex items-center justify-between">
-              <a
-                href={business.website}
-                target="_blank"
-                rel="noreferrer"
-                className="text-gray-700 text-sm hover:text-gray-600"
-              >
-                {business.website}
-              </a>
-            </div>
+          </h3>
+          <p className="text-gray-700 text-sm mb-2 text-right">
+            ☏{" "}
+            <a href="tel:PHONE_NUM"> {formatPhone(business.phone)}</a>
+          </p>
+          <div className="text-gray-700 text-sm text-center">
+            📍 {business.address}
           </div>
+
+          <div className="flex items-center justify-center m-2">
+            <ShowRating rating={business.rating} />
+            {business.reviews.length} Reviews
+          </div>
+          <a
+            href={business.website}
+            target="_blank"
+            rel="noreferrer"
+            className="text-gray-700 text-sm hover:text-gray-600 text-center p-2 m-2"
+          >
+            {business.website}
+          </a>
         </div>
       </div>
     ));
@@ -146,7 +137,7 @@ const ListBusiness = () => {
 
   return (
     <>
-      <div className="flex wrap content-center justify-between items-baseline xs:justify-center flex-nowrap">
+      <div className="flex wrap  content-center justify-between items-baseline xs:justify-center flex-nowrap">
         <FilterByCat setSelected={setSelected} />
         <Search searchTerm={searchTerm} handleSearch={handleSearch} />
       </div>

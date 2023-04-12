@@ -22,9 +22,9 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="prose min-h-screen mx-auto">
       <h1 className="text-center py-5">My Reviews</h1>
-      <SelfReviews userReviews={userReviews} />;
+      <SelfReviews userReviews={userReviews} />
     </div>
   );
 };
