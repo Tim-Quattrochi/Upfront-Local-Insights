@@ -31,10 +31,10 @@ app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 
 if (NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+  app.use(express.static(path.join(__dirname, "../client/dist")));
   app.all("*", (req, res, next) => {
     res.sendFile(
-      path.resolve(__dirname, "../client/build/index.html")
+      path.resolve(__dirname, "../client/dist/index.html")
     );
   });
 }
