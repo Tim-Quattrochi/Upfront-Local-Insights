@@ -1,6 +1,7 @@
 import axios from "../hooks/useAxios";
+import { baseURl } from "../../config/config";
 
-const API_URL = "http://localhost:3001/api";
+const API_URL = baseURl;
 
 /**
  * It takes in a dispatch function and a loginPayload object, and then it makes a post request to the

@@ -1,9 +1,10 @@
 import useRefreshToken from "./useRefreshToken";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { axiosPrivate } from "./useAxios";
 import { useAuthState } from "../Context";
+import { baseURl } from "../../config/config";
 
-const API_URL = "http://localhost:3001/api";
+const API_URL = baseURl;
 
 const useAxiosPrivate = () => {
   const auth = useAuthState();

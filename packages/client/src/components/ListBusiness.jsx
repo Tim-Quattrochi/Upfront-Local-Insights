@@ -137,7 +137,7 @@ const ListBusiness = () => {
 
   return (
     <>
-      <div className="flex wrap  content-center justify-between items-baseline xs:justify-center flex-nowrap">
+      <div className="flex flex-col items-center sm:flex-row sm:justify-between">
         <FilterByCat setSelected={setSelected} />
         <Search searchTerm={searchTerm} handleSearch={handleSearch} />
       </div>

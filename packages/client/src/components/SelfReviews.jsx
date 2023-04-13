@@ -12,7 +12,7 @@ const SelfReviews = ({ userReviews }) => {
             className="prose sm:w-full p-6 border rounded-md shadow-md md:w-1/2 mx-auto mb-4"
           >
             <div className=" flex justify-around text-lg font-semibold text-center">
-              Business Name: {review.business.name}
+              {review.business.name}
               <div className="text-xs font-light m-1 p-1 italic">
                 {formatDate(review.createdAt)}
               </div>

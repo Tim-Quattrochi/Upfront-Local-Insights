@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { Footer } from "./components/Footer";
@@ -7,7 +6,6 @@ import Landing from "./components/Landing";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { useAuthState } from "./Context";
-import SubmitBusiness from "./pages/SubmitBusiness";
 import ViewSingleBusiness from "./components/ViewSingleBusiness";
 import ErrorPage from "./components/RouteError";
 import LeaveRating from "./components/LeaveRating";

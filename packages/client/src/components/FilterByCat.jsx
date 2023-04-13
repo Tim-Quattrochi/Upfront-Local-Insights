@@ -21,7 +21,7 @@ const FilterByCat = ({ businesses, setSelected }) => {
 
   return (
     <select
-      className="select select-accent select-sm w-full max-w-xs text-center"
+      className=" sm:select-sm select select-success  w-full max-w-xs"
       onChange={handleSelected}
     >
       {options.map((cat, i) => (

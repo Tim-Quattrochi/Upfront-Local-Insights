@@ -4,9 +4,8 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
-
 const connectMyDB = require("./config/db");
-const { login } = require("./controllers/userController");
+const { NODE_ENV } = require("./config/constants");
 
 const app = express();
 
@@ -32,6 +31,15 @@ app.use("/api/review", require("./routes/reviewRoutes"));
 app.use("/api/business", require("./routes/businessRoutes"));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
+
+if (NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+  app.all("*", (req, res, next) => {
+    res.sendFile(
+      path.resolve(__dirname, "../client/build/index.html")
+    );
+  });
+}
 
 app.listen(port, () => {
   console.log(`Server listening on ${port}`);

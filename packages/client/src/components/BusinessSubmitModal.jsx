@@ -9,7 +9,7 @@ const BusinessSubmitModal = ({
     <>
       <label
         htmlFor="my-modal-4"
-        className=" btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:text-gray-800 transition-all"
+        className=" cursor-pointer hover:text-gray-800 transition-all"
       >
         {title}
       </label>

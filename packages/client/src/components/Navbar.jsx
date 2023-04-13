@@ -50,6 +50,14 @@ export const Navbar = () => {
                 Profile
               </Link>
             </li>
+            <li>
+              <Link
+                to={auth.user.isLoggedIn ? "/businesses" : ""}
+                className="justify-between"
+              >
+                Businesses
+              </Link>
+            </li>
 
             <li>
               {auth.user.isLoggedIn ? (
