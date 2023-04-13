@@ -10,7 +10,7 @@ export const Navbar = () => {
   const dispatch = useAuthDispatch();
 
   return (
-    <div className="navbar sm:flex-1 bg-gray-900  justify-between  text-white border-b-2">
+    <div className="navbar sm:flex-1 bg-red-300  justify-between  text-white border-b-2">
       <Link to={"/"}>
         <div className="btn btn-ghost normal-case text-sm flex-nowrap">
           Upfront Local Insights
