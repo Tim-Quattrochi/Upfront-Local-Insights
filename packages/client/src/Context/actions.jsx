@@ -1,5 +1,5 @@
 import axios from "../hooks/useAxios";
-import { baseURl } from "../../config/config";
+import { baseURl } from "../../config/constants";
 
 const API_URL = baseURl;
 
@@ -13,7 +13,7 @@ export async function loginUser(dispatch, loginPayload) {
   try {
     dispatch({ type: "REQUEST_LOGIN" });
     let response = await axios.post(
-      `${API_URL}/users/login`,
+      `/users/login`,
       JSON.stringify(loginPayload),
       {
         headers: { "Content-Type": "application/json" },

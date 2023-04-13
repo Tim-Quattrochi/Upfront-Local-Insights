@@ -2,7 +2,7 @@ import useRefreshToken from "./useRefreshToken";
 import { useEffect } from "react";
 import { axiosPrivate } from "./useAxios";
 import { useAuthState } from "../Context";
-import { baseURl } from "../../config/config";
+import { baseURl } from "../../config/constants";
 
 const API_URL = baseURl;
 
