@@ -11,7 +11,6 @@ const API_URL = baseURl;
  */
 export async function loginUser(dispatch, loginPayload) {
   try {
-    console.log(loginPayload);
     dispatch({ type: "REQUEST_LOGIN" });
     let response = await axios.post(
       `${API_URL}/users/login`,

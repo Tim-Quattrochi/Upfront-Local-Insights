@@ -14,7 +14,6 @@ import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const { isLoggedIn } = useAuthState();
-  console.log(isLoggedIn);
 
   return (
     <ErrorBoundary>
