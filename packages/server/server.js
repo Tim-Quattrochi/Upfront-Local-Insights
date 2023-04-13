@@ -5,11 +5,9 @@ const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
 const connectMyDB = require("./config/db");
-const { NODE_ENV } = require("./config/constants");
+const { NODE_ENV, PORT } = require("./config/constants");
 
 const app = express();
-
-const port = 3001;
 
 connectMyDB();
 
@@ -41,6 +39,6 @@ if (NODE_ENV === "production") {
   });
 }
 
-app.listen(port, () => {
-  console.log(`Server listening on ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });
