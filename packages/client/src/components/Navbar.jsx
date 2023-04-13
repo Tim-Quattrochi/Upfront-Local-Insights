@@ -10,7 +10,7 @@ export const Navbar = () => {
   const dispatch = useAuthDispatch();
 
   return (
-    <div className=" navbar bg-gray-900 justify-between  text-white border-b-2">
+    <div className="navbar sm:flex-1 bg-gray-900  justify-between  text-white border-b-2">
       <Link to={"/"}>
         <div className="btn btn-ghost normal-case text-sm flex-nowrap">
           Upfront Local Insights
@@ -18,25 +18,6 @@ export const Navbar = () => {
       </Link>
       <div className="flex-none gap-2">
         <div className="flex gap-2">
-          {/* Checking if the user is logged in. If they are, it will not show the register and login
-      buttons. If they are not logged in, it will show the register and login buttons. */}
-          {auth.user.isLoggedIn ? (
-            ""
-          ) : (
-            <>
-              <Link to={"/register"}>
-                <div className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:text-gray-300 transition-all">
-                  Register
-                </div>
-              </Link>
-              <Link to={"/login"}>
-                <div className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md hover:text-gray-300 transition-all">
-                  Login
-                </div>
-              </Link>
-            </>
-          )}
-
           <SubmitBusiness />
         </div>
         <div className="dropdown dropdown-end">
