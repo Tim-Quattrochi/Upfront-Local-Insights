@@ -36,6 +36,10 @@ if (NODE_ENV === "production") {
     express.static(path.join(__dirname, "./uploads/businessPhotos"))
   );
   app.use(express.static(path.join(__dirname, "./uploads")));
+  app.use(
+    "/uploads",
+    express.static(path.join(__dirname, "uploads"))
+  );
 
   app.all("*", (req, res, next) => {
     res.sendFile(
