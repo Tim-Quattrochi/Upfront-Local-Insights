@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const { DB_URI } = require("./constants");
 
+
+
 const connectMyDB = async () => {
   try {
     const conn = await mongoose.connect(DB_URI, {

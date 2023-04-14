@@ -32,6 +32,11 @@ app.use("/api/users", require("./routes/userRoutes"));
 
 if (NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
+  app.use(
+    express.static(path.join(__dirname, "./uploads/businessPhotos"))
+  );
+  app.use(express.static(path.join(__dirname, "./uploads")));
+
   app.all("*", (req, res, next) => {
     res.sendFile(
       path.resolve(__dirname, "../client/dist/index.html")
