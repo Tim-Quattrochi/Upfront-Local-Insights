@@ -27,7 +27,7 @@ const SelfReviews = ({ userReviews }) => {
 
             {review.photo ? (
               <img
-                src={`http://localhost:3001/${review.photo}`}
+                src={`http://54.90.137.205/${review.photo}`}
                 alt="User's review picture"
                 className="h-32 w-64 mt-4 rounded-md shadow-md"
               />

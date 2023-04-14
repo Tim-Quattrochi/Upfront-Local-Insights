@@ -69,13 +69,13 @@ const ListBusiness = () => {
           <div className="relative">
             {/* /* This code is rendering an image element with a conditional statement. If the
            `business.photo` property exists, it will render an image with the source set to
-           `http://localhost:3001/${business.photo}` and alt text "Photo of the establishment". If
+           `http://54.90.137.205/${business.photo}` and alt text "Photo of the establishment". If
            `business.photo` does not exist, it will render a placeholder image with the source set
            to `placeHolderImage` and no alt text. The `className` properties are setting the styling
            for the image element. */}
             {business.photo ? (
               <img
-                src={`http://localhost:3001/${business.photo}`}
+                src={`http://54.90.137.205/${business.photo}`}
                 alt="Photo of the establishment"
                 className="w-full object-cover rounded-t-lg"
               />

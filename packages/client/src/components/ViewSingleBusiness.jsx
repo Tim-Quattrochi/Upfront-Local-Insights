@@ -41,7 +41,7 @@ const ViewSingleBusiness = (props) => {
         <div className="relative">
           {singleBusiness.photo ? (
             <img
-              src={`http://localhost:3001/${singleBusiness.photo}`}
+              src={`http://54.90.137.205/${singleBusiness.photo}`}
               alt=""
               className="xs:w-full xs:object-contain w-1/2 h-60 object-cover rounded-t-lg mx-auto"
             />
@@ -112,7 +112,7 @@ const ViewSingleBusiness = (props) => {
 
               {review.photo ? (
                 <img
-                  src={`http://localhost:3001/${review.photo}`}
+                  src={`http://54.90.137.205/${review.photo}`}
                   alt="User's review picture"
                   className="h-32 w-64 mt-4 rounded-md shadow-md"
                 />

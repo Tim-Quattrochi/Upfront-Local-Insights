@@ -7,12 +7,9 @@ const useRefreshToken = () => {
   const { accessToken } = useAuthState();
 
   const refresh = async () => {
-    const response = await axios.get(
-      "http://localhost:3001/api/auth/refresh",
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get("/auth/refresh", {
+      withCredentials: true,
+    });
 
     const newAccessToken = response.data.accessToken;
     dispatch({
