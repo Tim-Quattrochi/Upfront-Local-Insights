@@ -1,5 +1,9 @@
 # Upfront-Local-Insights
 
+This project is deployed on an AWS EC2 instance and can be accessed by it's ip4v: http://54.90.137.205/
+
+---
+
 Upfront Local Insights is a business review website that lets users rate and review businesses. Users can also submit a business (with Photo) if the business is not already listed.
 
 # The Problem
@@ -87,3 +91,4 @@ I welcome contributions. Simply open a pull request with your changes and I will
 [express]: http://expressjs.com
 [react]: https://react.dev/
 [pm2]: https://pm2.keymetrics.io/
+[http://54.90.137.205/]: http://54.90.137.205/
