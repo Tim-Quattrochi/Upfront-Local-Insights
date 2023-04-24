@@ -90,6 +90,10 @@ const LeaveRating = ({
     setError(null);
   };
 
+  const handleSetRating = (e) => {
+    setRating(Number(e.target.value));
+  };
+
   //if an error for no rating shows and the user enters a
   //rating then the error will disappear.
   useEffect(() => {
@@ -135,7 +139,7 @@ const LeaveRating = ({
               name="rating"
               className="mask mask-star-2 bg-primary"
               value="1"
-              onChange={(e) => setRating(Number(e.target.value))}
+              onChange={handleSetRating}
             />
 
             <input
@@ -143,28 +147,28 @@ const LeaveRating = ({
               name="rating"
               className="mask mask-star-2 bg-primary"
               value="2"
-              onChange={(e) => setRating(Number(e.target.value))}
+              onChange={handleSetRating}
             />
             <input
               type="radio"
               name="rating"
               className="mask mask-star-2 bg-primary"
               value="3"
-              onChange={(e) => setRating(Number(e.target.value))}
+              onChange={handleSetRating}
             />
             <input
               type="radio"
               name="rating"
               className="mask mask-star-2 bg-primary"
               value="4"
-              onChange={(e) => setRating(Number(e.target.value))}
+              onChange={handleSetRating}
             />
             <input
               type="radio"
               name="rating"
               className="mask mask-star-2 bg-primary"
               value="5"
-              onChange={(e) => setRating(Number(e.target.value))}
+              onChange={handleSetRating}
             />
           </div>
           <label className="m-4 p-1 text-slate-900">
