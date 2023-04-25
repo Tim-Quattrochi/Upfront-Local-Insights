@@ -3,13 +3,13 @@ import { loginUser, useAuthDispatch } from "../Context";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-export default function Login() {
-  const initialValues = {
-    email: "",
-    password: "",
-    error: "",
-  };
+const initialValues = {
+  email: "",
+  password: "",
+  error: "",
+};
 
+export default function Login() {
   const [formData, setFormData] = useState(initialValues);
   const dispatch = useAuthDispatch();
 
@@ -25,11 +25,10 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    let payload = formData;
     try {
-      let response = await loginUser(dispatch, payload);
-      console.log(response);
-      if (response && response.data.user) {
+      const response = await loginUser(dispatch, formData);
+
+      if (response && response.data?.user) {
         navigate("/businesses");
       } else if (response && response.error) {
         setError(response.error);

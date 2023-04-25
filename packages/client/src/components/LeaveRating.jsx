@@ -127,7 +127,7 @@ const LeaveRating = ({
         <div className="text-xl font-semibold underline-offset-2 text-center m-3 text-secondary ">
           Leave a review
         </div>
-        <h1>{state && state.businessName}</h1>
+        <h1>{state?.businessName}</h1>
         <form
           onSubmit={handleSubmit}
           type="multipart/form-data"

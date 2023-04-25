@@ -36,7 +36,7 @@ const ViewSingleBusiness = (props) => {
   }, [businessId]);
 
   return (
-    <div className="bg-gray-100">
+    <div className=" min-h-screen bg-gray-100">
       <div className="bg-white rounded-lg shadow-md">
         <div className="relative">
           {singleBusiness.photo ? (
@@ -83,8 +83,8 @@ const ViewSingleBusiness = (props) => {
             <div className="flex items-center"></div>
           </div>
         </div>
-        <div className="flex text-5xl sm:text-sm font-bold tracking-wide m-3 justify-center ">
-          <p className="mr-2 text-info  ">Reviews</p>{" "}
+        <div className="flex  font-bold tracking-wide m-3 justify-center ">
+          <p className="mr-2 text-info text-5xl  ">Reviews</p>{" "}
           <FaRegStar fill="gold" />
         </div>
 

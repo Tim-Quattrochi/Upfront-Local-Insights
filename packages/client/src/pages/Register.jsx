@@ -52,9 +52,7 @@ export default function Register() {
     }
 
     try {
-      let payload = formData;
-
-      let response = await registerUser(dispatch, payload);
+      const response = await registerUser(dispatch, formData);
 
       if (response.data.user) {
         navigate("/businesses");
@@ -86,9 +84,10 @@ export default function Register() {
                 Name
               </label>
               <input
-                id="name"
                 name="name"
-                type="name"
+                type="text"
+                autoComplete="full-name"
+                placeholder="Enter your full name"
                 required
                 className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={formData.name}

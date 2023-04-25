@@ -12,14 +12,9 @@ const API_URL = baseURl;
 export async function loginUser(dispatch, loginPayload) {
   try {
     dispatch({ type: "REQUEST_LOGIN" });
-    let response = await axios.post(
-      `/users/login`,
-      JSON.stringify(loginPayload),
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    );
+    const response = await axios.post(`/users/login`, loginPayload, {
+      withCredentials: true,
+    });
 
     if (response.data.user) {
       dispatch({

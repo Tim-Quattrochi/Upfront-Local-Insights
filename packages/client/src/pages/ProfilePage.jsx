@@ -10,16 +10,12 @@ const ProfilePage = () => {
   const axios = useAxiosPrivate();
 
   useEffect(() => {
-    async function getSelfReviews() {
-      try {
-        const response = await axios.get(`/review/${user.user._id}`);
-        setUserReviews(response.data.ownedReviews.reviews);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    getSelfReviews();
+    axios
+      .get(`/review/${user.user._id}`)
+      .then((res) => {
+        setUserReviews(res.data.ownedReviews.reviews);
+      })
+      .catch(console.log);
   }, []);
 
   return (
