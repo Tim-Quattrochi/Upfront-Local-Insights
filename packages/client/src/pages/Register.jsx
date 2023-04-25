@@ -26,9 +26,12 @@ export default function Register() {
 
   const navigate = useNavigate();
 
+  const handleSetFormData = (data) => {
+    setFormData({ ...formData, ...data });
+  };
+
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
+    handleSetFormData({
       [e.target.name]: e.target.value,
       error: null,
     });
@@ -38,16 +41,12 @@ export default function Register() {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      return setFormData({
-        ...formData,
-        error: "Passwords must match",
-      });
+      return handleSetFormData({ error: "Passwords must match" });
     } else if (
       formData.password.length <= 8 ||
       formData.password.length >= 20
     ) {
-      return setFormData({
-        ...formData,
+      return handleSetFormData({
         error: "Password must be between 8 and 20 characters.",
       });
     }
