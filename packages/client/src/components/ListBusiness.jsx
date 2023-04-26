@@ -64,7 +64,7 @@ const ListBusiness = () => {
     )
     .slice(pagesVisited, pagesVisited + businessesPerPage)
     .map((business) => (
-      <div className="prose prose-sm mx-auto" key={business._id}>
+      <div className="prose prose:sm mx-auto" key={business._id}>
         <div className="bg-white rounded-lg shadow-md">
           <div className="relative">
             {/* /* This code is rendering an image element with a conditional statement. If the
@@ -74,17 +74,21 @@ const ListBusiness = () => {
            to `placeHolderImage` and no alt text. The `className` properties are setting the styling
            for the image element. */}
             {business.photo ? (
-              <img
-                src={`http://54.90.137.205/${business.photo}`}
-                alt="Photo of the establishment"
-                className="w-full object-cover rounded-t-lg"
-              />
+              <Link to={`/businesses/${business._id}`}>
+                <img
+                  src={`http://54.90.137.205/${business.photo}`}
+                  alt="Photo of the establishment"
+                  className="w-full object-cover rounded-t-lg"
+                />
+              </Link>
             ) : (
-              <img
-                src={placeHolderImage}
-                alt=""
-                className="w-full h-64 object-cover rounded-t-lg"
-              />
+              <Link to={`/businesses/${business._id}`}>
+                <img
+                  src={placeHolderImage}
+                  alt=""
+                  className="w-full h-64 object-cover rounded-t-lg"
+                />
+              </Link>
             )}
 
             <div className="absolute top-0 right-0 px-2 py-1 bg-gray-800 text-white rounded-bl-lg">
@@ -95,11 +99,11 @@ const ListBusiness = () => {
           <h3 className="text-2xl font-bold text-center">
             <Link
               to={`/businesses/${business._id}`}
-              className="text-gray-800 hover:text-gray-600"
+              className="text-secondary hover:text-gray-600"
             >
               {business.name}
             </Link>
-            <div className="text-gray-700 text-base italic m-1">
+            <div className=" text-neutral text-base italic m-1">
               {business.description}
             </div>
           </h3>
@@ -107,22 +111,16 @@ const ListBusiness = () => {
             ☏{" "}
             <a href="tel:PHONE_NUM"> {formatPhone(business.phone)}</a>
           </p>
-          <div className="text-gray-700 text-sm text-center">
+          <div className="text-gray-700 md:text-lg text-center">
             📍 {business.address}
           </div>
 
-          <div className="flex items-center justify-center m-2">
+          <div className="flex items-center justify-center m-2 ">
             <ShowRating rating={business.rating} />
-            {business.reviews.length} Reviews
+            <div className="text-gray-600 ml-2 text-sm md:text-base mt-1">
+              {business.reviews.length} Reviews
+            </div>
           </div>
-          <a
-            href={business.website}
-            target="_blank"
-            rel="noreferrer"
-            className="text-gray-700 text-sm hover:text-gray-600 text-center p-2 m-2"
-          >
-            {business.website}
-          </a>
         </div>
       </div>
     ));

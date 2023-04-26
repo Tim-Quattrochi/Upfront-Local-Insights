@@ -43,7 +43,7 @@ const ViewSingleBusiness = (props) => {
             <img
               src={`http://54.90.137.205/${singleBusiness.photo}`}
               alt=""
-              className="xs:w-full xs:object-contain w-1/2 h-60 object-cover rounded-t-lg mx-auto"
+              className="w-full h-64 object-none rounded-t-lg"
             />
           ) : (
             <img
@@ -54,16 +54,15 @@ const ViewSingleBusiness = (props) => {
           )}
         </div>
         <div className=" flex flex-col items-center justify-center p-6 py-4 text-center sm:p-8 sm:m-8">
-          <h1 className="text-2xl font-bold mb-4 ">
+          <h1 className="lg:text-3xl xs:text-2xl text-secondary font-bold mb-4 ">
             {singleBusiness.name}
           </h1>
-          <p className="text-gray-700 text-sm mb-2">
-            📍 {singleBusiness.address}
-          </p>
-
-          <p className="text-gray-700 text-base mb-4">
+          <div className="text-neutral text-base italic m-1 mb-4">
             {singleBusiness.description}
-          </p>
+          </div>
+          <div className="text-gray-700 md:text-lg text-center">
+            📍 {singleBusiness.address}
+          </div>
 
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center ">
@@ -85,7 +84,7 @@ const ViewSingleBusiness = (props) => {
         </div>
         <div className="flex  font-bold tracking-wide m-3 justify-center ">
           <p className="mr-2 text-info text-5xl  ">Reviews</p>{" "}
-          <FaRegStar fill="gold" />
+          <FaRegStar fill="gold" size={36} />
         </div>
 
         {reviews &&
