@@ -1,20 +1,6 @@
-import React from "react";
+import { options } from "../utilities/options";
 
 const FilterByCat = ({ businesses, setSelected }) => {
-  const options = [
-    { value: "", text: "--Select By Category--" },
-    { value: "Restaurant", text: "Restaurant" },
-    { value: "Bar", text: "Bar" },
-    { value: "Cafe", text: "Cafe" },
-    { value: "Retail", text: "Retail" },
-    { value: "Salon", text: "Salon" },
-    { value: "Animal", text: "Animal" },
-    { value: "Auto", text: "Auto" },
-    { value: "Hardware", text: "Hardware" },
-    { value: "Gas Station", text: "Gas Station" },
-    { value: "Other", text: "Other" },
-  ];
-
   const handleSelected = (e) => {
     setSelected(e.target.value);
   };
