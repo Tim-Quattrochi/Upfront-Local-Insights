@@ -11,6 +11,7 @@ import ErrorPage from "./components/RouteError";
 import LeaveRating from "./components/LeaveRating";
 import ListBusiness from "./components/ListBusiness";
 import ProfilePage from "./pages/ProfilePage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const { isLoggedIn } = useAuthState();
@@ -24,8 +25,14 @@ function App() {
           element={<Landing />}
           errorElement={<ErrorPage />}
         />
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
+
+        <Route path="/register" element={<ProtectedRoute />}>
+          <Route path="/register" element={<Register />} />
+        </Route>
+
+        <Route path="/login" element={<ProtectedRoute />}>
+          <Route path="/login" element={<Login />} />
+        </Route>
         <Route path="businesses" element={<ListBusiness />} />
 
         <Route
@@ -36,8 +43,12 @@ function App() {
           path="businesses/leave-rating"
           element={<LeaveRating />}
         />
-        <Route path="profile" element={<ProfilePage />} />
+
+        <Route path="profile" element={<ProtectedRoute />}>
+          <Route path="profile" element={<ProfilePage />} />
+        </Route>
       </Routes>
+
       <Footer />
     </ErrorBoundary>
   );
