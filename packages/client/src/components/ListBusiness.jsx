@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "../hooks/useAxios";
-import { Link } from "react-router-dom";
-import ShowRating from "./ShowRating";
-import { formatPhone } from "../utilities/formatPhone";
-import placeHolderImage from "../assets/Place-holder-image.svg";
 import Search from "./Search";
 import FilterByCat from "./FilterByCat";
+import BusinessCard from "./BusinessCard";
+
 const ListBusiness = () => {
   const [searchFilter, setSearchFilter] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -63,67 +61,7 @@ const ListBusiness = () => {
       (business) => selected === "" || business.category === selected
     )
     .slice(pagesVisited, pagesVisited + businessesPerPage)
-    .map((business) => (
-      <div className="prose prose:sm mx-auto" key={business._id}>
-        <div className="bg-white rounded-lg shadow-md">
-          <div className="relative">
-            {/* /* This code is rendering an image element with a conditional statement. If the
-           `business.photo` property exists, it will render an image with the source set to
-           `http://54.90.137.205/${business.photo}` and alt text "Photo of the establishment". If
-           `business.photo` does not exist, it will render a placeholder image with the source set
-           to `placeHolderImage` and no alt text. The `className` properties are setting the styling
-           for the image element. */}
-            {business.photo ? (
-              <Link to={`/businesses/${business._id}`}>
-                <img
-                  src={`http://54.90.137.205/${business.photo}`}
-                  alt="Photo of the establishment"
-                  className="w-full object-cover rounded-t-lg"
-                />
-              </Link>
-            ) : (
-              <Link to={`/businesses/${business._id}`}>
-                <img
-                  src={placeHolderImage}
-                  alt=""
-                  className="w-full h-64 object-cover rounded-t-lg"
-                />
-              </Link>
-            )}
-
-            <div className="absolute top-0 right-0 px-2 py-1 bg-gray-800 text-white rounded-bl-lg">
-              {business.category}
-            </div>
-          </div>
-
-          <h3 className="text-2xl font-bold text-center">
-            <Link
-              to={`/businesses/${business._id}`}
-              className="text-secondary hover:text-gray-600"
-            >
-              {business.name}
-            </Link>
-            <div className=" text-neutral text-base italic m-1">
-              {business.description}
-            </div>
-          </h3>
-          <p className="text-gray-700 text-sm mb-2 text-right">
-            ☏{" "}
-            <a href="tel:PHONE_NUM"> {formatPhone(business.phone)}</a>
-          </p>
-          <div className="text-gray-700 md:text-lg text-center">
-            📍 {business.address}
-          </div>
-
-          <div className="flex items-center justify-center m-2 ">
-            <ShowRating rating={business.rating} />
-            <div className="text-gray-600 ml-2 text-sm md:text-base mt-1">
-              {business.reviews.length} Reviews
-            </div>
-          </div>
-        </div>
-      </div>
-    ));
+    .map((business) => <BusinessCard business={business} />);
 
   /**
    * The function takes an object as an argument, and then uses the object's selected property to set
