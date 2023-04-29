@@ -17,40 +17,42 @@ function App() {
   const { isLoggedIn } = useAuthState();
 
   return (
-    <ErrorBoundary>
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={<Landing />}
-          errorElement={<ErrorPage />}
-        />
+    <div className="bgImage">
+      <ErrorBoundary>
+        <Navbar />
+        <Routes>
+          <Route
+            path="/"
+            element={<Landing />}
+            errorElement={<ErrorPage />}
+          />
 
-        <Route path="/register" element={<ProtectedRoute />}>
-          <Route path="/register" element={<Register />} />
-        </Route>
+          <Route path="/register" element={<ProtectedRoute />}>
+            <Route path="/register" element={<Register />} />
+          </Route>
 
-        <Route path="/login" element={<ProtectedRoute />}>
-          <Route path="/login" element={<Login />} />
-        </Route>
-        <Route path="businesses" element={<ListBusiness />} />
+          <Route path="/login" element={<ProtectedRoute />}>
+            <Route path="/login" element={<Login />} />
+          </Route>
+          <Route path="businesses" element={<ListBusiness />} />
 
-        <Route
-          path="businesses/:businessId"
-          element={<ViewSingleBusiness />}
-        />
-        <Route
-          path="businesses/leave-rating"
-          element={<LeaveRating />}
-        />
+          <Route
+            path="businesses/:businessId"
+            element={<ViewSingleBusiness />}
+          />
+          <Route
+            path="businesses/leave-rating"
+            element={<LeaveRating />}
+          />
 
-        <Route path="profile" element={<ProtectedRoute />}>
-          <Route path="profile" element={<ProfilePage />} />
-        </Route>
-      </Routes>
+          <Route path="profile" element={<ProtectedRoute />}>
+            <Route path="profile" element={<ProfilePage />} />
+          </Route>
+        </Routes>
 
-      <Footer />
-    </ErrorBoundary>
+        <Footer />
+      </ErrorBoundary>
+    </div>
   );
 }
 

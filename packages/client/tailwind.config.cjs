@@ -8,7 +8,11 @@ module.exports = {
       xs: "375px",
       ...defaultTheme.screens,
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        background: "url('../src/assets/bgImage.png')",
+      },
+    },
   },
   daisyui: {
     themes: [

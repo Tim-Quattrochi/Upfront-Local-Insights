@@ -1,24 +1,33 @@
 import landingImage from "../assets/landingImage.svg";
 import { Link } from "react-router-dom";
+import bgImage from "../assets/bgImage.png";
 
 const Landing = () => {
   return (
     <>
-      <div className=" w-full flex flex-wrap justify-center content-center  min-h-screen ">
+      <div
+        className=" w-full flex flex-wrap justify-center content-center mx-auto min-h-screen bg-bg"
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          backgroundRepeat: "no-repeat",
+          marginLeft: 0,
+          marginRight: 0,
+        }}
+      >
         <div className="max-w-md">
-          <h1 className=" prose text-2xl mb-10 relative text-center text-cyan-700 border border-1  border-cyan-500 shadow-md rounded">
+          <h1 className=" text-2xl mb-11 relative text-center text-cyan-700 border border-1  border-cyan-500 shadow-md rounded ">
             Real and{" "}
             <span className="italic underline decoration-pink-500">
               unbiased
             </span>{" "}
             Business reviews
           </h1>
-          <img
-            className="  object-fit lg:scale-125 md:w-full sm:object-scale"
-            src={landingImage}
+          {/* <img
+            className="w-full  object-cover lg:scale-125 md:w-full sm:object-scale"
+            src={}
             alt=""
-          />
-          <div className="py-6 text-xl">
+          /> */}
+          <div className="py-6 mt-5 text-xl">
             We want your reviews to be seen, good or bad.
           </div>
           <div className="py-6 ">

@@ -40,8 +40,8 @@ const ViewSingleBusiness = (props) => {
   }, [businessId]);
 
   return (
-    <div className=" min-h-screen bg-gray-100">
-      <div className="bg-white rounded-lg shadow-md">
+    <div className=" min-h-screen bg-white">
+      <div className="bgImage rounded-lg shadow-md">
         <div className="relative">
           {singleBusiness.photo ? (
             <img
@@ -57,18 +57,23 @@ const ViewSingleBusiness = (props) => {
             />
           )}
         </div>
-        <div className=" prose flex flex-col mt-4  mx-auto border rounded-md bg-base-100 shadow-md items-center justify-center p-6 py-4 text-center sm:p-8 ">
-          <h1 className="lg:text-3xl xs:text-2xl text-secondary font-bold mb-4 ">
+        <div className=" prose flex flex-col mt-4  mx-auto border rounded-md bg-white shadow-md items-center justify-center p-6 py-4 text-center sm:p-8 ">
+          <h1 className="block mt-1 text-lg leading-tight font-medium text-black hover:underline ">
             {singleBusiness.name}
           </h1>
-          <div className="text-neutral text-base italic m-1 mb-4">
+          <div>
+            Overall Rating{" "}
+            <span className="text-bold">{singleBusiness.rating}</span>
+            <ShowRating rating={singleBusiness.rating} />
+          </div>
+
+          <div className="tracking-wide text-sm text-indigo-500 font-semibold">
             {singleBusiness.description}
           </div>
-          <div className=" flex text-gray-700 md:text-lg text-center">
+          <div className=" flex mt-2 text-slate-500 md:text-lg text-center">
             <MdLocationOn size={24} fill={"red"} />
             {singleBusiness.address}
           </div>
-
           <div className="flex items-center justify-between mb-4 mt-2">
             <div className="flex items-center ">
               {" "}
@@ -76,7 +81,7 @@ const ViewSingleBusiness = (props) => {
                 style={{ marginRight: "4px" }}
                 size={20}
               />
-              <a href="tel:PHONE_NUM">
+              <a href="tel:PHONE_NUM" className=" text-slate-500">
                 {formatPhone(singleBusiness.phone)}
               </a>
             </div>
@@ -86,7 +91,7 @@ const ViewSingleBusiness = (props) => {
               href={singleBusiness.website}
               target="_blank"
               rel="noreferrer"
-              className="flex text-gray-700 text-sm hover:text-gray-600"
+              className=" flex  text-slate-500"
             >
               <TbWorldWww
                 size={24}
@@ -99,7 +104,7 @@ const ViewSingleBusiness = (props) => {
           </div>
         </div>
         <div className="flex  tracking-wide m-5 justify-center ">
-          <div className="flex w-full items-center text-center mr-2 bg-base-100 text-5xl text-secondary border rounded-md md:shadow ">
+          <div className="flex w-full items-center text-center mr-2 bg-white text-5xl text-secondary border rounded-md md:shadow ">
             Reviews
             <FaRegStar fill="gold" size={36} />
           </div>{" "}
@@ -109,7 +114,7 @@ const ViewSingleBusiness = (props) => {
           reviews.map((review) => (
             <div
               key={review._id}
-              className="prose sm:w-full p-6 border rounded-md shadow-md bg-base-100 md:w-1/2 mx-auto mb-4"
+              className="prose sm:w-full p-6 border rounded-md shadow-md bg-white md:w-1/2 mx-auto mb-4"
             >
               <div className=" flex justify-around text-lg font-semibold text-center">
                 {review.user.name || review.name}

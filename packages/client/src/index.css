@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bgImage {
+  background-image: url("./assets/bgImage.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  height: auto;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+/* Large devices (laptops/desktops, 1024px and up) */
+@media only screen and (min-width: 1024px) {
+  .bgImage {
+    min-height: 100vh;
+    background-size: cover;
+
+    background-repeat: no-repeat;
+  }
+}

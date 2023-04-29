@@ -9,7 +9,7 @@ import React from "react";
 
 const ShowRating = ({ rating }) => {
   return (
-    <div className="rating flex items-center content-center justify-center">
+    <div className="rating flex items-end content-center justify-center">
       {[...Array(5)].map((_, i) => (
         <svg
           key={i}
