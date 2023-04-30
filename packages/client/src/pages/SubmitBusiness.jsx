@@ -83,7 +83,7 @@ const SubmitBusiness = () => {
   return (
     /* This is a modal that is being used to submit a business. */
     <BusinessSubmitModal
-      title="Submit Business"
+      title="Submit A Business"
       handleSubmit={handleSubmit}
       showModal={showModal}
       setShowModal={setShowModal}
@@ -162,7 +162,7 @@ const SubmitBusiness = () => {
               onChange={handleChange}
             />
           </label>
-          <button type="submit" className="btn m-1">
+          <button type="submit" className="btn btn-primary m-1">
             Submit
           </button>
           {formFields.errorMsg && (

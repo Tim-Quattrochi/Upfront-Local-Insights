@@ -80,7 +80,8 @@ const ListBusiness = () => {
       <div className="flex-col">
         {displayBusinesses}
         <ReactPaginate
-          className="btn-group mx-auto py-1 my-1 xs:ml-14  "
+          className=" btn-group mb-20  mx-auto py-1 my-1 xs:ml-14  "
+          breakLabel="..."
           pageCount={pageCount}
           onPageChange={changePage}
           containerClassName={"btn-group"}
@@ -94,6 +95,7 @@ const ListBusiness = () => {
           previousClassName={"btn btn-accent"}
           nextClassName={"btn btn-accent"}
           breakLinkClassName={"page-link"}
+          renderOnZeroPageCount={null}
         />
       </div>
     </>

@@ -40,14 +40,14 @@ const ViewSingleBusiness = (props) => {
   }, [businessId]);
 
   return (
-    <div className=" min-h-screen bg-white">
+    <div className="  bg-white">
       <div className="bgImage rounded-lg shadow-md">
         <div className="relative">
           {singleBusiness.photo ? (
             <img
               src={`http://54.90.137.205/${singleBusiness.photo}`}
               alt=""
-              className="w-full h-64 object-none rounded-t-lg"
+              className="w-full h-64 object-scale-down rounded-t-lg"
             />
           ) : (
             <img
@@ -57,15 +57,17 @@ const ViewSingleBusiness = (props) => {
             />
           )}
         </div>
-        <div className=" prose flex flex-col mt-4  mx-auto border rounded-md bg-white shadow-md items-center justify-center p-6 py-4 text-center sm:p-8 ">
+        <div className=" prose flex flex-col mt-4  mx-auto border rounded-md  bg-transparent bg-opacity-50 shadow-md items-center justify-center p-6 py-4 text-center sm:p-8 ">
           <h1 className="block mt-1 text-lg leading-tight font-medium text-black hover:underline ">
             {singleBusiness.name}
           </h1>
           <div>
-            Overall Rating{" "}
-            <span className="text-bold">{singleBusiness.rating}</span>
+            <span className="font-bold">Overall Rating</span>
             <ShowRating rating={singleBusiness.rating} />
           </div>
+          <span className="text-left">
+            {singleBusiness.reviews?.length} Reviews
+          </span>
 
           <div className="tracking-wide text-sm text-indigo-500 font-semibold">
             {singleBusiness.description}
@@ -104,9 +106,13 @@ const ViewSingleBusiness = (props) => {
           </div>
         </div>
         <div className="flex  tracking-wide m-5 justify-center ">
-          <div className="flex w-full items-center text-center mr-2 bg-white text-5xl text-secondary border rounded-md md:shadow ">
-            Reviews
-            <FaRegStar fill="gold" size={36} />
+          <div className="flex  items-center  mr-2 text-lg  text-black font-bold  rounded-md md:shadow ">
+            <span className=" mx-auto">
+              {reviews.length > 0 ? "What People are Saying" : null}
+            </span>
+            {reviews.length > 0 ? (
+              <FaRegStar fill="gold" size={36} />
+            ) : null}
           </div>{" "}
         </div>
 

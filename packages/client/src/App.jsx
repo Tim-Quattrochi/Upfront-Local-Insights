@@ -17,7 +17,7 @@ function App() {
   const { isLoggedIn } = useAuthState();
 
   return (
-    <div className="bgImage">
+    <div className="relative  bgImage">
       <ErrorBoundary>
         <Navbar />
         <Routes>

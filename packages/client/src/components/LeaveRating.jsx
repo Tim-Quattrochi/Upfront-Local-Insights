@@ -124,8 +124,8 @@ const LeaveRating = ({
       )}
 
       <div>
-        <div className="text-xl font-semibold underline-offset-2 text-center m-3 text-secondary ">
-          Leave a review
+        <div className="text-xl font-semibold underline-offset-2 text-center m-3 text-black ">
+          Leave a review for this business
         </div>
         <h1>{state?.businessName}</h1>
         <form
@@ -133,11 +133,19 @@ const LeaveRating = ({
           type="multipart/form-data"
           className="flex flex-col flex-wrap justify-center align-center items-center"
         >
-          <div className="rating">
+          <div
+            className="rating tooltip tooltip-primary"
+            data-tip="How many stars?"
+          >
+            <input
+              type="radio"
+              name="rating-9"
+              className="rating-hidden"
+            />
             <input
               type="radio"
               name="rating"
-              className="mask mask-star-2 bg-primary"
+              className="mask mask-star-2 bg-[#facc15]"
               value="1"
               onChange={handleSetRating}
             />
@@ -145,28 +153,28 @@ const LeaveRating = ({
             <input
               type="radio"
               name="rating"
-              className="mask mask-star-2 bg-primary"
+              className="mask mask-star-2 bg-[#facc15]"
               value="2"
               onChange={handleSetRating}
             />
             <input
               type="radio"
               name="rating"
-              className="mask mask-star-2 bg-primary"
+              className="mask mask-star-2 bg-[#facc15]"
               value="3"
               onChange={handleSetRating}
             />
             <input
               type="radio"
               name="rating"
-              className="mask mask-star-2 bg-primary"
+              className="mask mask-star-2 bg-[#facc15]"
               value="4"
               onChange={handleSetRating}
             />
             <input
               type="radio"
               name="rating"
-              className="mask mask-star-2 bg-primary"
+              className="mask mask-star-2 bg-[#facc15]"
               value="5"
               onChange={handleSetRating}
             />
@@ -176,7 +184,7 @@ const LeaveRating = ({
             <textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="textarea textarea-bordered textarea-lg w-full max-w-xs"
+              className="textarea textarea-primary textarea-lg w-full max-w-xs "
             />
           </label>
           <img src={img} alt="" />
@@ -189,7 +197,10 @@ const LeaveRating = ({
               Submitting
             </button>
           ) : (
-            <button type="submit" className="btn btn-info mb-2">
+            <button
+              type="submit"
+              className="btn bg-[#facc15] hover:bg-sky-700 text-black mb-2"
+            >
               Submit Review
             </button>
           )}

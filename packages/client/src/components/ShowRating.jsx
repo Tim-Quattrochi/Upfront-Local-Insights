@@ -9,14 +9,14 @@ import React from "react";
 
 const ShowRating = ({ rating }) => {
   return (
-    <div className="rating flex items-end content-center justify-center">
+    <div className="rating flex items-end content-center  justify-center">
       {[...Array(5)].map((_, i) => (
         <svg
           key={i}
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill={i < Math.round(rating) ? "#ffd700" : "#e5e7eb"}
-          className="h-5 w-5"
+          viewBox="2 2 20 20"
+          fill={i < Math.round(rating) ? "#ffd700" : "#ffffff"}
+          className="h-8 w-7 border bg-primary"
         >
           <path
             strokeLinecap="round"

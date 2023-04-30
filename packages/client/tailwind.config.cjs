@@ -36,6 +36,7 @@ module.exports = {
 
           error: "#F35E68",
           blue: "#0000FF",
+          yellow: "#facc15",
         },
       },
       "corporate",

@@ -6,9 +6,9 @@ import { BsFillTelephoneForwardFill } from "react-icons/Bs";
 
 const BusinessCard = ({ business }) => {
   return (
-    <div class="max-w-md mx-auto m-4 bg-white rounded-xl hover:bg-slate-100 shadow-md overflow-hidden md:max-w-2xl">
-      <div class="md:flex">
-        <div class="md:shrink-0">
+    <div className="max-w-md mx-auto m-4 bg-white rounded-xl hover:bg-slate-100 shadow-md overflow-hidden md:max-w-2xl">
+      <div className="md:flex">
+        <div className="md:shrink-0">
           {business.photo ? (
             <Link to={`/businesses/${business._id}`}>
               <img
@@ -27,27 +27,27 @@ const BusinessCard = ({ business }) => {
             </Link>
           )}
         </div>
-        <div class="p-8">
-          <div class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
+        <div className="p-8">
+          <div className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
             <Link to={`/businesses/${business._id}`}>
               {business.name}
             </Link>
           </div>
           <Link
             to={`/businesses/${business._id}`}
-            class=" tracking-wide text-sm text-indigo-500 font-semibold"
+            className=" tracking-wide text-sm text-indigo-500 font-semibold"
           >
             {business.description}
           </Link>
-          <p class=" mt-2 text-slate-500">{business.address}</p>
-          <p class="flex mt-2 text-slate-500">
+          <p className=" mt-2 text-slate-500">{business.address}</p>
+          <p className="flex mt-2 text-slate-500">
             <BsFillTelephoneForwardFill
               style={{ marginRight: "4px" }}
             />{" "}
             {formatPhone(business.phone)}
           </p>
         </div>
-        <div className="flex justify-start">
+        <div className="flex justify-start mx-auto">
           <ShowRating rating={business.rating} />
         </div>
       </div>

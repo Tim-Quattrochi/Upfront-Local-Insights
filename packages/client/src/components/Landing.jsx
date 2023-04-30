@@ -5,15 +5,7 @@ import bgImage from "../assets/bgImage.png";
 const Landing = () => {
   return (
     <>
-      <div
-        className=" w-full flex flex-wrap justify-center content-center mx-auto min-h-screen bg-bg"
-        style={{
-          backgroundImage: `url(${bgImage})`,
-          backgroundRepeat: "no-repeat",
-          marginLeft: 0,
-          marginRight: 0,
-        }}
-      >
+      <div className=" w-full flex flex-wrap justify-center content-center mx-auto min-h-screen bg-bg">
         <div className="max-w-md">
           <h1 className=" text-2xl mb-11 relative text-center text-cyan-700 border border-1  border-cyan-500 shadow-md rounded ">
             Real and{" "}
