@@ -51,12 +51,7 @@ export const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to={
-                  auth.user.isLoggedIn ? "/businesses" : "/register"
-                }
-                className="justify-between"
-              >
+              <Link to={"/businesses"} className="justify-between">
                 Businesses
               </Link>
             </li>
