@@ -56,7 +56,9 @@ const ListBusiness = () => {
       (business) => selected === "" || business.category === selected
     )
     .slice(pagesVisited, pagesVisited + businessesPerPage)
-    .map((business) => <BusinessCard business={business} />);
+    .map((business) => (
+      <BusinessCard business={business} key={business._id} />
+    ));
 
   /**
    * The function takes an object as an argument, and then uses the object's selected property to set
