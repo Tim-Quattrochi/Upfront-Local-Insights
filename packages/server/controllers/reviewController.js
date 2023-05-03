@@ -114,6 +114,12 @@ const createReview = async (req, res) => {
 
 const getReviewsByUserId = async (req, res) => {
   const { userId } = req.params;
+
+  if (userId === "undefined" || !userId) {
+    return res
+      .status(401)
+      .json({ error: "please login to view this page." });
+  }
   console.log(userId);
   const ownedReviews = await User.findById(userId)
     .populate({

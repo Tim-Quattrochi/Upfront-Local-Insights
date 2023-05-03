@@ -8,12 +8,12 @@ const Search = ({ searchTerm, handleSearch }) => {
         type="text"
         value={searchTerm}
         onChange={handleSearch}
-        placeholder="Search businesses"
-        className="border-2 border-success bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-success"
+        placeholder="Search"
+        className="input input-success input-sm w-full max-w-xs"
       />
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6 relative mt-2 mr-4 text-gray-400"
+        className="h-6 w-6 relative mt-1 mr-4 text-gray-400 "
         viewBox="0 0 24 24"
         fill="white"
         stroke="black"

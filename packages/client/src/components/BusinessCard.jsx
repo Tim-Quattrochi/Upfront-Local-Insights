@@ -6,7 +6,7 @@ import { BsFillTelephoneForwardFill } from "react-icons/Bs";
 
 const BusinessCard = ({ business }) => {
   return (
-    <div className="max-w-md mx-auto m-4 bg-white rounded-xl hover:bg-slate-100 shadow-md overflow-hidden md:max-w-2xl">
+    <div className="max-w-md mx-auto m-4 bg-white rounded-xl  hover:bg-slate-100 shadow-md overflow-hidden md:max-w-2xl iphone12:h-1/6">
       <div className="md:flex">
         <div className="md:shrink-0">
           {business.photo ? (
@@ -52,66 +52,6 @@ const BusinessCard = ({ business }) => {
         </div>
       </div>
     </div>
-    // <div
-    //   className="flex justify-center p-5 w-1/2 mx-auto "
-    //   key={business._id}
-    // >
-    //   <div className="flex flex-col xs:flex-row bg-white rounded-lg shadow-md hover:bg-slate-100 w-full">
-    //     <div className="relative flex items-center sm:w-1/2 ">
-    //       {business.photo ? (
-    //         <Link to={`/businesses/${business._id}`}>
-    //           <img
-    //             src={`http://54.90.137.205/${business.photo}`}
-    //             alt="Photo of the establishment"
-    //             className="w-full h-48 object-fit rounded-t-lg xl:hidden"
-    //           />
-    //         </Link>
-    //       ) : (
-    //         <Link to={`/businesses/${business._id}`}>
-    //           <img
-    //             src={placeHolderImage}
-    //             alt=""
-    //             className="w-full h-48 object-fit rounded-t-lg xs:hidden"
-    //           />
-    //         </Link>
-    //       )}
-    //     </div>
-    //     <div className="flex-1 p-4 xs:w-full">
-    //       <h3 className="text-2xl font-bold mb-2">
-    //         <Link
-    //           to={`/businesses/${business._id}`}
-    //           className="text-secondary hover:text-gray-600"
-    //         >
-    //           {business.name}
-    //         </Link>
-    //       </h3>
-    //       <div className="text-neutral text-base italic mb-4">
-    //         {business.description}
-    //       </div>
-    //       <p className="text-gray-700 text-sm mb-2">
-    //         ☏{" "}
-    //         <a href="tel:PHONE_NUM">{formatPhone(business.phone)}</a>
-    //       </p>
-    //       <div className="text-gray-700 md:text-lg mb-4">
-    //         📍 {business.address}
-    //       </div>
-    //       <div className="flex items-center justify-between">
-    //         <div className="flex items-center">
-    //           <ShowRating rating={business.rating} />
-    //           <div className="text-gray-600 ml-2 text-sm md:text-base xs:hidden">
-    //             {business.reviews.length} Reviews
-    //           </div>
-    //         </div>
-    //         <Link
-    //           to={`/businesses/${business._id}`}
-    //           className="xs:hidden text-secondary hover:text-gray-600"
-    //         >
-    //           View Business
-    //         </Link>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

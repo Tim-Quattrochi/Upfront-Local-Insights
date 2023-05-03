@@ -17,17 +17,12 @@ const ListBusiness = () => {
   const pagesVisited = pageNumber * businessesPerPage;
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get("business");
-
+    axios
+      .get("business")
+      .then((response) => {
         setBusinesses(response.data.businesses);
-      } catch (error) {
-        console.log(error);
-        setError(error);
-      }
-    };
-    getData();
+      })
+      .catch((err) => setError(err));
   }, []);
 
   useEffect(() => {
@@ -52,7 +47,7 @@ const ListBusiness = () => {
         selected === "" || business.category === selected;
       return nameMatch && categoryMatch;
     });
-    console.log(results);
+
     setSearchFilter(results);
   };
 
@@ -73,28 +68,34 @@ const ListBusiness = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center sm:flex-row sm:justify-between">
+      <div className="flex   items-center  min-w-1/2 sm:justify-center">
         <FilterByCat setSelected={setSelected} />
         <Search searchTerm={searchTerm} handleSearch={handleSearch} />
       </div>
       <div className="flex-col">
         {displayBusinesses}
         <ReactPaginate
-          className=" btn-group mb-20  mx-auto py-1 my-1 xs:ml-14  "
           breakLabel="..."
+          marginPagesDisplayed={2}
           pageCount={pageCount}
           onPageChange={changePage}
-          containerClassName={"btn-group"}
-          activeClassName={"btn btn-active"}
+          containerClassName={"flex  bottom-0 z-10  "}
+          activeClassName={"z-10 bg-blue-500 text-white"}
           previousLabel={"Previous"}
           nextLabel={"Next"}
           disabledClassName={"disabled"}
-          pageClassName={"btn btn-accent"}
+          pageClassName={
+            "mx-1 py-2  w-10 text-center bg-gray-200 hover:bg-gray-300"
+          }
           breakClassName={"break-me"}
-          pageLinkClassName={"page-link"}
-          previousClassName={"btn btn-accent"}
-          nextClassName={"btn btn-accent"}
-          breakLinkClassName={"page-link"}
+          pageLinkClassName={"z-10 text-gray-700 hover:text-white"}
+          previousClassName={
+            "z-10 mx-1 py-2  bg-secondary hover:bg-gray-300"
+          }
+          nextClassName={
+            "z-10 mx-1 py-2 w-10 bg-secondary hover:bg-gray-300"
+          }
+          breakLinkClassName={"text-gray-700 hover:text-white"}
           renderOnZeroPageCount={null}
         />
       </div>

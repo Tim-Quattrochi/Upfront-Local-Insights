@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     screens: {
       xs: "375px",
+      iphone12: { min: "390px", max: "391px" },
       ...defaultTheme.screens,
     },
     extend: {

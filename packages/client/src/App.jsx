@@ -5,19 +5,15 @@ import { Navbar } from "./components/Navbar";
 import Landing from "./components/Landing";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import { useAuthState } from "./Context";
 import ViewSingleBusiness from "./components/ViewSingleBusiness";
 import ErrorPage from "./components/RouteError";
 import LeaveRating from "./components/LeaveRating";
 import ListBusiness from "./components/ListBusiness";
 import ProfilePage from "./pages/ProfilePage";
-import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  const { isLoggedIn } = useAuthState();
-
   return (
-    <div className="relative  bgImage">
+    <div className="bgImage">
       <ErrorBoundary>
         <Navbar />
         <Routes>
@@ -27,13 +23,10 @@ function App() {
             errorElement={<ErrorPage />}
           />
 
-          <Route path="/register" element={<ProtectedRoute />}>
-            <Route path="/register" element={<Register />} />
-          </Route>
+          <Route path="/register" element={<Register />} />
 
-          <Route path="/login" element={<ProtectedRoute />}>
-            <Route path="/login" element={<Login />} />
-          </Route>
+          <Route path="/login" element={<Login />} />
+
           <Route path="businesses" element={<ListBusiness />} />
 
           <Route
@@ -45,9 +38,7 @@ function App() {
             element={<LeaveRating />}
           />
 
-          <Route path="profile" element={<ProtectedRoute />}>
-            <Route path="profile" element={<ProfilePage />} />
-          </Route>
+          <Route path="profile" element={<ProfilePage />} />
         </Routes>
 
         <Footer />
