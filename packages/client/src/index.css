@@ -7,7 +7,7 @@
 }
 
 .bgImage {
-  background-image: url("./assets/bgImage.png");
+  background-image: url("./assets/bgImage.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -16,9 +16,18 @@
   background-position: center;
 }
 
-/* @media (min-width: 640px) {
+@media only screen and (max-width: 767px) {
   .bgImage {
-    min-height: 640px;
+    background-image: url("./assets/bgMobile.svg");
+  }
+}
+
+/*
+
+@media (min-width: 1024px) {
+  .bgImage {
+    background-image: url("./assets/bgMobile.svg");
+    min-height: 1024px;
   }
 }
 

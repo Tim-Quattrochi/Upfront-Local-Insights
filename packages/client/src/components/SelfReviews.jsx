@@ -1,5 +1,6 @@
 import React from "react";
 import ShowRating from "./ShowRating";
+import { Link } from "react-router-dom";
 import { formatDate } from "../utilities/formateDate";
 
 const SelfReviews = ({ userReviews }) => {
@@ -12,7 +13,19 @@ const SelfReviews = ({ userReviews }) => {
             className="prose sm:w-full p-6 border rounded-md shadow-md md:w-1/2 mx-auto mb-4"
           >
             <div className=" flex justify-around text-lg font-semibold text-center">
-              {review.business.name}
+              {/* This is a React Router `Link` component that creates a clickable link to a specific
+              business page. The `to` prop specifies the URL path to the business page, which
+              includes the business ID extracted from the `userReviews` array using the `map`
+              method. The `review.business.name` is the text content of the link that will be
+              displayed to the user.  */}
+              <Link
+                to={`/businesses/${userReviews.map(
+                  (userReview) => userReview.business._id
+                )}`}
+              >
+                {" "}
+                {review.business.name}
+              </Link>
               <div className="text-xs font-light m-1 p-1 italic">
                 {formatDate(review.createdAt)}
               </div>

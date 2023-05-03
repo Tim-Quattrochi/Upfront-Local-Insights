@@ -2,7 +2,7 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <footer className="bg-primary text-center w-full  lg:text-center iphone12:hidden sm:hidden  md: hidden fixed bottom-0">
+    <footer className="bg-primary text-center w-full  lg:text-center  fixed bottom-0">
       <div>
         <p>
           Copyright © 2023 - All right reserved by{" "}
