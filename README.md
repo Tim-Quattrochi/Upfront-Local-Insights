@@ -4,6 +4,8 @@ This project is deployed on an AWS EC2 instance and can be accessed by it's ip4v
 
 ---
 
+![listings](./listings.png)
+
 Upfront Local Insights is a business review website that lets users rate and review businesses. Users can also submit a business (with Photo) if the business is not already listed.
 
 # The Problem
@@ -26,15 +28,26 @@ from the root directory
 npm install
 ```
 
-Create a .env in the server folder and add your connection string.
+Create a .env file in the server folder and add your values.
 
 For example:
+
+```
+ NODE_ENV=development
+ DB_URI=YOUR_URI
+ JWT_SECRET=YOUR_SECRET
+ REFRESH_EXPIRES_IN=YOUR_VALUE DAYS, FOR EXAMPLE 20d
+ REFRESH_TOKEN_SECRET=YOUR_SECRET
+ PORT=3001
+```
+
+Double check your MongoDB connection URI. For example:
 
 ```
 DB_URI=mongodb+srv://<username>:<password>@cluster0.qkyacex.mongodb.net/?retryWrites=true&w=majority
 ```
 
-This App uses `concurrently` to start both the client and server. I have configured the root `package.json` to define workspaces with the client and server.
+This App uses `concurrently` to start both the client and server. I have configured the root `package.json` to define workspaces with the client and server. So in the ROOT directory:
 
 ```
 npm start
@@ -48,9 +61,11 @@ npm start
 
 - [Vite] - build tool that aims to provide a faster and leaner development experience for modern web projects.
 
-- [React] - JavaScript front end framework.
+- [React] - JavaScript front end library.
 
 - [Tailwind CSS] - A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
+
+- [DaisyUI] - It is simply a plugin for Tailwind CSS, which works on all frameworks and has made development faster, and customizable for developers using pure CSS.
 
 ### **Back-End**
 
@@ -82,6 +97,7 @@ Find a bug?
 I welcome contributions. Simply open a pull request with your changes and I will review them.
 
 [tailwind css]: https://tailwindcss.com/docs/guides/vite
+[DaisyUI]: https://daisyui.com/
 [vite]: https://vitejs.dev/
 [mongoose]: https://mongoosejs.com/
 [mongodb]: https://www.mongodb.com/
