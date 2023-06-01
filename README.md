@@ -77,7 +77,7 @@ npm start
 
 - [Express] - Express.js, or simply Express, is a back end web application framework for building RESTful APIs with Node.js
 
-- [MongoDB] - Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache.
+- [MongoDB] - MongoDB Atlas is a fully managed cloud database service that allows you to easily deploy, scale, and operate MongoDB databases in the cloud.
 
 ### **Deployment tools**
 
@@ -100,7 +100,7 @@ I welcome contributions. Simply open a pull request with your changes and I will
 [DaisyUI]: https://daisyui.com/
 [vite]: https://vitejs.dev/
 [mongoose]: https://mongoosejs.com/
-[mongodb]: https://www.mongodb.com/
+[mongodb]: https://www.mongodb.com/atlas/database
 [aws ec2]: https://aws.amazon.com/pm/ec2/?trk=9cd376cd-1c18-46f2-9f75-0e1cdbca94c5&sc_channel=ps&ef_id=CjwKCAjw8-OhBhB5EiwADyoY1QxxcGo4K0YGQjyUr9xX0Ttc1fkrW-xpgjPRjxiHxBuAfvsvbWKh0xoCjfIQAvD_BwE:G:s&s_kwcid=AL!4422!3!651751059309!e!!g!!aws%20ec2!19852662176!145019189697
 [node.js]: http://nodejs.org
 [nginx]: https://www.nginx.com/
