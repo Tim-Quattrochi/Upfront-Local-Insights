@@ -36,7 +36,7 @@ For example:
  NODE_ENV=development
  DB_URI=YOUR_URI
  JWT_SECRET=YOUR_SECRET
- REFRESH_EXPIRES_IN=YOUR_VALUE DAYS, FOR EXAMPLE 20d
+ REFRESH_EXPIRES_IN=YOUR_VALUE
  REFRESH_TOKEN_SECRET=YOUR_SECRET
  PORT=3001
 ```
@@ -77,7 +77,7 @@ npm start
 
 - [Express] - Express.js, or simply Express, is a back end web application framework for building RESTful APIs with Node.js
 
-- [MongoDB] - Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache.
+- [MongoDB] - MongoDB Atlas is a fully managed cloud database service that allows you to easily deploy, scale, and operate MongoDB databases in the cloud.
 
 ### **Deployment tools**
 
