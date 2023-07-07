@@ -1,6 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useAuthState } from "../Context";
 
 const Landing = () => {
+  const navigate = useNavigate();
+  const { user } = useAuthState();
+
+  console.log(user);
+
+  useEffect(() => {
+    if (user?.isLoggedIn) {
+      navigate("/businesses");
+    }
+  }, []);
+
   return (
     <>
       <div className=" w-full flex flex-wrap justify-center content-center mx-auto min-h-screen ">
