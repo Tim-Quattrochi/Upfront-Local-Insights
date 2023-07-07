@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { formatPhone } from "../utilities/formatPhone";
 import ShowRating from "./ShowRating";
 import placeHolderImage from "../assets/Place-holder-image.svg";
-import { BsFillTelephoneForwardFill } from "react-icons/Bs";
+import { BsFillTelephoneForwardFill } from "react-icons/bs";
 
 const BusinessCard = ({ business }) => {
   return (
