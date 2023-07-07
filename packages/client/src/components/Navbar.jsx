@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SubmitBusiness from "../pages/SubmitBusiness";
 import { logout } from "../Context";
 import { useAuthState, useAuthDispatch } from "../Context";
@@ -8,11 +8,17 @@ import { Avatar } from "./Avatar";
 export const Navbar = () => {
   const auth = useAuthState();
   const dispatch = useAuthDispatch();
+  const navigate = useNavigate();
+
+  const logoutToMain = async () => {
+    await logout(dispatch);
+    navigate("/");
+  };
 
   return (
     <div className="navbar sm:flex-1 bg-primary  justify-between  text-white border-b-2">
       <Link to={"/"}>
-        <div className="btn btn-ghost normal-case text-sm flex-nowrap">
+        <div className="btn btn-ghost normal-case text-lg xs:text-sm flex-nowrap">
           Upfront Local Insights
         </div>
       </Link>
@@ -51,19 +57,14 @@ export const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to={
-                  auth.user.isLoggedIn ? "/businesses" : "/register"
-                }
-                className="justify-between"
-              >
+              <Link to={"/businesses"} className="justify-between">
                 Businesses
               </Link>
             </li>
 
             <li>
               {auth.user.isLoggedIn ? (
-                <a onClick={() => logout(dispatch)}>Logout</a>
+                <a onClick={logoutToMain}>Logout</a>
               ) : (
                 ""
               )}

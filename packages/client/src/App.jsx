@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { Footer } from "./components/Footer";
 import { Navbar } from "./components/Navbar";
 import Landing from "./components/Landing";
 import Register from "./pages/Register";
@@ -13,7 +12,7 @@ import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
-    <div className="bgImage">
+    <div className="bgImage bg-cover bg-center h-full w-full  top-0 left-0 ">
       <ErrorBoundary>
         <Navbar />
         <Routes>
@@ -40,8 +39,6 @@ function App() {
 
           <Route path="profile" element={<ProfilePage />} />
         </Routes>
-
-        <Footer />
       </ErrorBoundary>
     </div>
   );

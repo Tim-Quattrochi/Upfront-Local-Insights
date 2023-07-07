@@ -7,7 +7,7 @@
 }
 
 .bgImage {
-  background-image: url("./assets/bgImage.png");
+  background-image: url("./assets/bgImage.webp");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -16,26 +16,8 @@
   background-position: center;
 }
 
-/* @media (min-width: 640px) {
+@media only screen and (max-width: 767px) {
   .bgImage {
-    min-height: 640px;
+    background-image: url("./assets/bgMobile.webp");
   }
 }
-
-@media (min-width: 768px) {
-  .bgImage {
-    min-height: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .bgImage {
-    min-height: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .bgImage {
-    min-height: 1280px;
-  }
-} */

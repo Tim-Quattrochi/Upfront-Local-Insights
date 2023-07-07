@@ -62,11 +62,20 @@ const ViewSingleBusiness = (props) => {
             {singleBusiness.name}
           </h1>
           <div>
-            <span className="font-bold">Overall Rating</span>
+            <span className="font-bold">
+              {singleBusiness.reviews?.length <= 0
+                ? "Not Rated"
+                : "Overall Rating"}
+            </span>
             <ShowRating rating={singleBusiness.rating} />
           </div>
           <span className="text-left">
-            {singleBusiness.reviews?.length} Reviews
+            {singleBusiness.reviews?.length
+              ? singleBusiness.reviews?.length
+              : ""}{" "}
+            {singleBusiness.reviews?.length <= 0
+              ? "No reviews yet!"
+              : "Reviews"}
           </span>
 
           <div className="tracking-wide text-sm text-indigo-500 font-semibold">
