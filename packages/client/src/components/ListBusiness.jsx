@@ -74,7 +74,7 @@ const ListBusiness = () => {
         <FilterByCat setSelected={setSelected} />
         <Search searchTerm={searchTerm} handleSearch={handleSearch} />
       </div>
-      <div className="flex-col">
+      <div className="">
         {displayBusinesses}
         <ReactPaginate
           breakLabel="..."

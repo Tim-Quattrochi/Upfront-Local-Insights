@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import bgImage from "./assets/bgImage.svg";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { Navbar } from "./components/Navbar";
 import Landing from "./components/Landing";
@@ -13,7 +12,7 @@ import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
-    <div className="bg-[bgImage] bg-cover bg-center h-full w-full fixed top-0 left-0 ">
+    <div className="bgImage bg-cover bg-center h-full w-full  top-0 left-0 ">
       <ErrorBoundary>
         <Navbar />
         <Routes>

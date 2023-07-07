@@ -1,6 +1,4 @@
-import landingImage from "../assets/landingImage.svg";
 import { Link } from "react-router-dom";
-import bgImage from "../assets/bgImage.png";
 
 const Landing = () => {
   return (
