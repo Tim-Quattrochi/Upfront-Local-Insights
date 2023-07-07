@@ -1,4 +1,7 @@
 import axios from "../hooks/useAxios";
+import { baseURl } from "../../config/constants";
+
+const API_URL = baseURl;
 
 /**
  * It takes in a dispatch function and a loginPayload object, and then it makes a post request to the
@@ -40,26 +43,17 @@ export async function loginUser(dispatch, loginPayload) {
  * @returns The response from the server.
  */
 export async function registerUser(dispatch, registerPayload) {
-<<<<<<< HEAD
-  
+  console.log(dispatch);
+  console.log(registerPayload);
   try {
     dispatch({ type: "REQUEST_REGISTER" });
     let response = await axios.post(
-      `/users/register`,
+      `${API_URL}/users/register`,
       registerPayload
     );
 
-    
+    console.log(response);
 
-=======
-  try {
-    dispatch({ type: "REQUEST_REGISTER" });
-    let response = await axios.post(
-      "/users/register",
-      registerPayload
-    );
-
->>>>>>> f28bd2b93a831f2992a53c2c6907c9d948dd14f9
     if (response.data?.error) {
       dispatch({ type: "REGISTER_ERROR", error });
       console.log(response.error);
