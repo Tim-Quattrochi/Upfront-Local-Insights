@@ -8,8 +8,6 @@ const {
 const signUp = async (req, res) => {
   const { confirmPassword, name, password, email, role } = req.body;
 
-  console.log(confirmPassword, name, password, email);
-
   if (!name || !email || !password || !confirmPassword) {
     return res
       .status(400)

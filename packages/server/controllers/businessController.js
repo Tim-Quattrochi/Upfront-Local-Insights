@@ -125,7 +125,7 @@ const createBusiness = async (req, res) => {
         website,
         photo,
       } = req.body;
-      console.log(req.body);
+   
       if (
         !name ||
         !description ||

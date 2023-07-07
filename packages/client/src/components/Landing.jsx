@@ -6,8 +6,6 @@ const Landing = () => {
   const navigate = useNavigate();
   const { user } = useAuthState();
 
-  console.log(user);
-
   useEffect(() => {
     if (user?.isLoggedIn) {
       navigate("/businesses");

@@ -61,8 +61,6 @@ const createReview = async (req, res) => {
     const { comment, user, rating, name } = req.body;
     //bring in the name of the user to reference.
 
-    console.log(user);
-
     if (
       !rating ||
       rating === "0" ||
@@ -120,7 +118,7 @@ const getReviewsByUserId = async (req, res) => {
       .status(401)
       .json({ error: "please login to view this page." });
   }
-  console.log(userId);
+
   const ownedReviews = await User.findById(userId)
     .populate({
       path: "reviews",

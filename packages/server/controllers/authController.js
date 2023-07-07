@@ -27,7 +27,6 @@ const refresh = async (req, res) => {
     refreshToken,
     REFRESH_TOKEN_SECRET,
     async (err, decoded) => {
-      console.log(decoded.id, user.id);
       if (err || user.id !== decoded.id) {
         return res.status(403).json({ message: "Forbidden." });
       }

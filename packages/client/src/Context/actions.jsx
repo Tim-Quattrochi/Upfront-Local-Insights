@@ -43,8 +43,6 @@ export async function loginUser(dispatch, loginPayload) {
  * @returns The response from the server.
  */
 export async function registerUser(dispatch, registerPayload) {
-  console.log(dispatch);
-  console.log(registerPayload);
   try {
     dispatch({ type: "REQUEST_REGISTER" });
     let response = await axios.post(
@@ -52,11 +50,9 @@ export async function registerUser(dispatch, registerPayload) {
       registerPayload
     );
 
-    console.log(response);
-
     if (response.data?.error) {
       dispatch({ type: "REGISTER_ERROR", error });
-      console.log(response.error);
+
       return error;
     }
 
