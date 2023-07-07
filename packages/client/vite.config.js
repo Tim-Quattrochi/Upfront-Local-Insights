@@ -16,4 +16,9 @@ export default defineConfig({
   resolve: {
     extensions: [".js", ".json", ".jsx"],
   },
+  build: {
+    rollupOptions: {
+      external: ["react-icons/Bs"],
+    },
+  },
 });
