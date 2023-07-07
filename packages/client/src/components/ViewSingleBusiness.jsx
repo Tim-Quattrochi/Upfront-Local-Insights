@@ -5,7 +5,6 @@ import LeaveRating from "./LeaveRating";
 import { formatDate } from "../utilities/formateDate";
 import { formatPhone } from "../utilities/formatPhone";
 import { BsFillTelephoneForwardFill } from "react-icons/Bs";
-import { MdLocationOn } from "react-icons/Md";
 import { FaRegStar } from "react-icons/fa";
 import { TbWorldWww } from "react-icons/Tb";
 
@@ -82,7 +81,6 @@ const ViewSingleBusiness = (props) => {
             {singleBusiness.description}
           </div>
           <div className=" flex mt-2 text-slate-500 md:text-lg text-center">
-            <MdLocationOn size={24} fill={"red"} />
             {singleBusiness.address}
           </div>
           <div className="flex items-center justify-between mb-4 mt-2">
