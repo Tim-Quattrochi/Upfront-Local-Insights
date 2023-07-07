@@ -4,10 +4,9 @@ import axios from "../hooks/useAxios";
 import LeaveRating from "./LeaveRating";
 import { formatDate } from "../utilities/formateDate";
 import { formatPhone } from "../utilities/formatPhone";
-import { BsFillTelephoneForwardFill } from "react-icons/Bs";
+import { BsFillTelephoneForwardFill } from "react-icons/bs";
 import { FaRegStar } from "react-icons/fa";
-import { TbWorldWww } from "react-icons/Tb";
-
+import { TbWorldWww } from "react-icons/tb";
 import ShowRating from "./ShowRating";
 import placeHolderImage from "../assets/Place-holder-image.svg";
 
