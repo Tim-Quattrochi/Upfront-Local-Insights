@@ -148,7 +148,7 @@ const ViewSingleBusiness = (props) => {
 
               {review.photo ? (
                 <img
-                  src={`http://54.90.137.205/${review.photo}`}
+                  src={`/${review.photo}`}
                   alt="User's review picture"
                   className="h-32 w-64 mt-4 rounded-md shadow-md"
                 />

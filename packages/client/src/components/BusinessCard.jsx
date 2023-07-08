@@ -12,7 +12,7 @@ const BusinessCard = ({ business }) => {
           {business.photo ? (
             <Link to={`/businesses/${business._id}`}>
               <img
-                src={`http://54.90.137.205/${business.photo}`}
+                src={`/${business.photo}`}
                 alt="Photo of the establishment"
                 className="h-48 w-full object-fit md:h-full md:w-48"
               />
