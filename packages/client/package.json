@@ -1,6 +1,7 @@
 {
   "name": "client",
   "private": true,
+  "homepage": "https://upfront-local-insights-client.vercel.app/",
   "proxy": "http://localhost:3001",
   "version": "0.0.0",
   "type": "module",
