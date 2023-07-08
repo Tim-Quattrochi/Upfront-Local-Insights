@@ -4,7 +4,11 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   server: {
     proxy: {
-      "/api": "http://localhost:3001/",
+      "/api": {
+        target: "https://upfront-local-server.onrender.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
     },
   },
   plugins: [react({ jsxRuntime: "classic" })],
