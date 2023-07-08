@@ -10,7 +10,7 @@ import { FaRegStar } from "react-icons/fa";
 import { TbWorldWww } from "react-icons/tb";
 import ShowRating from "./ShowRating";
 import placeHolderImage from "../assets/Place-holder-image.svg";
-
+import { imagePath } from "../../config/constants";
 const ViewSingleBusiness = (props) => {
   const [singleBusiness, setSingleBusiness] = useState({});
   const [reviews, setReviews] = useState([]);
@@ -44,7 +44,7 @@ const ViewSingleBusiness = (props) => {
         <div className="relative">
           {singleBusiness.photo ? (
             <img
-              src={`http://54.90.137.205/${singleBusiness.photo}`}
+              src={`${imagePath}${singleBusiness.photo}`}
               alt=""
               className="w-full h-64 object-scale-down rounded-t-lg"
             />
@@ -148,7 +148,7 @@ const ViewSingleBusiness = (props) => {
 
               {review.photo ? (
                 <img
-                  src={`/${review.photo}`}
+                  src={`${imagePath}${review.photo}`}
                   alt="User's review picture"
                   className="h-32 w-64 mt-4 rounded-md shadow-md"
                 />

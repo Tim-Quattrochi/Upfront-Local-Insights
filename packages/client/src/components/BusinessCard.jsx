@@ -3,6 +3,7 @@ import { formatPhone } from "../utilities/formatPhone";
 import ShowRating from "./ShowRating";
 import placeHolderImage from "../assets/Place-holder-image.svg";
 import { BsFillTelephoneForwardFill } from "react-icons/bs";
+import { imagePath } from "../../config/constants";
 
 const BusinessCard = ({ business }) => {
   return (
@@ -12,7 +13,7 @@ const BusinessCard = ({ business }) => {
           {business.photo ? (
             <Link to={`/businesses/${business._id}`}>
               <img
-                src={`/${business.photo}`}
+                src={`${imagePath}${business.photo}`}
                 alt="Photo of the establishment"
                 className="h-48 w-full object-fit md:h-full md:w-48"
               />

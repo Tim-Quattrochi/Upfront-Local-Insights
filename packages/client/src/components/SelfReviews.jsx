@@ -2,6 +2,7 @@ import React from "react";
 import ShowRating from "./ShowRating";
 import { Link } from "react-router-dom";
 import { formatDate } from "../utilities/formateDate";
+import { imagePath } from "../../config/constants";
 
 const SelfReviews = ({ userReviews }) => {
   return (
@@ -40,7 +41,7 @@ const SelfReviews = ({ userReviews }) => {
 
             {review.photo ? (
               <img
-                src={`/${review.photo}`}
+                src={`${imagePath}${review.photo}`}
                 alt="User's review picture"
                 className="h-32 w-64 mt-4 rounded-md shadow-md"
               />
