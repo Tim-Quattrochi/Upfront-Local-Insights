@@ -2,11 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "packages/server/server.js",
+      "src": "./server/server.js",
       "use": "@vercel/node"
     },
     {
-      "src": "packages/client/dist",
+      "src": "./client/dist",
       "use": "@vercel/static"
     }
   ],
@@ -14,7 +14,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "packages/server/server.js"
+      "destination": "./server/server.js"
     }
   ]
 }
