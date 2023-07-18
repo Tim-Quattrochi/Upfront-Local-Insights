@@ -20,9 +20,9 @@ export default defineConfig({
   resolve: {
     extensions: [".js", ".json", ".jsx"],
   },
-  build: {
-    rollupOptions: {
-      external: ["react-icons"],
-    },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./__tests__/setup.js",
   },
 });
