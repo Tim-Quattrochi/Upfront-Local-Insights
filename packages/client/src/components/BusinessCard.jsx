@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-import { formatPhone } from "../utilities/formatPhone";
 import ShowRating from "./ShowRating";
 import placeHolderImage from "../assets/Place-holder-image.svg";
 import { BsFillTelephoneForwardFill } from "react-icons/bs";
-import { imagePath } from "../../config/constants";
+import { checkPic } from "../utilities/checkPic";
 
 const BusinessCard = ({ business }) => {
   return (
@@ -13,7 +12,7 @@ const BusinessCard = ({ business }) => {
           {business.photo ? (
             <Link to={`/businesses/${business._id}`}>
               <img
-                src={`${imagePath}${business.photo}`}
+                src={`${checkPic(business.photo)}`}
                 alt="Photo of the establishment"
                 className="h-48 w-full object-fit md:h-full md:w-48"
               />
@@ -45,7 +44,7 @@ const BusinessCard = ({ business }) => {
             <BsFillTelephoneForwardFill
               style={{ marginRight: "4px" }}
             />{" "}
-            {formatPhone(business.phone)}
+            {business.phone}
           </p>
         </div>
         <div className="flex justify-start mx-auto">

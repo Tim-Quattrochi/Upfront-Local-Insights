@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import axios from "../hooks/useAxios";
 import LeaveRating from "./LeaveRating";
 import { formatDate } from "../utilities/formateDate";
-import { formatPhone } from "../utilities/formatPhone";
 import { BsFillTelephoneForwardFill } from "react-icons/bs";
 import { MdLocationOn } from "react-icons/md";
 import { FaRegStar } from "react-icons/fa";
@@ -11,6 +10,7 @@ import { TbWorldWww } from "react-icons/tb";
 import ShowRating from "./ShowRating";
 import placeHolderImage from "../assets/Place-holder-image.svg";
 import { imagePath } from "../../config/constants";
+import { checkPic } from "../utilities/checkPic";
 const ViewSingleBusiness = (props) => {
   const [singleBusiness, setSingleBusiness] = useState({});
   const [reviews, setReviews] = useState([]);
@@ -44,7 +44,7 @@ const ViewSingleBusiness = (props) => {
         <div className="relative">
           {singleBusiness.photo ? (
             <img
-              src={`${imagePath}${singleBusiness.photo}`}
+              src={`${checkPic(singleBusiness.photo)}`}
               alt=""
               className="w-full h-64 object-scale-down rounded-t-lg"
             />
@@ -92,7 +92,7 @@ const ViewSingleBusiness = (props) => {
                 size={20}
               />
               <a href="tel:PHONE_NUM" className=" text-slate-500">
-                {formatPhone(singleBusiness.phone)}
+                {singleBusiness.phone}
               </a>
             </div>
           </div>
