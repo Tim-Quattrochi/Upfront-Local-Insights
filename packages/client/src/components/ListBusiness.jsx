@@ -13,8 +13,7 @@ const ListBusiness = () => {
   const [selected, setSelected] = useState(""); //selected for filter by category.
   const [error, setError] = useState(null);
 
-  const businessesPerPage = 5;
-  const pagesVisited = pageNumber * businessesPerPage;
+  const businessesPerPage = 7;
 
   useEffect(() => {
     axios
@@ -28,8 +27,6 @@ const ListBusiness = () => {
   useEffect(() => {
     setSearchFilter(businesses);
   }, [businesses]);
-
-  const pageCount = Math.ceil(businesses.length / businessesPerPage);
 
   /**
    * The function takes in an event, sets the search term to the value of the event, filters the
@@ -51,15 +48,42 @@ const ListBusiness = () => {
     setSearchFilter(results);
   };
 
-  const displayBusinesses = searchFilter
-    .filter(
+  const displayBusinesses = () => {
+    const filteredBusinesses = searchFilter.filter(
       (business) => selected === "" || business.category === selected
-    )
-    .slice(pagesVisited, pagesVisited + businessesPerPage)
-    .map((business) => (
-      <BusinessCard business={business} key={business._id} />
-    ));
+    );
 
+    const startIndex = pageNumber * businessesPerPage;
+    const endIndex = Math.min(
+      (pageNumber + 1) * businessesPerPage,
+      filteredBusinesses.length
+    );
+
+    const businessesToDisplay = filteredBusinesses.slice(
+      startIndex,
+      endIndex
+    );
+
+    if (businessesToDisplay.length === 0) {
+      return (
+        <p className="text-center text-gray-500 my-4">
+          No results found.
+        </p>
+      );
+    }
+
+    return businessesToDisplay.map((business) => (
+      <BusinessCard key={business._id} business={business} />
+    ));
+  };
+
+  const totalFilteredResults = searchFilter.filter(
+    (business) => selected === "" || business.category === selected
+  ).length;
+
+  const pageCount = Math.ceil(
+    totalFilteredResults / businessesPerPage
+  );
   /**
    * The function takes an object as an argument, and then uses the object's selected property to set
    * the pageNumber state
@@ -75,31 +99,40 @@ const ListBusiness = () => {
         <Search searchTerm={searchTerm} handleSearch={handleSearch} />
       </div>
       <div className="">
-        {displayBusinesses}
-        <ReactPaginate
-          breakLabel="..."
-          marginPagesDisplayed={2}
-          pageCount={pageCount}
-          onPageChange={changePage}
-          containerClassName={"flex  bottom-0 z-10  "}
-          activeClassName={"z-10 bg-blue-500 text-white"}
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
-          disabledClassName={"disabled"}
-          pageClassName={
-            "mx-1 py-2  w-10 text-center bg-gray-200 hover:bg-gray-300"
-          }
-          breakClassName={"break-me"}
-          pageLinkClassName={"z-10 text-gray-700 hover:text-white"}
-          previousClassName={
-            "z-10 mx-1 py-2  bg-secondary hover:bg-gray-300"
-          }
-          nextClassName={
-            "z-10 mx-1 py-2 w-10 bg-secondary hover:bg-gray-300"
-          }
-          breakLinkClassName={"text-gray-700 hover:text-white"}
-          renderOnZeroPageCount={null}
-        />
+        {searchFilter.length === 0 ? (
+          <p className="text-center text-gray-500 my-4">
+            No results found.
+          </p>
+        ) : (
+          displayBusinesses()
+        )}
+
+        {searchFilter.length > businessesPerPage && (
+          <ReactPaginate
+            breakLabel="..."
+            marginPagesDisplayed={2}
+            pageCount={pageCount}
+            onPageChange={changePage}
+            containerClassName={"flex  bottom-0 z-10  "}
+            activeClassName={"z-10 bg-blue-500 text-white"}
+            previousLabel={"Previous"}
+            nextLabel={"Next"}
+            disabledClassName={"disabled"}
+            pageClassName={
+              "mx-1 py-2  w-10 text-center bg-gray-200 hover:bg-gray-300"
+            }
+            breakClassName={"break-me"}
+            pageLinkClassName={"z-10 text-gray-700 hover:text-white"}
+            previousClassName={
+              "z-10 mx-1 py-2  bg-secondary hover:bg-gray-300"
+            }
+            nextClassName={
+              "z-10 mx-1 py-2 w-10 bg-secondary hover:bg-gray-300"
+            }
+            breakLinkClassName={"text-gray-700 hover:text-white"}
+            renderOnZeroPageCount={null}
+          />
+        )}
       </div>
     </>
   );
