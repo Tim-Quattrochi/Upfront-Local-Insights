@@ -11,7 +11,7 @@ const FilterByCat = ({ businesses, setSelected }) => {
       onChange={handleSelected}
     >
       {options.map((cat, i) => (
-        <option key={cat.value} value={cat.value}>
+        <option key={i} value={cat.value}>
           {cat.text}
         </option>
       ))}
