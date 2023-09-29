@@ -9,11 +9,13 @@ import ErrorPage from "./components/RouteError";
 import LeaveRating from "./components/LeaveRating";
 import ListBusiness from "./components/ListBusiness";
 import ProfilePage from "./pages/ProfilePage";
+import { inject } from "@vercel/analytics";
 
 function App() {
   return (
     <div className="bgImage bg-cover bg-center h-full w-full  top-0 left-0 ">
       <ErrorBoundary>
+        {inject()}
         <Navbar />
         <Routes>
           <Route
