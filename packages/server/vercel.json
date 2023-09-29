@@ -16,5 +16,7 @@
       "source": "/(.*)",
       "destination": "./server/server.js"
     }
-  ]
+  ],
+
+  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
 }
