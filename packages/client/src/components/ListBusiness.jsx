@@ -4,6 +4,7 @@ import axios from "../hooks/useAxios";
 import Search from "./Search";
 import FilterByCat from "./FilterByCat";
 import BusinessCard from "./BusinessCard";
+import LoadingBar from "./LoadingBar";
 
 const ListBusiness = () => {
   const [searchFilter, setSearchFilter] = useState([]);
@@ -12,6 +13,7 @@ const ListBusiness = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [selected, setSelected] = useState(""); //selected for filter by category.
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const businessesPerPage = 7;
 
@@ -19,9 +21,15 @@ const ListBusiness = () => {
     axios
       .get("business")
       .then((response) => {
-        setBusinesses(response.data.businesses);
+        if (response.status === 200) {
+          setBusinesses(response.data.businesses);
+          setLoading(false);
+        }
       })
-      .catch((err) => setError(err));
+      .catch((err) => {
+        setLoading(false);
+        setError(err);
+      });
   }, []);
 
   useEffect(() => {
@@ -91,6 +99,8 @@ const ListBusiness = () => {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+
+  if (loading) return <LoadingBar />;
 
   return (
     <>
