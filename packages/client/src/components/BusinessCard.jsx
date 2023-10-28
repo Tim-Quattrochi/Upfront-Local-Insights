@@ -14,7 +14,7 @@ const BusinessCard = ({ business }) => {
               <img
                 src={`${checkPic(business.photo)}`}
                 alt="Photo of the establishment"
-                class="h-48 w-48 object-cover md:h-72 md:w-72 mx-auto"
+                className="h-48 w-48 object-cover md:h-72 md:w-72 mx-auto"
               />
             </Link>
           ) : (
@@ -22,31 +22,31 @@ const BusinessCard = ({ business }) => {
               <img
                 src={placeHolderImage}
                 alt=""
-                class="h-48 w-48 object-cover md:h-72 md:w-72 mx-auto"
+                className="h-48 w-48 object-cover md:h-72 md:w-72 mx-auto"
               />
             </Link>
           )}
         </div>
-        <div class="p-8">
-          <div class="block mt-2 text-xl leading-tight font-semibold text-black hover:underline">
+        <div className="p-8">
+          <div className="block mt-2 text-xl leading-tight font-semibold text-black hover:underline">
             <Link to={`/businesses/${business._id}`}>
               {business.name}
             </Link>
           </div>
           <Link
             to={`/businesses/${business._id}`}
-            class="mt-2 text-indigo-600 font-medium text-base hover:underline"
+            className="mt-2 text-indigo-600 font-medium text-base hover:underline"
           >
             {business.description}
           </Link>
-          <p class="mt-4 text-slate-500">{business.address}</p>
-          <p class="flex items-center mt-4 text-slate-500">
-            <BsFillTelephoneForwardFill class="w-5 h-5 mr-2" />{" "}
+          <p className="mt-4 text-slate-500">{business.address}</p>
+          <p className="flex items-center mt-4 text-slate-500">
+            <BsFillTelephoneForwardFill className="w-5 h-5 mr-2" />{" "}
             {business.phone}
           </p>
         </div>
       </div>
-      <div class="mt-4 p-4 bg-info">
+      <div className="mt-4 p-4 bg-info">
         <ShowRating rating={business.rating} />
       </div>
     </div>
