@@ -101,19 +101,30 @@ export const Navbar = () => {
           />
           {searchFilter.length > 0 ? (
             <div
-              className="absolute z-10 mt-20 bg-white w-64"
+              className="absolute z-10 mt-20  bg-white w-64"
               ref={dropdownRef}
             >
               {error ? <p>An error occurred.</p> : ""}
               {isOpen &&
                 searchFilter.map((business) => (
-                  <Link
-                    to={`/businesses/${business._id}`}
-                    key={business._id}
-                    className="block p-2 hover:bg-gray-200"
-                  >
-                    {business.name}
-                  </Link>
+                  <div className="flex w-full py-2 m-auto">
+                    <Link
+                      to={`/businesses/${business._id}`}
+                      key={business._id}
+                      className=" p-2 hover:bg-gray-200"
+                    >
+                      {business.name}
+                      {business.photo ? (
+                        <img
+                          src={business.photo}
+                          alt="Business"
+                          className="h-10 w-10 rounded-full "
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </Link>
+                  </div>
                 ))}
             </div>
           ) : null}
