@@ -19,28 +19,25 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          primary: "#61d7dd",
+          primary: "#1a6791",
 
-          secondary: "#2398c6",
+          secondary: "#f9b7b1",
 
-          accent: "#99bc38",
+          accent: "#db04ea",
 
-          neutral: "#1F2428",
+          neutral: "#2d2e39",
 
-          "base-100": "#ECECF3",
+          "base-100": "#2b3e5a",
 
-          info: "#A0C3E4",
+          info: "#4094dd",
 
-          success: "#1AD163",
+          success: "#31c495",
 
-          warning: "#FCBD36",
+          warning: "#f7b269",
 
-          error: "#F35E68",
-          blue: "#0000FF",
-          yellow: "#facc15",
+          error: "#e44444",
         },
       },
-      "corporate",
     ],
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
