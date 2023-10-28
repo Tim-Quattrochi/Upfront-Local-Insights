@@ -16,27 +16,26 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="navbar sm:flex-1 bg-primary  justify-between  text-white border-b-2">
-      <Link to={"/"}>
-        <div className="btn btn-ghost normal-case text-lg xs:text-sm flex-nowrap">
+    <div className="navbar bg-base-100">
+      <div className="flex-1">
+        <Link to="/" className="btn btn-ghost normal-case text-xl">
           Upfront Local Insights
-        </div>
-      </Link>
+        </Link>
+      </div>
       <div className="flex-none gap-2">
-        <div className="flex gap-2">
-          <SubmitBusiness />
+        <div className="form-control">
+          <input
+            type="text"
+            placeholder="Search"
+            className="input input-bordered w-24 md:w-auto"
+          />
         </div>
         <div className="dropdown dropdown-end">
           <label
             tabIndex={0}
             className="btn btn-ghost btn-circle avatar"
           >
-            {/* /* This code is rendering an Avatar component with a circular shape and a width of 12. The
-           Avatar component is receiving a prop called "name" which is being set to the first letter
-           of the user's name if they are logged in, or "Guest" if they are not logged in. The
-           Avatar component is likely responsible for rendering a user's profile picture or a
-           default icon if no picture is available. */}
-            <div className="rounded-full w-12">
+            <div className="w-14  rounded-full">
               <Avatar
                 name={
                   auth.user.user ? auth.user.user.name[0] : "Guest"
@@ -46,14 +45,14 @@ export const Navbar = () => {
           </label>
           <ul
             tabIndex={0}
-            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-accent rounded-box w-52"
+            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
               <Link
                 to={auth.user.isLoggedIn ? "/profile" : "/login"}
-                className="justify-between"
+                className="justify-start"
               >
-                Profile
+                <li>Profile</li>
               </Link>
             </li>
             <li>
@@ -61,7 +60,6 @@ export const Navbar = () => {
                 Businesses
               </Link>
             </li>
-
             <li>
               {auth.user.isLoggedIn ? (
                 <a onClick={logoutToMain}>Logout</a>
