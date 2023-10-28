@@ -1,19 +1,83 @@
-import React from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SubmitBusiness from "../pages/SubmitBusiness";
 import { logout } from "../Context";
 import { useAuthState, useAuthDispatch } from "../Context";
 import { Avatar } from "./Avatar";
+import useGetBusinesses from "../hooks/useGetBusinesses";
 
 export const Navbar = () => {
   const auth = useAuthState();
   const dispatch = useAuthDispatch();
   const navigate = useNavigate();
+  const [searchFilter, setSearchFilter] = useState([]);
+
+  const [isOpen, setIsOpen] = useState(true);
+  const dropdownRef = useRef(null);
+
+  const { businesses, error } = useGetBusinesses();
+
+  const [navbarSearchTerm, setNavbarSearchTerm] = useState("");
+
+  const handleNavBarSearch = (e) => {
+    setNavbarSearchTerm(e.target.value);
+
+    const results = businesses.filter((business) => {
+      const nameMatch = business.name
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase());
+
+      return e.target.value.length > 0 ? nameMatch : false;
+    });
+
+    setSearchFilter(results);
+  };
 
   const logoutToMain = async () => {
     await logout(dispatch);
     navigate("/");
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target) &&
+        !document
+          .querySelector(".input.input-bordered")
+          .contains(e.target)
+      ) {
+        setIsOpen(false);
+      } else {
+        setIsOpen(true);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleSearchClick = (e) => {
+      if (
+        !dropdownRef.current.contains(e.target) &&
+        document
+          .querySelector(".input.input-bordered")
+          .contains(e.target)
+      ) {
+        setIsOpen(true);
+      }
+    };
+
+    document.addEventListener("click", handleSearchClick);
+
+    return () => {
+      document.removeEventListener("click", handleSearchClick);
+    };
+  }, []);
 
   return (
     <div className="navbar bg-base-100">
@@ -21,14 +85,38 @@ export const Navbar = () => {
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           Upfront Local Insights
         </Link>
+        <span className="ml-10 bg-secondary h-10 text-white  p-2  rounded-md">
+          <SubmitBusiness />
+        </span>
       </div>
+
       <div className="flex-none gap-2">
-        <div className="form-control">
+        <div className="form-control relative">
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search for a business"
             className="input input-bordered w-24 md:w-auto"
+            value={navbarSearchTerm}
+            onChange={handleNavBarSearch}
           />
+          {searchFilter.length > 0 ? (
+            <div
+              className="absolute z-10 mt-20 bg-white w-64"
+              ref={dropdownRef}
+            >
+              {error ? <p>An error occurred.</p> : ""}
+              {isOpen &&
+                searchFilter.map((business) => (
+                  <Link
+                    to={`/businesses/${business._id}`}
+                    key={business._id}
+                    className="block p-2 hover:bg-gray-200"
+                  >
+                    {business.name}
+                  </Link>
+                ))}
+            </div>
+          ) : null}
         </div>
         <div className="dropdown dropdown-end">
           <label
