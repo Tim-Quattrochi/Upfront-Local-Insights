@@ -1,6 +1,11 @@
 # Upfront-Local-Insights
 
-This project is deployed on an AWS EC2 instance and can be accessed by it's Public IPv4 address: http://54.90.137.205/ and also deployed on  [Vercel].
+
+12/9/23 update: This app is now deployed on Vercel at :
+https://upfront-local-insights-client.vercel.app/
+
+
+~~This project is deployed on an AWS EC2 instance and can be accessed by it's Public IPv4 address: http://54.90.137.205/ and also deployed on  [Vercel].~~
 
 ---
 
