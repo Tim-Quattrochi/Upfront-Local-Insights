@@ -8,7 +8,7 @@ const BusinessCard = ({ business }) => {
   return (
     <div className="max-w-md mx-auto m-4 bg-base-100 rounded-xl shadow-md hover:shadow-lg overflow-hidden">
       <div className="md:flex md:items-center">
-        <div class="md:shrink-0">
+        <div className="md:shrink-0">
           {business.photo ? (
             <Link to={`/businesses/${business._id}`}>
               <img

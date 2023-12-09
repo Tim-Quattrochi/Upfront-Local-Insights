@@ -23,6 +23,8 @@ export const initialState = {
  * @returns The AuthReducer is returning the initialState, which is an empty object.
  */
 export const AuthReducer = (initialState, action) => {
+  const { error: { response: { data } = {} } = {} } = action;
+
   switch (action.type) {
     case "REQUEST_LOGIN":
       return {
@@ -48,7 +50,7 @@ export const AuthReducer = (initialState, action) => {
       return {
         ...initialState,
         loading: false,
-        errorMessage: action.error,
+        errorMessage: data,
       };
     case "REQUEST_REGISTER":
       return {

@@ -73,8 +73,8 @@ export async function registerUser(dispatch, registerPayload) {
 
     return response;
   } catch (error) {
-    error = error.response.data.error;
-    console.log(error);
+    error = error?.response?.data?.error;
+
     dispatch({ type: "REGISTER_ERROR", error });
   }
 }

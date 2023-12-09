@@ -13,7 +13,7 @@ import { inject } from "@vercel/analytics";
 
 function App() {
   return (
-    <div className="bgImage bg-cover bg-center h-full w-full  top-0 left-0 ">
+    <div className="h-full w-full bg-white  top-0 left-0 ">
       <ErrorBoundary>
         {inject()}
         <Navbar />

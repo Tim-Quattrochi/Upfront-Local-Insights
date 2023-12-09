@@ -11,6 +11,7 @@ import ShowRating from "./ShowRating";
 import placeHolderImage from "../assets/Place-holder-image.svg";
 import { imagePath } from "../../config/constants";
 import { checkPic } from "../utilities/checkPic";
+
 const ViewSingleBusiness = (props) => {
   const [singleBusiness, setSingleBusiness] = useState({});
   const [reviews, setReviews] = useState([]);
@@ -39,113 +40,106 @@ const ViewSingleBusiness = (props) => {
   }, [businessId]);
 
   return (
-    <div className="  bg-white">
-      <div className="bgImage rounded-lg shadow-md">
-        <div className="relative">
+    <div className="bg-white">
+      <div className="shadow-lg p-4 md:p-8 rounded-lg">
+        <div className="relative h-64 md:h-96">
           {singleBusiness.photo ? (
             <img
               src={`${checkPic(singleBusiness.photo)}`}
-              alt=""
-              className="w-full h-64 object-scale-down rounded-t-lg"
+              alt="Business Photo"
+              className="w-full h-full object-cover rounded-t-lg"
             />
           ) : (
             <img
               src={placeHolderImage}
-              alt=""
-              className="w-full h-64 object-cover rounded-t-lg"
+              alt="Placeholder"
+              className="w-full h-full object-cover rounded-t-lg"
             />
           )}
         </div>
-        <div className=" prose flex flex-col mt-4  mx-auto border rounded-md  bg-transparent bg-opacity-50 shadow-md items-center justify-center p-6 py-4 text-center sm:p-8 ">
-          <h1 className="block mt-1 text-lg leading-tight font-medium text-black hover:underline ">
+        <div className="prose flex flex-col mt-4 mx-auto border rounded-md bg-opacity-50 shadow-md p-6 py-4 text-center sm:p-8">
+          <h1 className="text-3xl font-semibold text-black hover:underline">
             {singleBusiness.name}
           </h1>
-          <div>
-            <span className="font-bold">
+          <div className="mt-2">
+            <span className="font-bold text-xl">
               {singleBusiness.reviews?.length <= 0
                 ? "Not Rated"
                 : "Overall Rating"}
             </span>
             <ShowRating rating={singleBusiness.rating} />
           </div>
-          <span className="text-left">
+          <span className="text-gray-600">
             {singleBusiness.reviews?.length
-              ? singleBusiness.reviews?.length
-              : ""}{" "}
-            {singleBusiness.reviews?.length <= 0
-              ? "No reviews yet!"
-              : "Reviews"}
+              ? `${singleBusiness.reviews?.length} Reviews`
+              : "No reviews yet!"}
           </span>
-
-          <div className="tracking-wide text-sm text-indigo-500 font-semibold">
+          <div className="text-sm text-indigo-500 font-semibold mt-4">
             {singleBusiness.description}
           </div>
-          <div className=" flex mt-2 text-slate-500 md:text-lg text-center">
-            <MdLocationOn size={24} fill={"red"} />
+          <div className="mt-4 text-gray-700">
+            <MdLocationOn
+              size={24}
+              fill="red"
+              className="inline mr-2"
+            />
             {singleBusiness.address}
           </div>
-          <div className="flex items-center justify-between mb-4 mt-2">
-            <div className="flex items-center ">
-              {" "}
-              <BsFillTelephoneForwardFill
-                style={{ marginRight: "4px" }}
-                size={20}
-              />
-              <a href="tel:PHONE_NUM" className=" text-slate-500">
-                {singleBusiness.phone}
-              </a>
-            </div>
+          <div className="mt-2 flex items-center">
+            <BsFillTelephoneForwardFill
+              size={20}
+              className="text-slate-500 inline mr-2"
+            />
+            <a
+              href={`tel:${singleBusiness.phone}`}
+              className="text-slate-500"
+            >
+              {singleBusiness.phone}
+            </a>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="mt-4 flex items-center justify-between">
             <a
               href={singleBusiness.website}
               target="_blank"
               rel="noreferrer"
-              className=" flex  text-slate-500"
+              className="flex items-center text-slate-500"
             >
-              <TbWorldWww
-                size={24}
-                fill={"blue"}
-                style={{ marginRight: "4px" }}
-              />{" "}
+              <TbWorldWww size={24} fill="blue" className="mr-2" />
               {singleBusiness.website}
             </a>
-            <div className="flex items-center"></div>
           </div>
         </div>
-        <div className="flex  tracking-wide m-5 justify-center ">
-          <div className="flex  items-center  mr-2 text-lg  text-black font-bold  rounded-md md:shadow ">
-            <span className=" mx-auto">
+        <div className="flex mt-5 justify-center">
+          <div className="flex items-center mr-2 text-2xl font-bold rounded-md shadow-md">
+            <span className="mx-auto">
               {reviews.length > 0 ? "What People are Saying" : null}
             </span>
             {reviews.length > 0 ? (
               <FaRegStar fill="gold" size={36} />
             ) : null}
-          </div>{" "}
+          </div>
         </div>
-
         {reviews &&
           reviews.map((review) => (
             <div
               key={review._id}
-              className="prose sm:w-full p-6 border rounded-md shadow-md bg-white md:w-1/2 mx-auto mb-4"
+              className="prose w-full p-6 border rounded-md shadow-md bg-white md:w-1/2 mx-auto mb-4"
             >
-              <div className=" flex justify-around text-lg font-semibold text-center">
+              <div className="flex justify-between items-center text-xl font-semibold">
                 {review.user.name || review.name}
-                <div className="text-xs font-light m-1 p-1 italic">
+                <div className="text-sm font-light italic">
                   {formatDate(review.createdAt)}
                 </div>
               </div>
-              <div className=" flex justify-center text-yellow-400 text-lg mb-2 text-center p-3 ">
+              <div className="flex justify-center items-center text-yellow-400 text-lg mb-2">
                 <ShowRating rating={review.rating} />
                 <div className="ml-2">
                   {Math.round(review.rating)}
                 </div>
               </div>
-              <p className=" text-gray-700 whitespace-pre-line text-center ">
+              <p className="text-gray-700 text-center">
                 {review.comment}
               </p>
-
               {review.photo ? (
                 <img
                   src={`${imagePath}${review.photo}`}
@@ -157,7 +151,6 @@ const ViewSingleBusiness = (props) => {
               )}
             </div>
           ))}
-
         <LeaveRating
           singleBusinessId={singleBusiness._id}
           setReviews={setReviews}

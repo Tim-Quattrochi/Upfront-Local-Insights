@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const LoadingBar = () => {
+  const [text, setText] = useState("Loading");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setText((prevText) => {
+        if (prevText === "Loading...") {
+          return "Loading businesses for you";
+        } else if (prevText === "Loading businesses for you...") {
+          return "Almost done!";
+        } else if (prevText === "Almost done!..........") {
+          return "Loading businesses for you";
+        } else {
+          return prevText + ".";
+        }
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="mt-32 flex justify-center content-center">
       <div
@@ -9,7 +29,7 @@ const LoadingBar = () => {
       >
         <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"></span>
       </div>
-      <span className="ml-5 text-primary text-lg">...Loading</span>
+      <span className="ml-5 text-primary text-lg">{text}</span>
     </div>
   );
 };

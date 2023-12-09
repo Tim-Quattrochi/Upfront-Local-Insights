@@ -63,7 +63,7 @@ export const Navbar = () => {
   useEffect(() => {
     const handleSearchClick = (e) => {
       if (
-        !dropdownRef.current.contains(e.target) &&
+        !dropdownRef.current?.contains(e.target) &&
         document
           .querySelector(".input.input-bordered")
           .contains(e.target)
@@ -85,9 +85,11 @@ export const Navbar = () => {
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           Upfront Local Insights
         </Link>
-        <span className="ml-10 bg-secondary h-10 text-white  p-2  rounded-md">
-          <SubmitBusiness />
-        </span>
+        {auth?.user?.isLoggedIn && (
+          <span className="ml-10 bg-secondary h-10 text-white  p-2  rounded-md">
+            <SubmitBusiness />
+          </span>
+        )}
       </div>
 
       <div className="flex-none gap-2">

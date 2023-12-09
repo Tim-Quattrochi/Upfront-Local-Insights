@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { loginUser, useAuthDispatch } from "../Context";
+import { loginUser, useAuthDispatch, useAuthState } from "../Context";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import ShowError from "../components/ShowError";
 
 const initialValues = {
   email: "",
@@ -12,6 +13,9 @@ const initialValues = {
 export default function Login() {
   const [formData, setFormData] = useState(initialValues);
   const dispatch = useAuthDispatch();
+  const {
+    user: { errorMessage },
+  } = useAuthState();
 
   const navigate = useNavigate();
 
@@ -34,7 +38,7 @@ export default function Login() {
         setError(response.error);
       }
     } catch (error) {
-      console.log(error);
+      console.log("Something went wrong.");
     }
   };
 
@@ -103,6 +107,9 @@ export default function Login() {
             Register here
           </Link>
         </div>
+        <span className="text-error py-2 px-2 mx-auto">
+          <ShowError error={errorMessage} auth={null} />
+        </span>
       </div>
     </div>
   );
