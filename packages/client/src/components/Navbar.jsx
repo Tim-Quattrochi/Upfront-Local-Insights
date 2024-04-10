@@ -11,6 +11,7 @@ export const Navbar = () => {
   const dispatch = useAuthDispatch();
   const navigate = useNavigate();
   const [searchFilter, setSearchFilter] = useState([]);
+  const [searchTimeout, setSearchTimeout] = useState(null);
 
   const [isOpen, setIsOpen] = useState(true);
   const dropdownRef = useRef(null);
@@ -19,18 +20,34 @@ export const Navbar = () => {
 
   const [navbarSearchTerm, setNavbarSearchTerm] = useState("");
 
+  const handleBusinessClick = (e) => {
+    setIsOpen(false);
+    setNavbarSearchTerm("");
+    setSearchFilter([]);
+  };
+
   const handleNavBarSearch = (e) => {
-    setNavbarSearchTerm(e.target.value);
+    const searchTerm = e.target.value;
+    setNavbarSearchTerm(searchTerm);
 
-    const results = businesses.filter((business) => {
-      const nameMatch = business.name
-        .toLowerCase()
-        .includes(e.target.value.toLowerCase());
+    // added debouncing.
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
 
-      return e.target.value.length > 0 ? nameMatch : false;
-    });
+    setSearchTimeout(
+      setTimeout(() => {
+        const results = businesses.filter((business) => {
+          const nameMatch = business.name
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
 
-    setSearchFilter(results);
+          return searchTerm.length > 0 ? nameMatch : false;
+        });
+
+        setSearchFilter(results);
+      }, 500)
+    );
   };
 
   const logoutToMain = async () => {
@@ -109,7 +126,10 @@ export const Navbar = () => {
               {error ? <p>An error occurred.</p> : ""}
               {isOpen &&
                 searchFilter.map((business) => (
-                  <div className="flex w-full py-2 m-auto">
+                  <div
+                    className="flex w-full py-2 m-auto"
+                    onClick={handleBusinessClick}
+                  >
                     <Link
                       to={`/businesses/${business._id}`}
                       key={business._id}
@@ -129,7 +149,16 @@ export const Navbar = () => {
                   </div>
                 ))}
             </div>
-          ) : null}
+          ) : (
+            ""
+          )}
+          {isOpen &&
+            navbarSearchTerm &&
+            searchFilter.length === 0 && (
+              <div className="flex w-full py-2 m-auto">
+                <p>No businesses found</p>
+              </div>
+            )}
         </div>
         <div className="dropdown dropdown-end">
           <label
