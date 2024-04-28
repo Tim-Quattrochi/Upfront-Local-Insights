@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import registerImage from "../assets/registerImage.svg";
 import {
   useAuthState,
@@ -21,6 +21,7 @@ export default function Register() {
   };
 
   const [formData, setFormData] = useState(initialValues);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const dispatch = useAuthDispatch();
   const auth = useAuthState();
@@ -44,7 +45,7 @@ export default function Register() {
     if (formData.password !== formData.confirmPassword) {
       return handleSetFormData({ error: "Passwords must match" });
     } else if (
-      formData.password.length <= 8 ||
+      formData.password.length < 8 ||
       formData.password.length >= 20
     ) {
       return handleSetFormData({
@@ -67,8 +68,9 @@ export default function Register() {
     <div className=" w-full min-h-screen max-w-md flex flex-col items-center justify-center mx-auto">
       <img
         src={registerImage}
-        className="object-fit"
+        className={`object-fit ${isLoaded ? "" : "blur"}`}
         alt="people gather by a laptop"
+        onLoad={() => setIsLoaded(true)}
       />
       <div className=" flex flex-col items-center justify-center bg-gray-100">
         <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
