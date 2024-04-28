@@ -6,6 +6,7 @@ const path = require("path");
 const morgan = require("morgan");
 const connectMyDB = require("./config/db");
 const { NODE_ENV, PORT } = require("./config/constants");
+const { router } = require("./routes/index");
 
 const app = express();
 
@@ -30,10 +31,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 //routes
-app.use("/api/review", require("./routes/reviewRoutes"));
-app.use("/api/business", require("./routes/businessRoutes"));
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/users", require("./routes/userRoutes"));
+
+app.use("/api", router);
 
 if (NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
