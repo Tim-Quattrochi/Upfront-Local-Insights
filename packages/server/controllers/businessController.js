@@ -3,6 +3,8 @@ const Business = require("../models/businessModel");
 const multer = require("multer");
 const uuid = require("uuid");
 const path = require("path");
+const axios = require("axios");
+const mapGooglePlaceTypesToCustomCategory = require("../utils/categoryPicker");
 
 /* This is the multer configuration. It is telling multer where to store the file and what to name it. */
 const storage = multer.diskStorage({
@@ -33,6 +35,176 @@ const upload = multer({
     }
   },
 }).single("file");
+
+// Function to get place details using the place_id
+// const getPlaceDetails = async (placeId) => {
+//   try {
+//     const response = await axios.get(
+//       `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${process.env.GOOGLE_PLACES_API_KEY}`
+//     );
+
+//     const placeDetails = response.data.result;
+
+//     // Access photos array
+//     const photos = placeDetails?.photos || [];
+
+//     // Get the first photo reference (if available)
+//     let photo = null;
+//     if (photos.length > 0) {
+//       const photoReference = photos[0].photo_reference;
+//       // Construct the photo URL
+//       const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${process.env.GOOGLE_PLACES_API_KEY}`;
+//       photo = photoUrl;
+//     }
+
+//     const customCategory = mapGooglePlaceTypesToCustomCategory(
+//       placeDetails?.types || []
+//     );
+
+//     const phoneNumber = placeDetails?.formatted_phone_number;
+//     const address = placeDetails?.formatted_address;
+//     const website = placeDetails?.website;
+
+//     const constructedBusiness = {
+//       name: placeDetails?.name,
+//       category: customCategory,
+//       address: address,
+//       phone: phoneNumber,
+//       website: website,
+//       photo: photo,
+//     };
+
+//     try {
+//       const checkBusinessName = await Business.findOne({
+//         name: constructedBusiness.name,
+//       });
+
+//       if (checkBusinessName) {
+//         throw new Error(
+//           "This business already exists in our database."
+//         );
+//       }
+
+//       const newBusiness = await Business.create(constructedBusiness);
+//       console.log("New business created:", newBusiness);
+//     } catch (err) {
+//       throw err;
+//     }
+
+//     return constructedBusiness;
+//   } catch (error) {
+//     console.log("Error fetching place details:", error);
+//     throw new Error(error);
+//   }
+// };
+const getPlaceDetails = async (placeIds) => {
+  try {
+    const placeDetailsPromises = [];
+    for (const placeId of placeIds) {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${process.env.GOOGLE_PLACES_API_KEY}`
+      );
+
+      const placeDetails = response.data.result;
+
+      // Access photos array
+      const photos = placeDetails?.photos || [];
+
+      // Get the first photo reference (if available)
+      let photo = null;
+      if (photos.length > 0) {
+        const photoReference = photos[0].photo_reference;
+        // Construct the photo URL
+        const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${process.env.GOOGLE_PLACES_API_KEY}`;
+        photo = photoUrl;
+      }
+
+      const customCategory = mapGooglePlaceTypesToCustomCategory(
+        placeDetails?.types || []
+      );
+
+      const phoneNumber =
+        placeDetails?.formatted_phone_number || null;
+      const address = placeDetails?.formatted_address || null;
+      const name = placeDetails?.name || null;
+
+      if (!name || !address || !phoneNumber) {
+        console.log("Skipping place - missing required fields:");
+        continue;
+      }
+
+      const constructedBusiness = {
+        name: name,
+        category: customCategory,
+        address: address,
+        phone: phoneNumber,
+        website: placeDetails?.website || null,
+        photo: photo,
+      };
+
+      try {
+        const checkBusinessName = await Business.findOne({
+          name: constructedBusiness.name,
+        });
+
+        if (checkBusinessName) {
+          console.log("Skipping place - already exists:");
+          continue;
+        }
+
+        const newBusiness = await Business.create(
+          constructedBusiness
+        );
+        console.log("New business created:", newBusiness);
+        placeDetailsPromises.push(constructedBusiness);
+      } catch (err) {
+        // Handle database-related errors, e.g., duplicate business name
+        console.error("Error saving to the database:", err);
+        continue;
+      }
+    }
+
+    return placeDetailsPromises;
+  } catch (error) {
+    console.log("Error fetching place details:", error);
+    throw new Error("Failed to fetch place details.");
+  }
+};
+
+const getGooglePlaces = async (req, res) => {
+  try {
+    const { keyword, type } = req.query;
+
+    const {
+      data: { results },
+    } = await axios.get(
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=28.8105,-81.8775&radius=5000&type=${type}&keyword=${keyword}&key=${process.env.GOOGLE_PLACES_API_KEY}`
+    );
+
+    const placeIds = results.map((place) => place.place_id);
+
+    if (placeIds.length === 0) {
+      return res.status(404).json({ error: "No Businesses found." });
+    }
+
+    const lastPlaceId = placeIds[placeIds.length - 1];
+
+    const placeDetails = await getPlaceDetails(placeIds);
+
+    res.status(200).json(results);
+  } catch (error) {
+    if (
+      error.message ===
+      "Error: This business already exists in our database."
+    ) {
+      return res.status(400).json({
+        error: "This business already exists in our database.",
+      });
+    }
+
+    res.status(500).json({ error: "Failed to get any businesses." });
+  }
+};
 
 /**
  * It fetches all businesses and populates the reviews and user fields
@@ -125,7 +297,7 @@ const createBusiness = async (req, res) => {
         website,
         photo,
       } = req.body;
-   
+
       if (
         !name ||
         !description ||
@@ -201,4 +373,5 @@ module.exports = {
   getAllBusinesses,
   getBusinessById,
   updateBusinessRating,
+  getGooglePlaces,
 };
