@@ -1,7 +1,7 @@
 import Login from "../pages/Login";
 import { AuthProvider } from "../Context";
 import { BrowserRouter } from "react-router-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 
 const renderLogin = () => {
@@ -37,5 +37,24 @@ describe("Login page test", () => {
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
     expect(btn).toBeInTheDocument();
+  });
+
+  it("should update form data when input values change", () => {
+    renderLogin();
+
+    const emailInput = screen.getByRole("textbox", {
+      name: /email/i,
+    });
+    const passwordInput = screen.getByLabelText(/password/i);
+
+    fireEvent.change(emailInput, {
+      target: { value: "test@example.com" },
+    });
+    fireEvent.change(passwordInput, {
+      target: { value: "password123" },
+    });
+
+    expect(emailInput.value).toBe("test@example.com");
+    expect(passwordInput.value).toBe("password123");
   });
 });
