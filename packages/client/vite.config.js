@@ -5,7 +5,10 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://upfront-local-server.onrender.com",
+        target:
+          process.env.VITE_NODE_ENV === "production"
+            ? "https://upfront-local-server.onrender.com"
+            : "http://localhost:3001",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

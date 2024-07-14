@@ -5,7 +5,7 @@ const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
 const connectMyDB = require("./config/db");
-const { NODE_ENV, PORT } = require("./config/constants");
+const { PORT, NODE_ENV } = require("./config/constants");
 const { router } = require("./routes/index");
 
 const app = express();
@@ -36,17 +36,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api", router);
 
 if (NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/dist")));
-  app.use(
-    express.static(path.join(__dirname, "./uploads/businessPhotos"))
-  );
-  app.use(express.static(path.join(__dirname, "./uploads")));
-  app.use(
-    "/uploads",
-    express.static(path.join(__dirname, "uploads"))
-  );
-
-  app.all("*", (req, res, next) => {
+  app.use("*", (_, res) => {
     res.sendFile(
       path.resolve(__dirname, "../client/dist/index.html")
     );
