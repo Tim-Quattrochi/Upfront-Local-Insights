@@ -13,6 +13,15 @@ module.exports = {
       backgroundImage: {
         background: "url('../src/assets/bgImage.png')",
       },
+      keyframes: {
+        spin: {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
+      },
+      animation: {
+        "spin-slow": "spin 3s linear infinite",
+      },
     },
   },
   daisyui: {

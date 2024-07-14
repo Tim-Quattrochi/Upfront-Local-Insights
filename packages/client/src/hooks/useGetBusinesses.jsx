@@ -5,6 +5,7 @@ const useGetBusinesses = () => {
   const [businesses, setBusinesses] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isLongLoad, setIsLongLoad] = useState(false);
 
   useEffect(() => {
     axios
@@ -24,7 +25,18 @@ const useGetBusinesses = () => {
       });
   }, []);
 
-  return { businesses, loading, error };
+  useEffect(() => {
+    if (loading) {
+      const timer = setTimeout(() => {
+        setIsLongLoad(true);
+      }, 5000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsLongLoad(false);
+    }
+  }, [loading]);
+
+  return { businesses, loading, error, isLongLoad };
 };
 
 export default useGetBusinesses;

@@ -32,7 +32,8 @@ export async function loginUser(dispatch, loginPayload) {
     dispatch({ type: "LOGIN_ERROR", error: response.data.errors[0] });
     return;
   } catch (error) {
-    dispatch({ type: "LOGIN_ERROR", error: error });
+    console.log(error);
+    dispatch({ type: "LOGIN_ERROR", error: error || error.message });
   }
 }
 

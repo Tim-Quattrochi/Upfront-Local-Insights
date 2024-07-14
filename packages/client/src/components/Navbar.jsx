@@ -16,9 +16,19 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const dropdownRef = useRef(null);
 
-  const { businesses, error } = useGetBusinesses();
+  const { businesses, error, loading, isLongLoad } =
+    useGetBusinesses();
 
   const [navbarSearchTerm, setNavbarSearchTerm] = useState("");
+
+  const shouldDisplayMessage =
+    isOpen && navbarSearchTerm && searchFilter.length === 0;
+
+  const message = isLongLoad
+    ? "Loading..."
+    : loading
+    ? "Loading businesses..."
+    : "No businesses found.";
 
   const handleBusinessClick = (e) => {
     setIsOpen(false);
@@ -113,6 +123,7 @@ export const Navbar = () => {
         <div className="form-control relative">
           <input
             type="text"
+            disabled={loading || isLongLoad}
             placeholder="Search for a business"
             className="input input-bordered w-24 md:w-auto"
             value={navbarSearchTerm}
@@ -152,13 +163,11 @@ export const Navbar = () => {
           ) : (
             ""
           )}
-          {isOpen &&
-            navbarSearchTerm &&
-            searchFilter.length === 0 && (
-              <div className="flex w-full py-2 m-auto">
-                <p>No businesses found</p>
-              </div>
-            )}
+          {shouldDisplayMessage && (
+            <div className="flex w-full py-2 m-auto">
+              <p>{message}</p>
+            </div>
+          )}
         </div>
         <div className="dropdown dropdown-end">
           <label
