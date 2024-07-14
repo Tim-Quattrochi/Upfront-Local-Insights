@@ -12,6 +12,7 @@ const initialValues = {
 
 export default function Login() {
   const [formData, setFormData] = useState(initialValues);
+  const [loginLoading, setLoginLoading] = useState(false);
   const dispatch = useAuthDispatch();
   const {
     user: { errorMessage },
@@ -28,7 +29,7 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setLoginLoading(true);
     try {
       const response = await loginUser(dispatch, formData);
 
@@ -39,6 +40,8 @@ export default function Login() {
       }
     } catch (error) {
       console.log("Something went wrong.");
+    } finally {
+      setLoginLoading(false);
     }
   };
 
@@ -92,7 +95,7 @@ export default function Login() {
               type="submit"
               className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Login
+              {loginLoading ? "Submitting..." : "Login"}
             </button>
           </div>
         </form>

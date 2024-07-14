@@ -1,16 +1,23 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuthState } from "../Context";
+import useServerCheck from "../hooks/useServerCheck";
+import LoadingBar from "./LoadingBar";
 
 const Landing = () => {
   const navigate = useNavigate();
   const { user } = useAuthState();
+  const serverStatus = useServerCheck("/health");
 
   useEffect(() => {
     if (user?.isLoggedIn) {
       navigate("/businesses");
     }
   }, []);
+
+  if (!serverStatus) {
+    return <LoadingBar />;
+  }
 
   return (
     <div className="hero min-h-screen bg-base-200">

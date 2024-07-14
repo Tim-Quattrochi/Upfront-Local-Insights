@@ -21,7 +21,8 @@ export default function Register() {
   };
 
   const [formData, setFormData] = useState(initialValues);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [regLoading, setRegLoading] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const dispatch = useAuthDispatch();
   const auth = useAuthState();
@@ -30,6 +31,10 @@ export default function Register() {
 
   const handleSetFormData = (data) => {
     setFormData({ ...formData, ...data });
+  };
+
+  const handleChangeLoadingStatus = (status) => {
+    setRegLoading(status);
   };
 
   const handleInputChange = (e) => {
@@ -41,13 +46,16 @@ export default function Register() {
 
   const handleRegistration = async (e) => {
     e.preventDefault();
+    setRegLoading(true);
 
     if (formData.password !== formData.confirmPassword) {
+      handleChangeLoadingStatus(false);
       return handleSetFormData({ error: "Passwords must match" });
     } else if (
       formData.password.length < 8 ||
       formData.password.length >= 20
     ) {
+      handleChangeLoadingStatus(false);
       return handleSetFormData({
         error: "Password must be between 8 and 20 characters.",
       });
@@ -61,6 +69,8 @@ export default function Register() {
       }
     } catch (error) {
       dispatch({ type: "REGISTER_ERROR", error });
+    } finally {
+      setRegLoading(false);
     }
   };
 
@@ -68,9 +78,9 @@ export default function Register() {
     <div className=" w-full min-h-screen max-w-md flex flex-col items-center justify-center mx-auto">
       <img
         src={registerImage}
-        className={`object-fit ${isLoaded ? "" : "blur"}`}
+        className={`object-fit ${isImageLoaded ? "" : "blur"}`}
         alt="people gather by a laptop"
-        onLoad={() => setIsLoaded(true)}
+        onLoad={() => setIsImageLoaded(true)}
       />
       <div className=" flex flex-col items-center justify-center bg-gray-100">
         <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
@@ -156,9 +166,10 @@ export default function Register() {
               </div>
               <button
                 type="submit"
+                disabled={regLoading}
                 className="w-full m-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
-                Register
+                {regLoading ? "Submitting..." : "Register"}
               </button>
 
               {formData.error && (
