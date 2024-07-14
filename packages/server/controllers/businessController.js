@@ -36,67 +36,6 @@ const upload = multer({
   },
 }).single("file");
 
-// Function to get place details using the place_id
-// const getPlaceDetails = async (placeId) => {
-//   try {
-//     const response = await axios.get(
-//       `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${process.env.GOOGLE_PLACES_API_KEY}`
-//     );
-
-//     const placeDetails = response.data.result;
-
-//     // Access photos array
-//     const photos = placeDetails?.photos || [];
-
-//     // Get the first photo reference (if available)
-//     let photo = null;
-//     if (photos.length > 0) {
-//       const photoReference = photos[0].photo_reference;
-//       // Construct the photo URL
-//       const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${process.env.GOOGLE_PLACES_API_KEY}`;
-//       photo = photoUrl;
-//     }
-
-//     const customCategory = mapGooglePlaceTypesToCustomCategory(
-//       placeDetails?.types || []
-//     );
-
-//     const phoneNumber = placeDetails?.formatted_phone_number;
-//     const address = placeDetails?.formatted_address;
-//     const website = placeDetails?.website;
-
-//     const constructedBusiness = {
-//       name: placeDetails?.name,
-//       category: customCategory,
-//       address: address,
-//       phone: phoneNumber,
-//       website: website,
-//       photo: photo,
-//     };
-
-//     try {
-//       const checkBusinessName = await Business.findOne({
-//         name: constructedBusiness.name,
-//       });
-
-//       if (checkBusinessName) {
-//         throw new Error(
-//           "This business already exists in our database."
-//         );
-//       }
-
-//       const newBusiness = await Business.create(constructedBusiness);
-//       console.log("New business created:", newBusiness);
-//     } catch (err) {
-//       throw err;
-//     }
-
-//     return constructedBusiness;
-//   } catch (error) {
-//     console.log("Error fetching place details:", error);
-//     throw new Error(error);
-//   }
-// };
 const getPlaceDetails = async (placeIds) => {
   try {
     const placeDetailsPromises = [];
