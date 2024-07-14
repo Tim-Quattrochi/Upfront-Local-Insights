@@ -19,6 +19,7 @@ app.use(
       "http://localhost:5173",
       "https://upfront-local-client.onrender.com",
       "https://upfront-local-insights-client.vercel.app",
+      "https://upfront-local-insights-clien-git-0ecaa1-timquattrochis-projects.vercel.app",
     ],
     credentials: true,
   })
