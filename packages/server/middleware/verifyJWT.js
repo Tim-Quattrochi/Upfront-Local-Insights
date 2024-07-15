@@ -17,14 +17,18 @@ const verifyJWT = async (req, res, next) => {
         console.log(err);
         return res.status(403).json({ message: "Forbidden." }); // This is not a valid token.
       }
-      req.user = decoded.email;
-      req.id = decoded.id;
-      req.role = decoded.role;
+
+      req.user = {
+        name: decoded.name,
+        id: decoded.id,
+        role: decoded.role,
+      };
+
       next();
     });
   } catch (error) {
     console.log(error);
-    res.send(500).json({ message: "Something went wrong." });
+    res.status(500).json({ message: "Something went wrong." });
   }
 };
 
