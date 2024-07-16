@@ -38,7 +38,6 @@ const ViewSingleBusiness = (props) => {
     };
     getSingleBusiness();
   }, [businessId]);
-
   return (
     <div className="bg-white">
       <div className="shadow-lg p-4 md:p-8 rounded-lg">
@@ -67,7 +66,7 @@ const ViewSingleBusiness = (props) => {
                 ? "Not Rated"
                 : "Overall Rating"}
             </span>
-            <ShowRating rating={singleBusiness.rating} />
+            <ShowRating business={singleBusiness} />
           </div>
           <span className="text-gray-600">
             {singleBusiness.reviews?.length

@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { Navbar } from "./components/Navbar";
 import Landing from "./components/Landing";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -13,36 +12,34 @@ import { inject } from "@vercel/analytics";
 
 function App() {
   return (
-    <div className="h-full w-full bg-white  top-0 left-0 ">
-      <ErrorBoundary>
-        {inject()}
-        <Navbar />
-        <Routes>
-          <Route
-            path="/"
-            element={<Landing />}
-            errorElement={<ErrorPage />}
-          />
+    <ErrorBoundary>
+      {inject()}
 
-          <Route path="/register" element={<Register />} />
+      <Routes>
+        <Route
+          path="/"
+          element={<Landing />}
+          errorElement={<ErrorPage />}
+        />
 
-          <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-          <Route path="businesses" element={<ListBusiness />} />
+        <Route path="/login" element={<Login />} />
 
-          <Route
-            path="businesses/:businessId"
-            element={<ViewSingleBusiness />}
-          />
-          <Route
-            path="businesses/leave-rating"
-            element={<LeaveRating />}
-          />
+        <Route path="businesses" element={<ListBusiness />} />
 
-          <Route path="profile" element={<ProfilePage />} />
-        </Routes>
-      </ErrorBoundary>
-    </div>
+        <Route
+          path="businesses/:businessId"
+          element={<ViewSingleBusiness />}
+        />
+        <Route
+          path="businesses/leave-rating"
+          element={<LeaveRating />}
+        />
+
+        <Route path="profile" element={<ProfilePage />} />
+      </Routes>
+    </ErrorBoundary>
   );
 }
 
