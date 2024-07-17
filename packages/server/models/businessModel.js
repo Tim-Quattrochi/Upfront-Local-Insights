@@ -17,6 +17,7 @@ const businessSchema = mongoose.Schema({
       "Restaurant",
       "Bar",
       "Cafe",
+      "Convenience Store",
       "Retail",
       "Salon",
       "Animal",
@@ -24,6 +25,7 @@ const businessSchema = mongoose.Schema({
       "Hardware",
       "Gas Station",
       "Other",
+      "Dentist",
       "Health",
       "Accounting",
       "Airport",
@@ -90,8 +92,13 @@ const businessSchema = mongoose.Schema({
     type: String,
     trim: true,
   },
+  placeId: {
+    type: String,
+    trim: true,
+  },
   photo: {
     type: String,
+    trim: true,
   },
   rating: {
     type: Number,

@@ -7,25 +7,32 @@ exported as the default export of the module. */
 
 import React from "react";
 
-const ShowRating = ({ rating }) => {
+const ShowRating = ({ business }) => {
+  const { rating, reviews } = business;
+  console.log(rating);
+  const roundedRating = rating ? Math.round(rating) : 0;
   return (
-    <div className="rating flex  content-center 	items-baseline justify-center">
+    <div className="flex items-center gap-2">
       {[...Array(5)].map((_, i) => (
         <svg
           key={i}
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="2 2 20 20"
-          fill={i < Math.round(rating) ? "#ffd700" : "#ffffff"}
-          className="h-8 w-7 border bg-primary"
+          fill={i < roundedRating ? "#ffd700" : "#e5e7eb"}
+          className="w-5 h-5"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 2L15.09 8.36L22 9.82L17 14.64L18.18 21.21L12 17.77L5.82 21.21L7 14.64L2 9.82L8.91 8.36L12 2z"
-          />
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
         </svg>
       ))}
+      <span className="text-sm text-muted-foreground">
+        ({reviews?.length} reviews)
+      </span>
     </div>
   );
 };

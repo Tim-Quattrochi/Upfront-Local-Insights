@@ -1,40 +1,6 @@
-const mongoose = require("mongoose");
 const Business = require("../models/businessModel");
-const multer = require("multer");
-const uuid = require("uuid");
-const path = require("path");
 const axios = require("axios");
 const mapGooglePlaceTypesToCustomCategory = require("../utils/categoryPicker");
-
-/* This is the multer configuration. It is telling multer where to store the file and what to name it. */
-const storage = multer.diskStorage({
-  destination: "./uploads/businessPhotos",
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      "BUSINESS-PHOTO-" + Date.now() + path.extname(file.originalname)
-    );
-  },
-});
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1000000 },
-  fileFilter: (req, file, cb) => {
-    if (
-      file.mimetype === "image/png" ||
-      file.mimetype === "image/jpg" ||
-      file.mimetype === "image/jpeg"
-    ) {
-      cb(null, true);
-    } else {
-      cb(null, false);
-      return cb(
-        new Error("Only .png .jpg and .jpeg pictures allowed.")
-      );
-    }
-  },
-}).single("file");
 
 const getPlaceDetails = async (placeIds) => {
   try {
@@ -79,6 +45,7 @@ const getPlaceDetails = async (placeIds) => {
         phone: phoneNumber,
         website: placeDetails?.website || null,
         photo: photo,
+        placeId: placeId,
       };
 
       try {
@@ -218,59 +185,49 @@ const getBusinessById = async (req, res) => {
  */
 const createBusiness = async (req, res) => {
   try {
-    //multer file upload
-    upload(req, res, async (err) => {
-      if (err) {
-        return res.status(422).json({
-          error:
-            "only jpg, jpeg, and png picture allowed. Also only one picture per review at this time.",
-        });
-      }
+    const {
+      name,
+      description,
+      selectedCategory,
+      address,
+      phone,
+      website,
+    } = req.body;
 
-      const {
+    if (
+      !name ||
+      !description ||
+      !address ||
+      !phone ||
+      !website ||
+      !selectedCategory
+    ) {
+      return res
+        .status(400)
+        .json({ error: "Please enter all the required fields." });
+    }
+
+    //if the business name exists, we don't want to store it
+
+    const checkBusinessName = await Business.findOne({ name });
+
+    if (checkBusinessName) {
+      return res.status(400).json({
+        error: "This business already exists in our database.",
+      });
+    } else {
+      let newBusiness = await Business.create({
         name,
         description,
-        selectedCategory,
+        category: selectedCategory,
         address,
         phone,
         website,
-        photo,
-      } = req.body;
-
-      if (
-        !name ||
-        !description ||
-        !address ||
-        !phone ||
-        !website ||
-        !selectedCategory
-      ) {
-        return res
-          .status(400)
-          .json({ error: "Please enter all the required fields." });
-      }
-
-      //if the business name exists, we don't want to store it
-
-      const checkBusinessName = await Business.findOne({ name });
-
-      if (checkBusinessName) {
-        return res.status(400).json({
-          error: "This business already exists in our database.",
-        });
-      } else {
-        let newBusiness = await Business.create({
-          name,
-          description,
-          category: selectedCategory,
-          address,
-          phone,
-          website,
-          photo: req.file ? req.file.path : "null",
-        });
-        res.status(201).json(newBusiness);
-      }
-    });
+        placeId: null,
+        photo: req.file ? req.file.path : "null",
+      });
+      res.status(201).json(newBusiness);
+    }
   } catch (error) {
     console.log(error);
     res.send(error);

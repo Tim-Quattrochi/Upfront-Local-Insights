@@ -107,25 +107,23 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <div className="navbar bg-base-100">
-      <div className="flex-1">
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
+    <div className="flex justify-around  h-24 bg-primary">
+      <div className="m-5 p-1 mr-auto">
+        <Link
+          to="/"
+          className="btn btn-ghost normal-case md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-accent to-secondary hover:from-secondary hover:to-accent transition-all duration-300 ease-in-out shadow-sm hover:shadow-md tracking-wide"
+        >
           Upfront Local Insights
         </Link>
-        {auth?.user?.isLoggedIn && (
-          <span className="ml-10 bg-secondary h-10 text-white  p-2  rounded-md">
-            <SubmitBusiness />
-          </span>
-        )}
       </div>
 
-      <div className="flex-none gap-2">
+      <div className="flex justify-center items-center flex-wrap">
         <div className="form-control relative">
           <input
             type="text"
             disabled={loading || isLongLoad}
-            placeholder="Search for a business"
-            className="input input-bordered w-24 md:w-auto"
+            placeholder="Search a business"
+            className="inpu bg-gray-200 input-bordered w-20 h-auto md:w-auto m-5 p-1 placeholder:text-black placeholder:p-4 placeholder:italic"
             value={navbarSearchTerm}
             onChange={handleNavBarSearch}
           />
@@ -164,23 +162,16 @@ export const Navbar = () => {
             ""
           )}
           {shouldDisplayMessage && (
-            <div className="flex w-full py-2 m-auto">
-              <p>{message}</p>
+            <div className=" font-bold ">
+              <p className="px-2 pb-6">{message}</p>
             </div>
           )}
         </div>
         <div className="dropdown dropdown-end">
-          <label
-            tabIndex={0}
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-14  rounded-full">
-              <Avatar
-                name={
-                  auth.user.user ? auth.user.user.name[0] : "Guest"
-                }
-              />
-            </div>
+          <label tabIndex={0}>
+            <Avatar
+              name={auth.user.user ? auth.user.user.name[0] : "Guest"}
+            />
           </label>
           <ul
             tabIndex={0}
@@ -198,6 +189,13 @@ export const Navbar = () => {
               <Link to={"/businesses"} className="justify-between">
                 Businesses
               </Link>
+            </li>
+            <li>
+              {auth?.user?.isLoggedIn && (
+                <span className="ml-10 bg-info text-white  px-2 py-1 rounded-md border-none">
+                  <SubmitBusiness />
+                </span>
+              )}
             </li>
             <li>
               {auth.user.isLoggedIn ? (
