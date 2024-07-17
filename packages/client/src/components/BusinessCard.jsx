@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { truncateAfterDomain } from "../utilities/shortenUrl";
+import { truncateAfterDomain } from "../utilities/shortenURL";
 import ShowRating from "./ShowRating";
 
 const BusinessCard = ({ business }) => {
