@@ -1,5 +1,5 @@
-import Login from "../pages/Login";
-import { AuthProvider } from "../Context";
+import Login from "../../pages/Login";
+import { AuthProvider } from "../../Context";
 import { BrowserRouter } from "react-router-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
