@@ -3,7 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import SubmitBusiness from "../pages/SubmitBusiness";
 import { logout } from "../Context";
 import { useAuthState, useAuthDispatch } from "../Context";
+import { useTheme } from "../Context/themeContext";
 import { Avatar } from "./Avatar";
+import ThemeController from "./ThemeController";
 import useGetBusinesses from "../hooks/useGetBusinesses";
 
 export const Navbar = () => {
@@ -18,6 +20,8 @@ export const Navbar = () => {
 
   const { businesses, error, loading, isLongLoad } =
     useGetBusinesses();
+
+  const { handleThemeChange, state } = useTheme();
 
   const [navbarSearchTerm, setNavbarSearchTerm] = useState("");
 
@@ -106,18 +110,22 @@ export const Navbar = () => {
     };
   }, []);
 
-  return (
-    <div className="flex justify-between h-28 bg-primary">
-      <div className="mr-auto">
-        <Link to="/" className="mr">
-          <img
-            src="/logo.svg"
-            alt="logo"
-            className="h-28 object-cover"
-          />
-        </Link>
-      </div>
+  console.log(state);
 
+  return (
+    <div className="flex justify-between h-20 md:h-28 bg-primary">
+      <Link to="/" className="flex items-center">
+        <img
+          src="/logo.png"
+          alt="logo"
+          className="w-24 md:w-32 lg:w-40 "
+        />
+        <span className="text-stone-100 text-lg md:text-2xl font-bold">
+          {" "}
+          Local Insights
+        </span>
+      </Link>
+      <ThemeController onChange={handleThemeChange} />
       <div className="flex justify-center items-baseline flex-wrap">
         <div className="form-control relative">
           <input
@@ -195,13 +203,7 @@ export const Navbar = () => {
                 Businesses
               </Link>
             </li>
-            <li>
-              {auth?.user?.isLoggedIn && (
-                <span className="ml-10 bg-info text-white  px-2 py-1 rounded-md border-none">
-                  <SubmitBusiness />
-                </span>
-              )}
-            </li>
+
             <li>
               {auth.user.isLoggedIn ? (
                 <a onClick={logoutToMain}>Logout</a>

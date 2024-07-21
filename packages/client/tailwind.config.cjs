@@ -1,97 +1,18 @@
-// /** @type {import('tailwindcss').Config} */
-// const defaultTheme = require("tailwindcss/defaultTheme");
-
-// module.exports = {
-//   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-//   theme: {
-//     screens: {
-//       xs: "375px",
-//       iphone12: { min: "390px", max: "391px" },
-//       ...defaultTheme.screens,
-//     },
-//     extend: {
-//       backgroundImage: {
-//         background: "url('../src/assets/bgImage.png')",
-//       },
-//       keyframes: {
-//         spin: {
-//           from: { transform: "rotate(0deg)" },
-//           to: { transform: "rotate(360deg)" },
-//         },
-//       },
-//       animation: {
-//         "spin-slow": "spin 3s linear infinite",
-//       },
-//     },
-//   },
-//   daisyui: {
-//     themes: [
-//       {
-//         mytheme: {
-//           primary: "#1a6791",
-
-//           secondary: "#f9b7b1",
-
-//           accent: "#db04ea",
-
-//           neutral: "#2d2e39",
-
-//           "base-100": "#2b3e5a",
-
-//           info: "#4094dd",
-
-//           success: "#31c495",
-
-//           warning: "#f7b269",
-
-//           error: "#e44444",
-//         },
-//       },
-//       "light",
-//       "dark",
-//       "cupcake",
-//       "bumblebee",
-//       "emerald",
-//       "corporate",
-//       "synthwave",
-//       "retro",
-//       "cyberpunk",
-//       "valentine",
-//       "halloween",
-//       "garden",
-//       "forest",
-//       "aqua",
-//       "lofi",
-//       "pastel",
-//       "fantasy",
-//       "wireframe",
-//       "black",
-//       "luxury",
-//       "dracula",
-//       "cmyk",
-//       "autumn",
-//       "business",
-//       "acid",
-//       "lemonade",
-//       "night",
-//       "coffee",
-//       "winter",
-//     ],
-//   },
-//   plugins: [require("@tailwindcss/typography"), require("daisyui")],
-// };
-
 const fontFamily = require("tailwindcss/defaultTheme").fontFamily;
 /** @type {import { fontFamily } from "tailwindcss/defaultTheme"}; */
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  daisyui: {
+    themes: ["light", "dark", "lofi", "dim", "nord"],
+  },
   theme: {
     extend: {
       fontFamily: {
-        heading: ["var(--font-heading)", ...fontFamily.sans],
-        body: ["var(--font-body)", ...fontFamily.sans],
+        heading: ['"Trade Gothic Next Light"', ...fontFamily.sans],
+        subheading: ['"Fira Sans Black"', ...fontFamily.sans],
+        body: ['"Franklin Gothic Demi"', ...fontFamily.sans],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -99,24 +20,17 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "#4a90e2", // A fresh, modern blue
-          foreground: "#ffffff",
-        },
-        secondary: {
-          DEFAULT: "#50e3c2", // A vibrant teal
-          foreground: "#ffffff",
-        },
-        destructive: {
-          DEFAULT: "#e94e77", // A strong, eye-catching pink
-          foreground: "#ffffff",
-        },
+        primary: "#00c0c9",
+        secondary: "#b8dde1",
+        tertiary: "#004e64",
+        quaternary: "#d9d6d3",
+        neutral: "#5e5e5e",
         muted: {
-          DEFAULT: "#b0bec5", // A soft, neutral gray
+          DEFAULT: "#b0bec5",
           foreground: "#ffffff",
         },
         accent: {
-          DEFAULT: "#f5a623", // A warm, inviting orange
+          DEFAULT: "#f5a623",
           foreground: "#ffffff",
         },
         popover: {
@@ -126,6 +40,10 @@ module.exports = {
         card: {
           DEFAULT: "#f7fafc",
           foreground: "#333333",
+        },
+        btn: {
+          DEFAULT: "#00c0c9",
+          foreground: "#ffffff",
         },
       },
       white: "#ffffff",
@@ -176,6 +94,10 @@ module.exports = {
         primary: "2px solid #4a90e2",
         secondary: "2px solid #50e3c2",
         destructive: "2px solid #e94e77",
+      },
+      btn: {
+        DEFAULT: "var(--radix-button-background-color)",
+        foreground: "var(--radix-button-text-color)",
       },
     },
   },

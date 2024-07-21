@@ -3,7 +3,7 @@ import React from "react";
 export const Avatar = ({ name }) => {
   return (
     <div className="m-2 px-4">
-      <div className="relative inline-flex items-center justify-center w-14 h-14 md:w-20 md:h-20 lg:w-20 lg:h-20 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 border-4 border-white shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out">
+      <div className="relative inline-flex items-center justify-center w-14 h-14 md:w-20 md:h-20 lg:w-20 lg:h-20 rounded-full bg-gradient-to-r from-indigo-500 via-blue-500 to-blue-500 border-2 border-white shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out">
         <span className="text-sm md:text-2xl lg:text-xl text-white font-semibold">
           {name.toUpperCase()}
         </span>

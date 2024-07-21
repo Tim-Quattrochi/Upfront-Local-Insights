@@ -20,24 +20,27 @@ const Landing = () => {
   }
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content text-center">
-        <div className="max-w-md">
-          <h1 className="text-4xl font-bold">
-            Real consumer reviews
+    <section className="min-h-screen flex justify-center items-center  py-12 md:py-24 lg:py-32 bg-gradient-to-r from-[#4c6ef5] to-primary">
+      <div className="container px-4 md:px-6 flex flex-col items-center justify-center text-center space-y-6">
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold text-primary-foreground sm:text-5xl md:text-6xl">
+            Welcome to Local Insights
           </h1>
-          <p className="py-6">
-            We want your reviews to be seen, good or bad. Plenty of
-            review sites are around, but we want to be different. We
-            want consumers to be able to see the good and the bad, so
-            they can make an informed decision.
+          <p className="max-w-[700px] text-primary-foreground md:text-xl">
+            Evaluate and score your preferred local establishments.
+            Assist others in discovering the top spots in the
+            community. Make knowledgeable choices.
           </p>
-          <Link to={"/register"}>
-            <button className="btn btn-primary">Get Started</button>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Link to={"/register"} className="w-full sm:w-auto">
+            <button className="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Sign Up
+            </button>
           </Link>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

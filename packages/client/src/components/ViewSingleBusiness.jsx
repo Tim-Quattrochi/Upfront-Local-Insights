@@ -38,15 +38,16 @@ const ViewSingleBusiness = (props) => {
     };
     getSingleBusiness();
   }, [businessId]);
+
   return (
-    <div className="bg-white">
-      <div className="shadow-lg p-4 md:p-8 rounded-lg">
-        <div className="relative h-64 md:h-96">
+    <div className="container mx-auto bg-gray-100 ">
+      <div className="p-4 md:p-8 rounded-lg bg-white ">
+        <div className="max-w-sm rounded overflow-hidden shadow-lg mx-auto">
           {singleBusiness.photo ? (
             <img
               src={`${checkPic(singleBusiness.photo)}`}
               alt="Business Photo"
-              className="w-full h-full object-cover rounded-t-lg"
+              className="object-scale-down max-h-full drop-shadow-md rounded-md m-auto"
             />
           ) : (
             <img
@@ -57,22 +58,15 @@ const ViewSingleBusiness = (props) => {
           )}
         </div>
         <div className="prose flex flex-col mt-4 mx-auto border rounded-md bg-opacity-50 shadow-md p-6 py-4 text-center sm:p-8">
-          <h1 className="text-3xl font-semibold text-black hover:underline">
+          <h1 className="text-2xl font-semibold text-black hover:underline">
             {singleBusiness.name}
           </h1>
           <div className="mt-2">
             <span className="font-bold text-xl">
-              {singleBusiness.reviews?.length <= 0
-                ? "Not Rated"
-                : "Overall Rating"}
+              {singleBusiness.reviews?.length <= 0 ? "Not Rated" : ""}
             </span>
-            <ShowRating business={singleBusiness} />
           </div>
-          <span className="text-gray-600">
-            {singleBusiness.reviews?.length
-              ? `${singleBusiness.reviews?.length} Reviews`
-              : "No reviews yet!"}
-          </span>
+          <ShowRating business={singleBusiness} />
           <div className="text-sm text-indigo-500 font-semibold mt-4">
             {singleBusiness.description}
           </div>
@@ -109,12 +103,18 @@ const ViewSingleBusiness = (props) => {
           </div>
         </div>
         <div className="flex mt-5 justify-center">
-          <div className="flex items-center mr-2 text-2xl font-bold rounded-md shadow-md">
+          <div className="flex items-center mr-2 text-2xl font-bold rounded-md">
             <span className="mx-auto">
-              {reviews.length > 0 ? "What People are Saying" : null}
+              {reviews.length > 0 ? (
+                <span className="text-tertiary">
+                  What People are Saying
+                </span>
+              ) : null}
             </span>
             {reviews.length > 0 ? (
-              <FaRegStar fill="gold" size={36} />
+              <span className="p-2">
+                <FaRegStar fill="gold" size={36} />
+              </span>
             ) : null}
           </div>
         </div>

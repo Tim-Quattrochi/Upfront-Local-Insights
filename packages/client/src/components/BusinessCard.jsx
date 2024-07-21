@@ -20,7 +20,7 @@ const BusinessCard = ({ business }) => {
   };
 
   return (
-    <div className="bg-background text-foreground p-6 md:p-8 lg:p-10 rounded-lg shadow-lg max-w-3xl mx-auto">
+    <div className="bg-background text-foreground p-6 md:p-8 lg:p-10 rounded-lg shadow-lg mx-auto max-w-2xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="relative overflow-hidden rounded-lg">
           <img
@@ -29,27 +29,23 @@ const BusinessCard = ({ business }) => {
             width="500"
             height="300"
             className="w-full h-64 object-cover transition-transform duration-500 hover:scale-105"
-            style={{ aspectRatio: "500/300", objectFit: "cover" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-4">
-            <h1 className="text-2xl font-bold text-white">
-              {business.name}
-            </h1>
+            <div className="relative">
+              <h1 className="text-2xl font-bold text-white">
+                {business.name}
+              </h1>
+            </div>
           </div>
         </div>
         <div className="grid gap-4">
           <div className="grid gap-1">
             <div className="flex items-center justify-between">
               <h1 className="text-2xl font-bold">{business.name}</h1>
-
-              <ShowRating business={business} />
             </div>
-            <p className="text-muted-foreground">
-              {business.address}
-            </p>
-            <p className="text-muted-foreground">
-              {business.description}
-            </p>
+            <ShowRating business={business} />
+            <p className="text-gray-700">{business.address}</p>
+            <p className="text-gray-700">{business.description}</p>
           </div>
           <div className="grid gap-1">
             <div className="flex items-center gap-2">
@@ -59,7 +55,7 @@ const BusinessCard = ({ business }) => {
             <div className="flex items-center gap-2">
               <img src="/web.svg" />
               <a
-                className="underline text-muted-foreground"
+                className="underline text-gray-700"
                 href={business.website}
                 target="_blank"
                 rel="noreferrer"

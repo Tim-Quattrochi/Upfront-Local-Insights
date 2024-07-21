@@ -130,10 +130,8 @@ const ListBusiness = () => {
           breakClassName={breakClass}
           breakLabel="..."
           onPageChange={changePage}
-          pageRangeDisplayed={3}
           previousClassName={prevClass}
           nextClassName={nextClass}
-          marginPagesDisplayed={3}
           renderOnZeroPageCount={null}
         />
       )}

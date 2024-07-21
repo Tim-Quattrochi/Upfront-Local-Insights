@@ -8,11 +8,12 @@ exported as the default export of the module. */
 import React from "react";
 
 const ShowRating = ({ business }) => {
-  const { rating, reviews } = business;
+  console.log(business);
+  const { rating, reviews } = business ?? {};
   console.log(rating);
   const roundedRating = rating ? Math.round(rating) : 0;
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 ">
       {[...Array(5)].map((_, i) => (
         <svg
           key={i}
@@ -30,9 +31,7 @@ const ShowRating = ({ business }) => {
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
         </svg>
       ))}
-      <span className="text-sm text-muted-foreground">
-        ({reviews?.length} reviews)
-      </span>
+      <span className="text-sm">({reviews?.length} reviews)</span>
     </div>
   );
 };
